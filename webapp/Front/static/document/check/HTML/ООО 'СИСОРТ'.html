@@ -1,0 +1,312 @@
+<DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <style>
+            td, th {
+                font-size: 14px;
+                font-family: 'Times New Roman', Times, serif;
+                border: 1px solid black;
+                padding: 5px;
+            }
+            .no-border-top {
+                border-top: none;
+            }
+            .no-border-bottom {
+                border-bottom: none;
+            }
+            .no-border {
+                border: none;
+            }
+            p {
+                font-size: 14px;
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .signature-table {
+            width: 100%;
+            padding-top: 50px;
+            }
+    
+            .signature-table td {
+                border: none;
+                font-weight: 600;
+            }
+    
+            .signature-table .sign {
+                text-align: right;
+                border-bottom: 1px solid black;
+            }
+    
+            .stamp {
+                width: 200px;
+                height: auto;
+                position: absolute;
+                bottom: 50px;
+                left: 50px;
+            }
+    
+            .signature-1 {
+                width: 150px;
+                height: auto;
+                position: absolute;
+                bottom: 100px;
+                right: 200px;
+            }
+    
+            .signature-2 {
+                width: 100px;
+                height: auto;
+                position: absolute;
+                bottom: 100px;
+                right: 50px;
+            }
+
+            .footer {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body style="">
+        <div style=" display: flex; flex-direction: row-reverse;    justify-content: space-between;">
+            <table style="border-collapse: collapse;width: 65%;">
+                <tr>
+                    <td class="no-border-bottom" style="width: 100px;" 
+                        colspan="4">bank_seller</td>
+                    <td style="width: 50px;">БИК</td>
+                    <td style="width: 30px;">bik_seller</td>
+                </tr>
+                <tr>
+                    <td class="no-border-top" style="
+                        width: 50px;
+                        vertical-align: bottom;
+                        " 
+                        colspan="4">Банк получателя</td>
+                    <td style="
+                        width: 50px;
+                        ">Сч. №</td>
+                    <td style="
+                        width: 30px;
+                        ">checking_account_seller</td>
+                </tr>
+                <tr>
+                    <td class="no-border-top" style="
+                        width: 50px; 
+                        vertical-align: bottom;
+                        " 
+                        colspan="1">ИНН</td>
+                    <td style="
+                        width: 50px;
+                        ">inn_seller</td>
+                    <td style="
+                        width: 30px;
+                        ">КПП</td>
+                    <td style="
+                        width: 30px;
+                        ">kpp_seller</td>
+                    <td class="no-border-bottom" style="
+                        width: 50px;
+                        ">Сч. №</td>
+                    <td class="no-border-bottom" style="
+                        width: 30px;
+                        ">corporate_account_seller</td>
+                </tr>
+                <tr>
+                    <td class="no-border-bottom" style="
+                        width: 50px;  
+                        vertical-align: bottom;
+                        " 
+                        colspan="4">organization_fullname_seller</td>
+                    <td class="no-border-bottom no-border-top"  style="
+                        width: 30px;
+                        "></td>
+                    <td class="no-border-bottom no-border-top"  style="
+                        width: 30px;
+                        "></td>
+    
+                </tr>
+                <tr>
+                    <td class="no-border-top" style="
+                        width: 50px; 
+                        vertical-align: bottom;
+                        " 
+                        colspan="4">Получатель</td>
+                    <td class="no-border-top" style="
+                        width: 30px;
+                        "></td>
+                    <td class="no-border-top" style="
+                        width: 30px;
+                        "></td>
+                </tr>
+                <img  src="https://csort-news.ru/off_bot/static/document/check/Qr_code/qr_code_png.png"  alt="Image" id="image-placeholder" style="width: 200px; height: auto; ">
+            </table>
+        </div>
+        <p style="
+            font-size: 28px;
+            font-weight: 600;
+            border-bottom: 5px solid black;
+            padding-bottom: 10px;
+            ">
+            Счёт на оплату № number от date_create
+        </p>
+        
+        <table style="
+            border-collapse: collapse;
+            width: 100%;">
+            <tr>
+                <td class="no-border" style="
+                width: 100px;
+                ">
+                    Поставщик (Исполнитель):
+                </td>
+                <td class="no-border" style="
+                width: 600px;
+                font-weight: 600;
+                ">
+                    organization_fullname_seller,
+                    ИНН inn_seller, КПП kpp_seller, address_seller, тел.: phone_number_seller
+                </td>
+            </tr>
+            <tr>
+                <td class="no-border" style="
+                width: 100px;
+                ">
+                    Покупатель
+                    (Заказчик):                
+                </td>
+                <td class="no-border" style="
+                width: 600px;
+                font-weight: 600;
+                ">
+                    organization_shortname_buyer, ИНН inn_buyer, КПП kpp_buyer, address_buyer, тел.: phone_number_buyer                
+                </td>
+            </tr>
+            <tr>
+                <td class="no-border" style="
+                width: 100px;
+                ">
+                    Основание:                
+                </td>
+                <td class="no-border" style="
+                width: 600px;
+                font-weight: 600;
+                ">
+                    Счет number от date_create               
+                </td>
+            </tr>
+        </table>
+        <table style="
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+            ">
+            <tr>
+                <td style="
+                font-weight: 600;
+                text-align: center;
+                padding: 0;
+                ">
+                    №               
+                </td>
+                <td style="
+                font-weight: 600;
+                text-align: center;
+                padding: 0;
+                ">
+                    Товары (работы, услуги)               
+                </td>
+                <td style="
+                font-weight: 600;
+                text-align: center;
+                padding: 0;
+                ">
+                    Кол-во               
+                </td>
+                <td style="
+                font-weight: 600;
+                text-align: center;
+                padding: 0;
+                ">
+                    Цена              
+                </td>
+                <td style="
+                font-weight: 600;
+                text-align: center;
+                padding: 0;
+                ">
+                    Сумма              
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%; padding-top: 20px; border-spacing: 0;">
+            <tr>
+                <td class="no-border" style="text-align: right; font-weight: 600; width: 75%; padding: 0;">Итого:</td>
+                <td class="no-border" style="text-align: right; font-weight: 600; width: 25%; padding: 0;">total_sum_str</td>
+            </tr>
+            <tr>
+                <td class="no-border" style="text-align: right; font-weight: 600; padding: 0;">В том числе НДС 22%:</td>
+                <td class="no-border" style="text-align: right; font-weight: 600; padding: 0;">nds_total_str</td>
+            </tr>
+            <tr>
+                <td class="no-border" style="text-align: right; font-weight: 600; padding: 0;">Итого к оплате:</td>
+                <td class="no-border" style="text-align: right; font-weight: 600; padding: 0;">total_sum_str</td>
+            </tr>
+        </table>
+        
+        <div>
+            <p style="margin: 0; padding-top: 10px;">
+            Всего наименований table_str, на сумму total_sum_str руб.
+            </p>
+            <p style="margin: 0; font-weight: 600;">
+                sum_propis
+            </p>
+            <p></p>
+            <p style="margin: 0;">
+                Оплатить не позднее date_work_days
+            </p>
+            <p style="margin: 0;">
+                Оплата данного счета означает согласие с условиями поставки товара
+            </p>
+            <p style="margin: 0;">
+                Уведомление об оплате обязательно, в противном случае не гарантируется наличие товара на складе.
+            </p>
+            <p style="margin: 0; border-bottom: 5px solid black; padding-bottom: 20px;">
+                Товар отпускается по факту прихода денег на р/с Поставщика, самовывозом, при наличии доверенности и паспорта.
+            </p>
+        </div>
+
+        <div class="footer">
+            <table style="border-collapse: collapse; width: 100%; margin-top: 70px;">
+                <tr>
+                    <td class="no-border" style="padding: 0;">Подписи сторон:</td>
+                </tr>
+                <tr>
+                    <td class="no-border" style="padding: 0;">position_user_seller _______________ middle_Name_seller first_Name_cut_seller middle_Name_cut_seller</td>
+                    <td class="no-border" style="padding: 0;">position_user_buyer _______________ middle_Name_buyer first_Name_cut_buyer last_Name_cut_buyer</td>
+                </tr>
+            </table>
+            <img src="https://csort-news.ru/off_bot/static/document/img_doc/Csort_print.png"  alt="Seal" style="width: 150px; height: auto; position: absolute; top: -35px; left: 15%;">
+            <img src="https://csort-news.ru/off_bot/static/document/img_doc/Csort_signature.png" alt="Signature 1" style="width: 100px; height: auto; position: absolute; top: 50px; left: 10%">
+        </div>
+        <!-- <table class="signature-table">
+            <tr>
+                <td style="width: 8%;">Руководитель</td>
+                <td class="sign" style="width: 40%;font-weight: 400;">Савинков М.В.</td>
+                <td style="width: 4%;"></td>
+                <td style="width: 8%;">Бухгалтер</td>
+                <td class="sign" style="width: 40%;font-weight: 400;">Савинков М.В.</td>
+            </tr>
+        </table>
+        
+        <div style="position: relative; width: 100%; height: 100px; margin-top: 0px;">
+            <img src="https://csort-news.ru/off_bot/static/document/img_doc/Csort_print.png" alt="Seal" style="width: 150px; height: auto; position: absolute; top: -20px; left: 20%;">
+            <img src="https://csort-news.ru/off_bot/static/document/img_doc/Csort_signature.png" alt="Signature 1" style="width: 100px; height: auto; position: absolute; top: -80px; right: 60%;">
+            <img src="https://csort-news.ru/off_bot/static/document/img_doc/Csort_signature.png" alt="Signature 2" style="width: 100px; height: auto; position: absolute; top: -80px; right: 10%;">
+        </div>
+     -->
+    </body>
+    </html>
+    

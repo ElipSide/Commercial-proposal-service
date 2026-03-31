@@ -1,0 +1,131 @@
+{
+    "id_model": 1,
+    "modelName": "CSZE10",
+    "material": "Сталь оцинкованная",
+    "motor_reductor": "it",
+    "modificationType": "CSZE",
+    "metalThickness": "2x2",
+    "outletSize": "100х100",
+    "capacity_param": {
+        "capacity": 9.49,
+        "speed": "0.3",
+        "turn": "23",
+        "step": "8",
+        "bucket": "1.8",
+        "bucket_load": "0.61"
+    },
+    "modelSize": {
+        "height": "3.77",
+        "top_length": "1.54",
+        "bottom_length": "2.05",
+        "height_length_x": 0.59
+    },
+    "sectionElement": {
+        "heightSection": [
+            120
+        ],
+        "topSection": [],
+        "bottomSection": []
+    },
+    "onloadElement": {
+        "load": {
+            "len_size": 0.5,
+            "count": 0,
+            "un_price": 45477.54
+        },
+        "unload": {
+            "len_size": 0,
+            "count": 0,
+            "un_price": 0,
+            "type": "electrical"
+        },
+        "load_x": 1.63,
+        "unload_x": 1.03,
+        "unload_y": 0.74
+    },
+    "otherComponents": {
+        "chain": {
+            "name": "Цепь HJ 4013",
+            "count": 22.8,
+            "un_price": 1720.5
+        },
+        "bucket": {
+            "name": "Ковш HJ 4013",
+            "count": 89.2,
+            "un_price": 992
+        },
+        "converter": {
+            "name": "E2000-0007T3F2KB",
+            "count": 1,
+            "un_price": 13439.7,
+            "kW": 0.75,
+            "enable": true
+        },
+        "reductor": {
+            "name": "TC 90",
+            "count": 1,
+            "un_price": 126900,
+            "kW": 71
+        },
+        "motor": {
+            "name": "BA 80 A2 ",
+            "count": 1,
+            "un_price": 12360,
+            "kW": 0.75
+        },
+        "sensorPodpor": {
+            "name": "Емкостные датчики приближения CQ28-10NPP-KW (PNP)",
+            "count": "1",
+            "un_price": 11523,
+            "enable": true
+        },
+        "sensorChain": {
+            "name": "Индуктивные датчики приближения IME18-08BPOZW2S (PNP)",
+            "count": 2,
+            "un_price": 2839,
+            "enable": true
+        },
+        "controlBox": {
+            "name": "Шкаф управления Z норией",
+            "count": 1,
+            "un_price": 46800,
+            "enable": true
+        },
+        "backward": {
+            "name": "Устройство обратного хода",
+            "count": 1,
+            "un_price": 36000,
+            "enable": true,
+            "enable_force": true
+        },
+        "streetFulfillment": {
+            "name": "Уличное исполнение",
+            "count": 1,
+            "un_price": 47370.509,
+            "enable": false
+        }
+    },
+    "modelDeliveryData": {
+        "modelMass": "425.00",
+        "modelVolume": "2.31"
+    },
+    "basePrice": 447584.66,
+    "sectionPrice": {
+        "heightSectionPrice": 26120.43,
+        "topSectionPrice": 0,
+        "bottomSectionPrice": 0,
+        "sum": 26120.43
+    },
+    "onloadPrice": 0,
+    "otherPrice": 344414.5,
+    "modelPrice": "1055374.27",
+    "NDS": 1.2,
+    "id_product": "0",
+    "modelCount": 1,
+    "CO_Data": {
+        "coDate": "17.04.2025",
+        "invoice_link": "",
+        "discountValue": "",
+        "deliveryConditions": ""
+    }
+}

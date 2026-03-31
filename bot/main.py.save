@@ -1,0 +1,193 @@
+import asyncio
+import logging
+import sys
+from aiogram import F, Bot, Dispatcher, html, types
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
+from aiogram.filters import CommandStart
+from aiogram.types import Message
+# from aiogram.dispatcher.filters import Command, Text
+
+from classes import replyButton, NumbersCallbackFactory
+import api_bot
+import phrases
+import time
+user_data = {}
+
+from aiogram import Bot, Dispatcher, types
+from aiogram.filters.command import Command
+
+TOKEN = '7210907492:AAFPVOLHDn7u_CT1csL0bj6zX9T-FHbvgCk'
+if not TOKEN:
+    raise Exception("No token provided")
+
+# All handlers should be attached to the Router (or Dispatcher)
+dp = Dispatcher()
+workUser = api_bot.workingUsers()
+bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+
+@dp.message(CommandStart())
+async def command_start_handler(message: Message) -> None:
+    """
+    Этот обработчик получает сообщения с помощью команды `/start`.
+    """
+    if message.from_user is not None:
+        botCl = replyButton(str(message.from_user.id), message.from_user.username)
+        if message.from_user.username == None:
+            await message.answer(phrases.USERNAME_MESSAGE, reply_markup= botCl.delete())
+            return 
+        is_exists = await workUser.is_user_exists(str(message.from_user.id))
+        if is_exists == False:
+            await message.answer(phrases.REQUEST_CONTACT_MESSAGE, reply_markup= botCl.auth())
+            return
+        await message.answer(f"Привет, {html.bold(message.from_user.full_name)}!\n{phrases.OLD_USER} \nРады тебя видеть" , reply_markup=botCl.visits())
+
+
+@dp.message(Command("numbers_fab"))
+async def cmd_numbers_fab(message: Message):
+    print(message.from_user.id)
+    user_data[message.from_user.id] = 0
+    botCl = replyButton(str(message.from_user.id), message.from_user.username)
+
+    await message.answer("Выберете компанию", reply_markup=botCl.statistics())
+
+@dp.message(F.contact)
+async def contact_handler(message: Message) -> None:
+    """
+    Этот обработчик получает контактную информацию пользователя
+    """
+    contact = message.contact
+    botCl = replyButton(str(message.from_user.id), message.from_user.username)
+    if contact!= None:
+        is_exists = await workUser.is_user_write(message)
+        await message.answer(f"Привет, {html.bold(message.from_user.full_name)}!\n{phrases.OLD_USER} \nРады тебя видеть" , reply_markup=botCl.visits())
+    else:
+        await message.answer(phrases.REQUEST_CONTACT_MESSAGE, reply_markup= botCl.auth())
+
+# @dp.callback_query(text="Menu")
+@dp.message(F.text.lower() == "назад")
+async def with_puree(message: types.Message):
+    if message.from_user.id not in [769657026, 5232657726, 258192542]:
+        await message.answer(f'Нет доступа к команде')
+        return
+    botCl = replyButton(str(message.from_user.id), message.from_user.username)
+    await message.answer('Возврат в меню',reply_markup=botCl.visits())
+
+    # await message.reply("Отличный выбор!")
+
+
+@dp.message(F.text.lower() == "обновить бота")
+async def with_puree(message: types.Message):
+    if message.from_user.id not in [769657026, 5232657726]:
+        await message.answer(f'Нет доступа к команде')
+        return
+    Users = await workUser.is_users()
+    await message.answer(f'Начали рассылку по {len(Users)} пользователям')
+    for user in Users:
+        try:
+            id = user[0]
+            messag = f"Привет, Мы обновили функционал,\nчтобы не было проблем, нажми /start еще раз"
+            await bot.send_message(id,messag, reply_markup=types.ReplyKeyboardRemove())
+        except:
+            await bot.send_message(5232657726,f'Чата с пользователеим {id} не существует')
+        time.sleep(1)
+
+
+@dp.message(F.text.lower() == "статистика")
+async def with_puree(message: types.Message):
+    if  message.from_user.id not in [769657026, 5232657726, 258192542]:
+        await message.answer(f'Нет доступа к команде')
+        return
+    botCl = replyButton(str(message.from_user.id), message.from_user.username)
+
+    company = await workUser.is_company()
+    await message.answer(f'По какой компании прислать статистику', reply_markup=botCl.statistics(company))
+    # await message.reply("Отличный выбор!")
+
+
+@dp.message()
+async def test(message: Message) -> None:
+    botCl = replyButton(str(message.from_user.id), message.from_user.username)
+
+    if 'Получить_Кп_№' in message.text:
+
+        keyCP = message.text.split('Получить_Кп_№')[1]
+        is_exists = await workUser.is_user_exists(str(message.from_user.id))
+        id_manag = await workUser.is_id_manag(str(keyCP))
+        if is_exists != False:
+            url = f'https://csort-news.ru/offer/PDF?keyCP={keyCP}&tg_id={str(id_manag)}'
+            keyboard = {"inline_keyboard": [
+                        # [{"text": "Посмотреть КП", "web_app": {'url':escaped_url}}],
+                            [{"text": "Открыть КП",  "web_app": {'url':url}}]
+                            ]}
+            await message.answer(f'Посмотреть КП №{keyCP}', reply_markup= keyboard)
+            return
+
+
+
+
+
+
+from magic_filter import F
+
+@dp.callback_query(NumbersCallbackFactory.filter(F.action == "change"))
+async def callbacks_num_change_fab(
+        callback: types.CallbackQuery, 
+        callback_data: NumbersCallbackFactory):
+    botCl = replyButton(str(callback.from_user.id), callback.from_user.username)
+
+    stat = await workUser.company_stat(callback_data.value)
+    stat_week = stat['week']
+    stat_month = stat['month']
+    result_week = botCl.process_statistics(stat_week)
+    result_month = botCl.process_statistics(stat_month)
+    date_week = botCl.format_date_range(7)
+    date_month = botCl.format_date_range(31)
+    text = (
+        f"Статистика компании {html.bold(callback_data.value)}\n"
+        f"Коммерчиские предложения\n"
+        f"{html.bold(f'За неделю({date_week})')}:\n"
+        f" Договоров: {result_week['КП']['Договор']['count']} общей суммой {botCl.format_numbers(result_week['КП']['Договор']['sum'])}\n"
+        # f" С компаниями: {', '.join(result_week['Договор']['company'])}\n"
+        f" Счетов: {result_week['КП']['Счет']['count']} общей суммой {botCl.format_numbers(result_week['КП']['Счет']['sum'])}\n"
+        # f" С компаниями: {', '.join(result_week['Счет']['company'])}\n\n"
+        f"{html.bold(f'За месяц({date_month})')}:\n"
+        f" Договоров: {result_month['КП']['Договор']['count']} общей суммой {botCl.format_numbers(result_month['КП']['Договор']['sum'])}\n"
+        # f" С компаниями: {', '.join(result_month['Договор']['company'])}\n"
+        f" Счетов: {result_month['КП']['Счет']['count']} общей суммой {botCl.format_numbers(result_month['КП']['Счет']['sum'])}\n\n"
+        # f" С компаниями: {', '.join(result_month['Счет']['company'])}\n"
+        f"Сервисные услуги\n"
+        f"{html.bold(f'За неделю({date_week})')}:\n"
+        f" Договоров: {result_week['Сервис']['Договор']['count']} общей суммой {botCl.format_numbers(result_week['Сервис']['Договор']['sum'])}\n"
+        # f" С компаниями: {', '.join(result_week['Договор']['company'])}\n"
+        f" Счетов: {result_week['Сервис']['Счет']['count']} общей суммой {botCl.format_numbers(result_week['Сервис']['Счет']['sum'])}\n"
+        # f" С компаниями: {', '.join(result_week['Счет']['company'])}\n\n"
+        f"{html.bold(f'За месяц({date_month})')}:\n"
+        f" Договоров: {result_month['Сервис']['Договор']['count']} общей суммой {botCl.format_numbers(result_month['Сервис']['Договор']['sum'])}\n"
+        # f" С компаниями: {', '.join(result_month['Договор']['company'])}\n"
+        f" Счетов: {result_month['Сервис']['Счет']['count']} общей суммой {botCl.format_numbers(result_month['Сервис']['Счет']['sum'])}\n\n"
+        f" Пользователи: {result_month['id']}\n\n"
+    )
+
+    await bot.send_message(callback.from_user.id, text) 
+
+
+ALLOWED_CHAT_ID = -4736966872
+API_URL = "http://localhost:8000/api/bots"
+
+@dp.message(Command("+"))
+async def cmd_update(message: types.Message):
+    print("SSSSSSSSSSSSSSSSSSSSSSSSSSSS")
+    if message.chat.id == ALLOWED_CHAT_ID:
+        print("xxxxxxxxxxxxxxxxxxx")
+        user_id = message.from_user.id
+        requests.get(f"{API_URL}/reg_manger/{user_id}")
+
+async def main() -> None:
+    # Initialize Bot instance with default bot properties which will be passed to all API calls
+    # And the run events dispatching
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+    asyncio.run(main())

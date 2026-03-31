@@ -1,0 +1,296 @@
+.grayBlock{
+  display: flex;
+  flex-direction: column;
+  background: #f2f2f2;
+  border-radius: 8px;
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.whiteBlock{
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  justify-content: flex-start;
+  background-color: white;
+  align-items: center;
+  border-radius: 8px;
+  width: 95%;
+}
+.choiceNoriaButton{
+  display: flex;
+  flex-direction: row;
+  width: 317px;
+  height: 35px;
+  padding-left: 3px;
+  align-items: center;
+  outline: none;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  border: solid 1px #f2f2f2;
+  margin-top: 10px;
+  color: #636363;
+  box-shadow: 0px 2px 4px 2px rgba(91, 101, 121, 0.2);
+  justify-content: center;
+}
+.photoNoriaBlock{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 320px;
+  height: 315px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  margin: 10px 0 10px 0;
+  cursor: pointer;
+}
+.loadingPhotoNoria{
+  width: 70px;
+  height: 70px;
+  fill: #5B677D;
+}
+.blockNorias{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.ParConfigBlock{
+  display: flex;
+  flex-direction: column;
+  background: #f2f2f2;
+  border-radius: 8px;
+  justify-content: flex-start;
+  align-items: center;
+  width: 320px;
+  margin-bottom: 7px;
+}
+.ParConfigTitle{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  color: #636363;
+}
+.parametrsBlock{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.parBlock{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0 5px 0;
+  width: 305px;
+}
+.subblockParam{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 7px;
+  align-items: center;
+}
+.parametrsNoria{
+  font-size: 13px;
+  color: #5b6579;
+  min-height: 30px;
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+.choiceProduct{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  border: solid 2px;
+  background-color: #f2f2f2;
+  border-color: #f2f2f2;
+  min-height: 30px;
+  text-align: center;
+  width: 130px;
+  outline: none;
+  color: #5b6579;
+}
+.choiceProduct:hover{
+  background-color: white;
+}
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+.range {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  background: white;
+  padding: 0px 10px;
+}
+.value {
+  font-size: 15px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 5px;
+}
+.line{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.meaningBlock{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 5px;
+  font-size: 12px;
+}
+.blockPrice{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5px;
+}
+.priceWindow{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-left: 14px;
+  margin-bottom: 5px;
+}
+.priceNds{
+  width: 90px;
+  min-height: 25px;
+  border-radius: 8px;
+  outline: none;
+  border: solid 2px #f2f2f2;
+  text-align: center;
+}
+.modelWindow{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-left: 14px;
+  margin-bottom: 5px;
+}
+.setWindow{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background: #f2f2f2;
+  border-radius: 8px;
+  width: 313px;
+  min-height: 30px;
+  padding-left: 5px;
+}
+.designFeatures{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 320px;
+  background: #f2f2f2;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.allFeatures{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 303px;
+  background: white;
+  border-radius: 8px;
+  margin: 10px 0px 10px 0px;
+}
+.blockFeatures{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding-left: 10px;
+}
+.checkboxBlock{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 7px;
+  width: 100%;
+}
+.countWindow{
+  border-radius: 8px;
+  height: 25px;
+  width: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: solid 1px #747474;
+}
+.buttonPlMn{
+  width: 27px;
+  height: 23px;
+  border-radius: 8px;
+  border: none;
+  background-color: white;
+  outline: none;
+  color: #5B677D;
+  cursor: pointer;
+}
+.buttonPlMn:hover{
+  background-color: rgb(236, 236, 236);
+}
+.textMark{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  text-align: left;
+  margin-left: 10px;
+  font-size: 13px;
+  align-self: center;
+  margin-bottom: 7px;
+}
+.blockBudget{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 12px;
+  font-size: 13px;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 5px;
+}

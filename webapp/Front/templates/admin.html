@@ -1,0 +1,443 @@
+<html > 
+<head> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=noб user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+	<link id="favicon" rel="icon" type="image/x-icon" href="/favicon.ico">
+
+	<link href="{{ url_for('static', path='/css/admin.css') }}?u={{ last_updated }}" rel="stylesheet">
+	<link href="{{ url_for('static', path='/css/Main.css') }}?u={{ last_updated }}" rel="stylesheet">
+
+	<script src="{{ url_for('static', path='/js/admin/main.js') }}?u={{ last_updated }}" defer></script> <!-- Загрузить первым -->
+
+
+	<script src="{{ url_for('static', path='/js/Lib/jquery-3.7.1.min.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="{{ url_for('static', path='/js/Lib/jquery.maskedinput.min.js') }}?u={{ last_updated }}" defer ></script> 
+
+	<script src="{{ url_for('static', path='/js/Lib/toastify-js.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="{{ url_for('static', path='/js/Lib/swiper-element-bundle.min.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="https://telegram.org/js/telegram-web-app.js" async ></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"async > 
+	<title></title> 
+
+	<script>
+		$SCRIPT_ROOT = "";
+	</script>
+</head> 
+
+<!DOCTYPE html>
+
+
+
+<body style="max-width: 100%;"> 
+	<div id="mainBlock" class="mainBlock" style="overflow-y: clip;">
+		<div id="listInfoCreate" class="listInfoCreate" style="display: none;">
+			<div id="InfoCreate" class="InfoCreate">
+				<div class="createWindowIn">
+					<div class="blockIconExit" onclick="closeWindowCreate()">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 25px; height: 25px;">
+							<path d="M18,6h0a1,1,0,0,0-1.414,0L12,10.586,7.414,6A1,1,0,0,0,6,6H6A1,1,0,0,0,6,7.414L10.586,12,6,16.586A1,1,0,0,0,6,18H6a1,1,0,0,0,1.414,0L12,13.414,16.586,18A1,1,0,0,0,18,18h0a1,1,0,0,0,0-1.414L13.414,12,18,7.414A1,1,0,0,0,18,6Z"/>
+						</svg>
+					</div>
+					<div class="windowInform">
+						<div id="fillingInform" class="fillingInform">
+							<div id="createLine" class="createLine">
+								<div class="nameInputInfo">Создать</div>
+								<input class="inputLine">
+							</div>
+							<div id="sectionsLine" class="createLine">
+								<div class="nameInputInfo">Разделы</div>
+								<input class="inputLine">
+							</div>
+							<div id="lineSubsections" class="createLine">
+								<div class="nameInputInfo">Подразделы</div>
+								<input class="inputLine">
+							</div>
+							<div id="blockAddReturn" class="blockAddReturn">
+								<div class="nameAddLine">Добавить поле</div>
+								<div class="nameReturnLine">Вернуть поля по умолчанию</div>
+							</div>
+							<div id="blockFindReset" class="blockFindReset">
+								<div id="buttonFind" class="chapterButton" onclick="startSearch()">
+									<div class="textButton">Найти</div>
+								</div>
+								<div id="buttonReset" class="buttonReset" onclick="resetEverything()">
+									<div class="textButton">Сбросить</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="dopCategoriSet" class="dopCategoriSet" style="display: none;">
+			<div id="blockCategSet" class="blockCategSet">
+				<div class="generalLine">
+					<div class="blockSetTitle">
+						<div class="textTitleSet">Настройка списка "Таблица товаров"</div>
+					</div>
+					<div class="blockIconExit" onclick="closeCategSet()">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 25px; height: 25px;">
+							<path d="M18,6h0a1,1,0,0,0-1.414,0L12,10.586,7.414,6A1,1,0,0,0,6,6H6A1,1,0,0,0,6,7.414L10.586,12,6,16.586A1,1,0,0,0,6,18H6a1,1,0,0,0,1.414,0L12,13.414,16.586,18A1,1,0,0,0,18,18h0a1,1,0,0,0,0-1.414L13.414,12,18,7.414A1,1,0,0,0,18,6Z"/>
+						</svg>
+					</div>
+				</div>
+				<div id="selectionBlock" class="selectionBlock">
+					<div class="tableNames" style="margin-left: 10px; display: none;" onclick="select_colomn(this.id)">
+						<input type="checkbox" style="pointer-events: none;">
+						<div class="allNames" style="color: #686868; padding-left: 3px;"> слово</div>
+					</div>
+				</div>
+				<div class="barSave">
+					<div id="blockConfirmation" class="blockConfirmation">
+						<div id="buttonApply" class="chapterButton" onclick="saveApply()">
+							<div class="textButton">Применить</div>
+						</div>
+						<div id="buttonСancel" class="buttonReset" onclick="cancelEverything()">
+							<div class="textButton" style="color: white;">Отменить</div>
+						</div>
+					</div>
+					<!-- <div class="selectAll">
+						<input type="checkbox">
+						<div class="allNames" style="color: #686868; padding-left: 3px; padding-top: 2px;"> Выбрать все</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+		<div id="blockInfoEquip" class="blockInfoEquip" style="display: none;">
+			<div class="windowInfoEquip">
+				<div id="crossBlockInfoEq" class="crossBlockInfoEq" onclick="closeCrossBlockInfo()">
+					<div id="crossInfoEq" class="crossInfoEq">
+						<div class="svgPictures" style="width: 20px; height: 20px; fill: #385898;">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+								<path d="M18,6h0a1,1,0,0,0-1.414,0L12,10.586,7.414,6A1,1,0,0,0,6,6H6A1,1,0,0,0,6,7.414L10.586,12,6,16.586A1,1,0,0,0,6,18H6a1,1,0,0,0,1.414,0L12,13.414,16.586,18A1,1,0,0,0,18,18h0a1,1,0,0,0,0-1.414L13.414,12,18,7.414A1,1,0,0,0,18,6Z"/>
+							</svg>
+						</div>
+					</div>
+				</div>
+				<div class="lineNameProd">
+					<div id="blockHardwareHeader" class="blockHardwareHeader">
+						<div id="hardwareHeader" class="hardwareHeader">Например: Фотосепаратор СмартСорт 1.1L</div>
+					</div>
+					<div class="line" style="color: #b9b9b9;"></div>
+				</div>
+				<div class="blockInforAboutEqip" id="WindowInfo_1">
+					<div id="blocksGeneralChar" class="blocksGeneralChar">
+						<div id="blockGeneralInfoEq" class="blockGeneralInfoEq">
+							<div id="subGeneralInfoEq" class="subGeneralInfoEq">
+								<div class="blockHeader">Общее</div>
+								<div class="changeInfo" id="changeInfo_1" onclick="Change_el_info(this.id)">Изменить</div>
+								<div class="changeInfo" id="cancelchangeInfo_1"onclick="Close_Change_el_info(this.id)"  style="display: none;">Отменить</div>
+							</div>
+							<div class="lineGeneralInfo" style="margin-top: 5px;"></div>
+							<div id="generalInfo" class="generalInfo">
+								<div class="nameParGen" style="display: none;">
+									<div id="bitrix_id" class="parametrsName">Bitrix ID</div>
+									<input id="valBitrixId" class="inputParName" type="text" value="" readonly="true">
+								</div>
+							</div>
+
+							<div id="savechangeInfo_1" class="saveDataEl" onclick="Save_change_el_info(this.id)">
+								<div class="addElem">Сохранить изменения</div>
+							</div>
+						</div>
+						<div class="buttonDeletElem">
+					<div class="deleteDataEl" onclick="Delete_dataEl()">
+						<div class="deleteElem">Удалить элемент</div>
+					</div>
+				</div>
+					</div>
+					<div id="secondWorkingWindow" class="secondWorkingWindow">
+						<div id="blockInfoPhoto" class="blockInfoPhoto">
+							<div class="changeInfo" style="display: none;">Отменить</div>
+							<div id="lineTextParEquip" class="lineTextParEquip">
+								<input type="checkbox" style="display: none;">
+								<div class="blockHeader">Фото</div>
+								<!-- <div class="blockHeader" style="margin-left: 130px;">Наименование</div>
+								<div class="blockHeader" style="margin-right: 10px;">Цена</div> -->
+							</div>
+							<div class="lineGeneralInfo"></div>
+							<div id="infoPhoto" class="infoPhoto">
+								<div class="blockPhotoEquip">
+									<div class="checkboxAndEdit" style="display: none;">
+										<input type="checkbox">
+										<div onclick="openDopSetPhoto(this.id)" style="padding-top: 2px;">
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 15px; height: 15px; margin: 0 5px;">
+												<rect y="11" width="24" height="2" rx="1"/>
+												<rect y="4" width="24" height="2" rx="1"/>
+												<rect y="18" width="24" height="2" rx="1"/>
+											</svg>
+										</div>
+									</div>
+									<div style="display: flex; justify-content: center;flex-direction: row;align-items: center; width: 97%;">
+										<div id="framePhotoEquip" class="framePhotoEquip" onclick="Changephoto()">
+											<svg xmlns="http://www.w3.org/2000/svg" id="photoEquip" viewBox="0 0 24 24" class="svgPictures" style="width: 25px; height: 25px;">
+												<path d="M19,0H5A5.006,5.006,0,0,0,0,5V19a5.006,5.006,0,0,0,5,5H19a5.006,5.006,0,0,0,5-5V5A5.006,5.006,0,0,0,19,0ZM5,2H19a3,3,0,0,1,3,3V19a2.951,2.951,0,0,1-.3,1.285l-9.163-9.163a5,5,0,0,0-7.072,0L2,14.586V5A3,3,0,0,1,5,2ZM5,22a3,3,0,0,1-3-3V17.414l4.878-4.878a3,3,0,0,1,4.244,0L20.285,21.7A2.951,2.951,0,0,1,19,22Z"/>
+												<path d="M16,10.5A3.5,3.5,0,1,0,12.5,7,3.5,3.5,0,0,0,16,10.5Zm0-5A1.5,1.5,0,1,1,14.5,7,1.5,1.5,0,0,1,16,5.5Z"/>
+											</svg>
+											<img id="PhotoEquip" class="PhotoEquip" src="">
+											<input id="fileElem" type="file" style="display:none" onchange="handleFiles(this.files,this.id)" capture>
+
+										</div>
+										<!-- <div id="modelEquip" class="prodsEquip"></div>
+										<div id="priceEquip" class="prodsEquip"></div> -->
+									</div>
+								</div>
+								<div class="lineGeneralInfo" style="margin-bottom: 5px; width: 99%;"></div>
+								
+							</div>
+													
+							<div id="blockCharInfo" class="blockCharInfo">
+								<div id="subCharInfo" class="subGeneralInfoEq">
+									<div class="blockHeader">Характеристики</div>
+									<div id="change_addit_info" class="changeInfo" onclick="Change_eladdit_info()" >Изменить</div>
+									<div id="cancelchange_addit_info" class="changeInfo" style="display: none;" onclick="Close_eladdit_info()">Отменить</div>
+								</div>
+								<div class="lineGeneralInfo" style="margin-top: 5px;"></div>
+								<div style="    display: flex; width: 660px;">
+									<div class="addDataEl" onclick="add_addit_info()">
+										<div class="addElem">+ Добавить характеристику</div>
+									</div>
+								</div>
+								<div id="blockPermanentChar" class="blockPermanentChar" >
+									<div style="width: 100%; display: flex; justify-content: end;" onclick="Closeadd_addit_info()">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 25px; height: 25px;">
+											<path d="M13.414,12l4.293-4.293a1,1,0,0,0-1.414-1.414L12,10.586,7.707,6.293a1,1,0,0,0-1.414,1.414L10.586,12l-4.293,4.293a1,1,0,1,0,1.414,1.414L12,13.414l4.293,4.293a1,1,0,0,0,1.414-1.414Z"></path>
+										</svg>
+
+									</div>
+									<div class="nameParGen">
+										<div id="" class="parametrsName">ID Bitrix</div>
+										<input id="addit_BitrixId" class="inputParName inputborder" type="text" value="" >
+									</div>
+									<div class="nameParGen">
+										<div id="" class="parametrsName">Наименование параметра</div>
+										<input id="addit_parameter_name" class="inputParName inputborder" type="text" value=""  >
+									</div>
+									<div class="nameParGen">
+										<div id="" class="parametrsName">Значение</div>
+										<input id="addit_value" class="inputParName inputborder" type="text" value=""  >
+									</div>
+									<div class="nameParGen">
+										<div id="" class="parametrsName">Единица измерения</div>
+										<input id="addit_unit_of_measurement" class="inputParName inputborder" type="text" value=""  >
+									</div>
+									<div style="margin-top: 10px;">
+										<div id="" class="chapterButton" style="display: flex;" onclick="SaveNewRow_addit_info()">
+											<div class="textButton">Сохранить</div>
+										</div>
+									</div>
+									
+								</div>
+								<div id="characteristicInfo" class="generaladditInfo">
+									<div class="nameParadditGen" style="display: none; ">
+										<div style="display: flex; flex-direction: column; width: 330px;align-items: flex-start; justify-content: center;">
+											<div id="heightEqip" class="parametrsadditName">Высота</div>
+											<input id="valHeightEquip" class="inputParadditName" type="text" value="" readonly>
+										</div>
+										<div style="display: flex; align-items: center; height: 35px; width: 30px; justify-content: center; flex-direction: row;" onclick="Deleteadditinfo(this.id)">
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 25px; height: 25px;">
+												<path d="M21,6H17V4.5A1.5,1.5,0,0,0,15.5,3h-7A1.5,1.5,0,0,0,7,4.5V6H3A1,1,0,0,0,3,8H4V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM9,4.5a.5.5,0,0,1,.5-.5h7a.5.5,0,0,1,.5.5V6H9ZM18,19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V8H18Z"></path>
+												<path d="M10,17a1,1,0,0,0,1-1V10a1,1,0,0,0-2,0v6A1,1,0,0,0,10,17Z"></path>
+												<path d="M14,17a1,1,0,0,0,1-1V10a1,1,0,0,0-2,0v6A1,1,0,0,0,14,17Z"></path>
+											</svg>
+										</div>
+
+									</div>
+								</div>
+								
+								<div id="saveadditchangeInfo" class="saveDataEl" onclick="Save_change_eladdit_info()">
+									<div class="addElem">Сохранить изменения</div>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+					
+				</div>
+
+				<div class="twoWindowInfo"  id="WindowInfo_2"style="display: none;">
+					<div class="blockInforAboutEqip">
+						<div id="blocksGeneralCharTwo" class="blocksGeneralChar" style="width: 100%;">
+							<div id="blockGeneralInfoEqTwo" class="blockGeneralInfoEq" style="width: 100%;">
+								<div id="subGeneralInfoEqTwo" class="subGeneralInfoEq">
+									<div class="blockHeader">Общее</div>
+									<div class="changeInfo" id="changeInfo_2" onclick="Change_el_info(this.id)">Изменить</div>
+									<div class="changeInfo" id="cancelchangeInfo_2"onclick="Close_Change_el_info(this.id)"  style="display: none;">Отменить</div>
+								</div>
+								<div class="lineGeneralInfo" style="margin-top: 5px;"></div>
+								<div id="generalInfoTwo" class="generalInfo">
+									<div class="nameParGen" style="display: none;">
+										<div id="bitrix_idTwo" class="parametrsName">Bitrix ID</div>
+										<input id="valBitrixIdTwo" class="inputParName" type="text" value="" readonly="true">
+									</div>
+								</div>
+
+								<div id="savechangeInfo_2" class="saveDataEl" onclick="Save_change_el_info(this.id)">
+									<div class="addElem">Сохранить изменения</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="blockSaveChanges" class="blockSaveChanges" style="display: none;">
+					<div id="saveChange" class="saveChange">
+						<div id="" class="chapterButton" onclick="">
+							<div class="textButton">Сохранить</div>
+						</div>
+						<div id="" class="chapterButton" onclick="" style="background-color: #9b9b9b; border: solid 2px #9b9b9b;">
+							<div class="textButton">Отменить</div>
+						</div>
+					</div>
+				</div>
+
+				
+			</div>
+		</div>
+		<div id="mainPage" class="mainPage">
+			<div id="lineTitleBlock" class="lineTitleBlock">
+				<div id="tableProducts" class="tableProducts">Список таблиц</div>
+				<div id="buttonCreate" class="chapterButton" style="display: none;" onclick="New_dataEl()">
+					<div class="textButton">Создать</div>
+				</div>
+					<div id="searchBar" class="search-bar" style="display: none;">
+						<div id="filter_block" style="display: flex; flex-direction: row;">
+							<div class="filter_page" style="display: none;">
+								<div style="margin-right: 10px; font-size: 13px; color: #686868; padding: 5px 0 5px 0;">Раздел: Услуги</div>
+								<button onclick="remove_and_back(this.parentElement.id)">×</button>
+							</div>
+						</div>
+						
+						<input id="SearcitemBlock" type="text" placeholder="+ поиск" oninput="Searcitem(this.value)">
+						<button class="clear-btn" onclick="clearsearc()">×</button>
+					</div>
+					<script>
+        const input = document.querySelector('.search-bar input');
+        const clearBtn = document.querySelector('.search-bar .clear-btn');
+        input.addEventListener('input', function() {
+            clearBtn.style.display = this.value ? 'block' : 'none';
+        });
+    </script>
+
+			</div>
+			<div id="windowAllTables" class="windowAllTables">
+				<div id="blockTitleProdTable" class="blockTitleProdTable">
+					<div id="allProdTab" class="adminPanelHeaders">
+						<div class="allProducts">Таблицы в бд</div>
+					</div>
+					<div class="line"></div>
+				</div>
+				<div id="blockProdStorageBox" class="blockProdStorageBox">
+					<div id="blockProdStorageBox_children" style="display: none;" class="blockProdStorageBox_children" onclick="openTable(this.id)">
+						<div  class="tableNames"  style="padding-left: 20px;">
+							<div class="allNames">Название таблиц</div>
+						</div>
+						<!-- <div class="line"></div> -->
+					</div>
+				</div>
+				<div id="blockNumberPages" class="blockNumberPages" >
+					<div class="line" style="margin-top: 0px;"></div>
+					<div class="blockInfoPage" >
+						<div id="allPages" class="infoWorlds" style="margin-right: 10px;">Всего: </div>
+					</div>
+				</div>
+			</div>
+			<div id="windowAllProds" class="windowAllTables" style="display: none;">
+				<div style="  overflow-x: auto;  scrollbar-color: #c9c9c9 white;  scrollbar-width: thin; min-height: 500px;">
+
+					<div id="blockTitleProds" class="blockTitleProdTable">
+						<div id="allProds" class="tableProdEquip">
+							<div id="nameEquip" class="nameEquip">
+								<input id="allProds_input" type="checkbox" onchange="CheckedallProds()">
+								<div id="gearWheel" onclick="gearWheelOpen()">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 15px; height: 15px; margin: 0 5px;">
+										<path d="M12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"/>
+										<path d="M21.294,13.9l-.444-.256a9.1,9.1,0,0,0,0-3.29l.444-.256a3,3,0,1,0-3-5.2l-.445.257A8.977,8.977,0,0,0,15,3.513V3A3,3,0,0,0,9,3v.513A8.977,8.977,0,0,0,6.152,5.159L5.705,4.9a3,3,0,0,0-3,5.2l.444.256a9.1,9.1,0,0,0,0,3.29l-.444.256a3,3,0,1,0,3,5.2l.445-.257A8.977,8.977,0,0,0,9,20.487V21a3,3,0,0,0,6,0v-.513a8.977,8.977,0,0,0,2.848-1.646l.447.258a3,3,0,0,0,3-5.2Zm-2.548-3.776a7.048,7.048,0,0,1,0,3.75,1,1,0,0,0,.464,1.133l1.084.626a1,1,0,0,1-1,1.733l-1.086-.628a1,1,0,0,0-1.215.165,6.984,6.984,0,0,1-3.243,1.875,1,1,0,0,0-.751.969V21a1,1,0,0,1-2,0V19.748a1,1,0,0,0-.751-.969A6.984,6.984,0,0,1,7.006,16.9a1,1,0,0,0-1.215-.165l-1.084.627a1,1,0,1,1-1-1.732l1.084-.626a1,1,0,0,0,.464-1.133,7.048,7.048,0,0,1,0-3.75A1,1,0,0,0,4.79,8.992L3.706,8.366a1,1,0,0,1,1-1.733l1.086.628A1,1,0,0,0,7.006,7.1a6.984,6.984,0,0,1,3.243-1.875A1,1,0,0,0,11,4.252V3a1,1,0,0,1,2,0V4.252a1,1,0,0,0,.751.969A6.984,6.984,0,0,1,16.994,7.1a1,1,0,0,0,1.215.165l1.084-.627a1,1,0,1,1,1,1.732l-1.084.626A1,1,0,0,0,18.746,10.125Z"/>
+									</svg>
+								</div>
+								<div class="prodsEquip"></div>
+							</div>
+							<div id="nameTableRows" class="nameTableRows" style="display: none;" onclick="SortByKey_Func(this.id)">
+								<div class="prodsEquip" style="">названия колонок</div>
+								<div style="display: none;">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 20px; height: 20px; ">
+										<path d="M12.71,13.4a1,1,0,0,1-1.42,0L6.71,8.81a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41l4.59,4.59a3,3,0,0,0,4.24,0l4.59-4.59a1,1,0,0,0,.29-.7,1,1,0,0,0-.29-.71,1,1,0,0,0-1.42,0Z"></path>
+									</svg>
+								</div>
+								<div style="display: none;">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 20px; height: 20px;">
+										<path d="M11.29,10.6a1,1,0,0,1,1.42,0l4.58,4.59a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.41L14.12,9.19a3,3,0,0,0-4.24,0L5.29,13.78a1,1,0,0,0-.29.71,1,1,0,0,0,.29.7,1,1,0,0,0,1.42,0Z"></path>
+									</svg>
+								</div>
+							</div>
+						</div>
+						<div class="line"></div>
+					</div>
+					<div id="blockProdEquipment" class="blockProdStorageBox">
+						<div style="display: none;" class="blockProdStorageBoxRow">
+							<div id="namesValues" class="tableProdEquip">
+								<div class="tableNames" style="width: 40px;" >
+									<input type="checkbox" onchange="ChoiceDeleteEl(this.id)">							
+								</div>
+								<div id="valuesTableRows" class="nameTableRows" style="display: none;" >
+									<div class="prodsEquip" style="text-align: center;">значения</div>
+								</div>
+							</div>
+							<div class="line"></div>
+						</div>
+					</div>
+				</div>
+				<div id="blockEditPages" class="blockNumberPages">
+					<div class="line" style="margin-top: 0;"></div>
+					<div class="blockInfoEdit">
+						<div id="blockEditDelete" class="blockEditDelete">
+							<div class="blockEditButton" style="padding: 0 10px 0 15px;" onclick="New_dataEl()">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 20px; height: 20px; padding-right: 5px;">
+									<path d="M18.656.93,6.464,13.122A4.966,4.966,0,0,0,5,16.657V18a1,1,0,0,0,1,1H7.343a4.966,4.966,0,0,0,3.535-1.464L23.07,5.344a3.125,3.125,0,0,0,0-4.414A3.194,3.194,0,0,0,18.656.93Zm3,3L9.464,16.122A3.02,3.02,0,0,1,7.343,17H7v-.343a3.02,3.02,0,0,1,.878-2.121L20.07,2.344a1.148,1.148,0,0,1,1.586,0A1.123,1.123,0,0,1,21.656,3.93Z"/>
+									<path d="M23,8.979a1,1,0,0,0-1,1V15H18a3,3,0,0,0-3,3v4H5a3,3,0,0,1-3-3V5A3,3,0,0,1,5,2h9.042a1,1,0,0,0,0-2H5A5.006,5.006,0,0,0,0,5V19a5.006,5.006,0,0,0,5,5H16.343a4.968,4.968,0,0,0,3.536-1.464l2.656-2.658A4.968,4.968,0,0,0,24,16.343V9.979A1,1,0,0,0,23,8.979ZM18.465,21.122a2.975,2.975,0,0,1-1.465.8V18a1,1,0,0,1,1-1h3.925a3.016,3.016,0,0,1-.8,1.464Z"/>
+								</svg>
+								<div class="infoWorlds">Создать строку</div>
+							</div>
+							<div class="blockEditButton" onclick="Delete_data_arr()">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 20px; height: 20px;">
+									<path d="M18,6h0a1,1,0,0,0-1.414,0L12,10.586,7.414,6A1,1,0,0,0,6,6H6A1,1,0,0,0,6,7.414L10.586,12,6,16.586A1,1,0,0,0,6,18H6a1,1,0,0,0,1.414,0L12,13.414,16.586,18A1,1,0,0,0,18,18h0a1,1,0,0,0,0-1.414L13.414,12,18,7.414A1,1,0,0,0,18,6Z"/>
+								</svg>
+								<div class="infoWorlds">Удалить</div>
+							</div>
+						</div>
+						<div id="blockNumderPage" class="blockEditDelete">
+							<div class="infoWorlds" id='infoblockNumderPage'>Всего строк: </div>
+							<div class="blockEditButton">
+								<div onclick="OldPage()">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 20px; height: 20px; padding-left: 30px;">
+										<path d="M10.6,12.71a1,1,0,0,1,0-1.42l4.59-4.58a1,1,0,0,0,0-1.42,1,1,0,0,0-1.41,0L9.19,9.88a3,3,0,0,0,0,4.24l4.59,4.59a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.42Z"/>
+									</svg>
+								</div>
+								<div id="Page_select_table" class="infoWorlds" style="color: #686868;">Страница 1</div>
+								<div onclick="NextPage()">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svgPictures" style="width: 20px; height: 20px; padding-right: 15px;" >
+										<path d="M15.4,9.88,10.81,5.29a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42L14,11.29a1,1,0,0,1,0,1.42L9.4,17.29a1,1,0,0,0,1.41,1.42l4.59-4.59A3,3,0,0,0,15.4,9.88Z"/>
+									</svg>
+								</div>
+								
+							</div>
+							<div class="blockEditButton" style="color: #686868;">
+								<div class="infoWorlds">На странице: </div>
+								<select id="Select_maxRows" class="selectStyle" onchange="ChangeMaxRow()">
+									<option>5</option>
+									<option selected>25</option>
+									<option>50</option>
+									<option>100</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body> 
+</html> 

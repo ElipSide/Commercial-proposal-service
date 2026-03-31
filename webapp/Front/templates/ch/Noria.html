@@ -1,0 +1,852 @@
+<html > 
+<head> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=noб user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+
+	<link href="{{ url_for('static', path='/css/Noria.css') }}?u={{ last_updated }}" rel="stylesheet">
+	<link href="{{ url_for('static', path='/css/Main.css') }}?u={{ last_updated }}" rel="stylesheet">
+
+	<script src="{{ url_for('static', path='/js/Noria.js') }}?u={{ last_updated }} " defer></script> <!-- Загрузить первым -->
+
+	<script src="{{ url_for('static', path='/js/Lib/jquery-3.7.1.min.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="{{ url_for('static', path='/js/Lib/jquery.maskedinput.min.js') }}?u={{ last_updated }}" defer ></script> 
+
+	<script src="{{ url_for('static', path='/js/Lib/toastify-js.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="{{ url_for('static', path='/js/Lib/swiper-element-bundle.min.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="https://telegram.org/js/telegram-web-app.js" async ></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"async > 
+
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
+	<script type="text/javascript" src="https://unpkg.com/imask"></script>
+
+	<title>Калькулятор норий</title> 
+	<script>
+		$SCRIPT_ROOT = "";
+
+	</script>
+
+</head> 
+
+
+
+<body id="mainBlock" class="mainBlock">
+	<div id="grayBlock" class="grayBlock">
+		<div id="whiteBlock" class="whiteBlock">
+			<select id="choiceNoriaButton" class="choiceNoriaButton" onchange="ChoiceNoria(this.value)">
+				<option value="ChainConveyor_CSZE">Конвейер цепной</option>
+				<option value="ScraperConveyor_CSCC">Скребковый транспортер</option>
+				<option value="BeltConveyor_CSBC">Ленточный транспортер</option>
+				<option value="VerticalElevator_CSE">Вертикальный элеватор</option>
+			</select>
+			<div id="photoNoriaBlock" class="photoNoriaBlock" onclick="user_images_load(this.id)">
+				<input id="fileElem" type="file" style="display:none" onchange="handleFiles(this.files,this.id)" accept="image/*">
+				<svg xmlns="http://www.w3.org/2000/svg" id="loadingPhotoNoria" viewBox="0 0 24 24" class="loadingPhotoNoria">
+					<path d="M17.721,3,16.308,1.168A3.023,3.023,0,0,0,13.932,0H10.068A3.023,3.023,0,0,0,7.692,1.168L6.279,3Z"/>
+					<circle cx="12" cy="14" r="4"/>
+					<path d="M19,5H5a5.006,5.006,0,0,0-5,5v9a5.006,5.006,0,0,0,5,5H19a5.006,5.006,0,0,0,5-5V10A5.006,5.006,0,0,0,19,5ZM12,20a6,6,0,1,1,6-6A6.006,6.006,0,0,1,12,20Z"/>
+				</svg>
+			</div>
+			<div id="BlockCards">
+				<div id="blockNoriaCSZE" class="blockNorias" style="display: none;">
+					<div id="ParConfigBlockCSZE" class="ParConfigBlock">
+						<div id="ParConfigTitleCSZE" class="ParConfigTitle">
+							<div class="blockTitle" style="margin-top: 10px; font-size: 14px;">Параметры и комплектация</div>
+						</div>
+						<div id="parametrsBlockCSZE" class="parametrsBlock">
+							<div id="parBlockCSZE" class="parBlock">
+								<div class="topRow" style="background-color: white; display: flex; width: 100%;">
+									<div class="subblockParam">
+										<div id="efficiencyCSZE" class="parametrsNoria">Производительность, т\ч</div>
+										<select id="choiceProductCSZE" class="choiceProduct">
+											<option>Пшеница</option>
+											<option>Семечка</option>
+											<option>Горчица</option>
+											<option>Чечевица</option>
+											<option>Фасоль</option>
+											<option>Гречка</option>
+											<option>Соя</option>
+											<option>Ячмень</option>
+											<option>Кукуруза</option>
+											<option>Лен</option>
+											<option>Овес</option>
+											<option>Арахис</option>
+											<option>Рис</option>
+											<option>Кубометр</option>
+										</select>
+									</div>
+									<div class="wrapper">
+										<div class="range">
+											<div class="value">0</div>
+											<input type="range" min="0" max="25" value="0" id="range" class="line" />
+											<div class="meaningBlock">
+												<div style="margin-left: 5px;">0</div>
+												<div></div>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div id="ElHeightBlock" class="parBlock">
+								<div class="topRow" style="background-color: white; display: flex; width: 100%;">
+									<div style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px;">
+										<div id="elevatorHeight" class="parametrsNoria">Высота элеватора, м</div>
+										<select id="choiceHeight" class="choiceProduct">
+											<option>Общая</option>
+											<option>До выгрузки</option>
+										</select>
+									</div>
+									<div class="wrapper">
+										<div class="range">
+											<div class="value" style="margin-left: 0px;"></div>
+											<input type="range" min="2" max="7" value="0" id="rangeElHeight" class="line" />
+											<div class="meaningBlock">
+												<div style="margin-left: 5px;"></div>
+												<div></div>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div id="LengthupperBlockCSZE" class="parBlock">
+								<div class="topRow" style="background-color: white; display: flex; width: 100%;">
+									<div style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px;">
+										<div id="lengthUpperSectionCSZE" class="parametrsNoria">Длина верхнего участка, м</div>
+										<select id="choiceLengthUpperCSZE" class="choiceProduct">
+											<option>Общая</option>
+											<option>До выгрузки</option>
+										</select>
+									</div>
+									<div class="wrapper">
+										<div class="range">
+											<div class="value" style="margin-left: 0px;"></div>
+											<input type="range" min="1" max="5" value="0" id="LengthUpperCSZE" class="line" />
+											<div class="meaningBlock">
+												<div style="margin-left: 5px;"></div>
+												<div></div>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div id="lengthLowerBlock" class="parBlock" style="margin: 5px 0 10px 0;">
+								<div class="topRow" style="background-color: white; display: flex; width: 100%;">
+									<div style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px;">
+										<div id="lengthLowerSection" class="parametrsNoria">Длина нижнего участка, м</div>
+										<select id="choiceLengthLower" class="choiceProduct">
+											<option>Общая</option>
+											<option>До выгрузки</option>
+										</select>
+									</div>
+									<div class="wrapper">
+										<div class="range">
+											<div class="value" style="margin-left: 0px;"></div>
+											<input type="range" min="1" max="2" value="0" id="rangeLengthLower" class="line" />
+											<div class="meaningBlock">
+												<div style="margin-left: 5px;"></div>
+												<div></div>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="blockPriceCSZE" class="blockPrice">
+						<div id="priceWindowCSZE" class="priceWindow">
+							<div class="blockTitle" style="margin-right: 5px;">Цена с НДС:</div>
+							<input id="priceNdsCSZE" class="priceNds">
+							<div class="blockTitle" style="margin-left: 5px;">руб.</div>
+						</div>
+						<div id="modelWindowCSZE" class="modelWindow">
+							<div class="blockTitle" style="margin-right: 5px;">Модель:</div>
+							<div class="blockTitle"></div>
+						</div>
+						<div id="setWindowCSZE" class="setWindow">
+							<div class="blockTitle" style="margin-right: 5px;">В комплектацию входит:</div>
+						</div>
+					</div>
+					<div id="designFeaturesCSZE" class="designFeatures">
+						<div id="allFeaturesCSZE" class="allFeatures">
+							<div class="blockTitle" style="font-size: 14px; margin-bottom: 7px; margin-top: 7px;">Особенности конструкции</div>
+							<div id="executionMaterialCSZE" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Материал исполнения</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="galvanizationCSZE" type="checkbox" checked />
+										<label for="galvanizationCSZE" style="margin-left: 3px;">Оцинковка</label>
+									</div>
+									<div style="display: flex; align-items: center;">
+										<input id="stainlessSteelCSZE" type="checkbox" />
+										<label for="stainlessSteelCSZE" style="margin-left: 3px;">Нержавейка</label>
+									</div>
+								</div>
+							</div>
+
+							<div id="electricMotorCSZE" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Производитель электродвигателя</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="ItalyCSZE" type="checkbox" checked />
+										<label for="ItalyCSZE" style="margin-left: 3px;">Италия</label>
+									</div>
+								</div>
+							</div>
+
+							<div id="protectiveCoversCSZE" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Дополнительные защитные кожуха</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="yesCSZE" type="checkbox" />
+										<label for="yesCSZE" style="margin-left: 3px;">Да</label>
+									</div>
+								</div>
+							</div>
+
+							<div id="additionalDownloadCSZE" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Дополнительная загрузка</div>
+								<div class="checkboxBlock" style="flex-direction: row;">
+									<div class="countWindow">            
+										<button id="downloadCSZE_minus" onclick="decrement(this.id)" class="buttonPlMn">-</button>
+										<div id="downloadCSZE">0</div>
+										<button id="downloadCSZE_plus" onclick="increment(this.id)" class="buttonPlMn">+</button>        
+									</div>
+									<div class="blockTitle" style="margin-left: 5px;">штук</div>
+								</div>
+							</div>
+
+							<div id="additionalUnloadingCSZE" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Дополнительная выгрузка</div>
+								<div class="checkboxBlock" style="flex-direction: row;">
+									<div class="countWindow">            
+										<button id="UnloadCSZE_minus" onclick="decrement(this.id)" class="buttonPlMn">-</button>
+										<div id="UnloadCSZE">0</div>
+										<button id="UnloadCSZE_plus"  onclick="increment(this.id)" class="buttonPlMn">+</button>        
+									</div>
+									<div class="blockTitle" style="margin-left: 5px;">штук</div>
+								</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="electricsCSZE" type="checkbox" checked />
+										<label for="electricsCSZE" style="margin-left: 3px;">Электрика</label>
+									</div>
+									<div style="display: flex; align-items: center;">
+										<input id="pneumaticsCSZE" type="checkbox" />
+										<label for="pneumaticsCSZE" style="margin-left: 3px;">Пневматика</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="SecurityAutomatBlockCSZE" class="designFeatures">
+						<div id="allOptionsCSZE" class="allFeatures">
+							<div class="blockTitle" style="font-size: 14px; margin-bottom: 7px; margin-top: 7px;">Опции безопасности и автоматизации</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="SecurityAutomatCSZE" type="checkbox" checked />
+									<label for="SecurityAutomatCSZE" style="margin-left: 3px;">Безопасность и автоматизация</label>
+								</div>
+							</div>
+							<div class="textMark">Привести дополнительные параметры в соответствие требованиям Ростехнадзора, оснастив элеватор датчиками.</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="controlCabinetCSZE" type="checkbox" checked />
+									<label for="controlCabinetCSZE" style="margin-left: 3px;">Шкаф управления</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="frequencyConverterCSZE" type="checkbox" checked />
+									<label for="frequencyConverterCSZE" style="margin-left: 3px;">Частотный преобразователь</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="reverseGearCSZE" type="checkbox" checked />
+									<label for="reverseGearCSZE" style="margin-left: 3px;">Устройство обратного хода</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="backupSensorsCSZE" type="checkbox" checked />
+									<label for="backupSensorsCSZE" style="margin-left: 3px;">Датчики подпора</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="circuitSensorCSZE" type="checkbox" checked />
+									<label for="circuitSensorCSZE" style="margin-left: 3px;">Датчик обрыва цепи</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="blockNoriaCSCC" class="blockNorias" style="display: none;">
+					<div id="ParConfigBlockCSCC" class="ParConfigBlock">
+						<div id="ParConfigTitleCSCC" class="ParConfigTitle">
+							<div class="blockTitle" style="margin-top: 10px; font-size: 14px;">Параметры и комплектация</div>
+						</div>
+						<div id="parametrsBlockCSCC" class="parametrsBlock">
+							<div id="parBlockCSCC" class="parBlock">
+								<div class="topRow" style="background-color: white; display: flex; width: 100%;">
+									<div style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px;">
+										<div id="efficiencyCSCC" class="parametrsNoria">Производительность, т\ч</div>
+										<select id="choiceProductCSCC" class="choiceProduct">
+											<option>Пшеница</option>
+											<option>Семечка</option>
+											<option>Горчица</option>
+											<option>Чечевица</option>
+											<option>Фасоль</option>
+											<option>Гречка</option>
+											<option>Соя</option>
+											<option>Ячмень</option>
+											<option>Кукуруза</option>
+											<option>Лен</option>
+											<option>Овес</option>
+											<option>Арахис</option>
+											<option>Рис</option>
+											<option>Кубометр</option>
+										</select>
+									</div>
+									<div class="wrapper">
+										<div class="range">
+											<div class="value">0</div>
+											<input type="range" min="0" max="137" value="0" id="efCSCC" class="line" />
+											<div class="meaningBlock">
+												<div style="margin-left: 5px;">0</div>
+												<div></div>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div id="convLengthBlockCSCC" class="parBlock" style="margin: 5px 0 10px 0;">
+								<div class="topRow" style="background-color: white; display: flex; width: 100%;">
+									<div style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px;">
+										<div id="conveyorLengthCSCC" class="parametrsNoria">Длина транспортера, м</div>
+										<select id="choiceConveyorCSCC" class="choiceProduct">
+											<option>Общая</option>
+											<option>По осям</option>
+											<option>Транспортировки</option>
+										</select>
+									</div>
+									<div class="wrapper">
+										<div class="range">
+											<div class="value" style="margin-left: 0px;"></div>
+											<input type="range" min="1" max="19" value="0" id="ConveyorLength" class="line" />
+											<div class="meaningBlock">
+												<div style="margin-left: 5px;"></div>
+												<div></div>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="blockPriceCSCC" class="blockPrice">
+						<div id="priceWindowCSCC" class="priceWindow">
+							<div class="blockTitle" style="margin-right: 5px;">Цена с НДС:</div>
+							<input id="priceNdsCSCC" class="priceNds">
+							<div class="blockTitle" style="margin-left: 5px;">руб.</div>
+						</div>
+						<div id="modelWindowCSCC" class="modelWindow">
+							<div class="blockTitle" style="margin-right: 5px;">Модель:</div>
+							<div class="blockTitle"></div>
+						</div>
+						<div id="setWindowCSCC" class="setWindow">
+							<div class="blockTitle" style="margin-right: 5px;">В комплектацию входит:</div>
+						</div>
+					</div>
+					<div id="designFeaturesCSCC" class="designFeatures">
+						<div id="allFeaturesCSCC" class="allFeatures">
+							<div class="blockTitle" style="font-size: 14px; margin-bottom: 7px; margin-top: 7px;">Особенности конструкции</div>
+							<div id="executionMaterialCSCC" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Материал исполнения</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="galvanizationCSCC" type="checkbox" checked />
+										<label for="galvanizationCSCC" style="margin-left: 3px;">Оцинковка</label>
+									</div>
+									<div style="display: flex; align-items: center;">
+										<input id="stainlessSteelCSCC" type="checkbox" />
+										<label for="stainlessSteelCSCC" style="margin-left: 3px;">Нержавейка</label>
+									</div>
+								</div>
+							</div>
+
+							<div id="electricMotorCSCC" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Производитель электродвигателя</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="ItalyCSCC" type="checkbox" checked />
+										<label for="ItalyCSCC" style="margin-left: 3px;">Италия</label>
+									</div>
+								</div>
+							</div>
+
+							<div id="protectiveCoversCSCC" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Дополнительные защитные кожуха</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="yesCSCC" type="checkbox" />
+										<label for="yesCSCC" style="margin-left: 3px;">Да</label>
+									</div>
+								</div>
+							</div>
+
+							<div id="additlDownloadTypeCSCC" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Тип дополнительной загрузки</div>
+								<div class="checkboxBlock" style="flex-direction: column;">
+									<div style="display: flex; align-items: center; width: 100%;">
+										<input id="sideLoadingCSCC" type="checkbox" />
+										<label for="sideLoadingCSCC" style="margin-left: 3px;">Боковая загрузка</label>
+									</div>
+									<div style="display: flex; align-items: center; width: 100%;">
+										<input id="verticalLoadingCSCC" type="checkbox" />
+										<label for="verticalLoadingCSCC" style="margin-left: 3px;">Вертикальная загрузка</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="SecurityAutomatBlockCSCC" class="designFeatures">
+						<div id="allOptionsCSCC" class="allFeatures">
+							<div class="blockTitle" style="font-size: 14px; margin-bottom: 7px; margin-top: 7px;">Опции безопасности и автоматизации</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="SecurityAutomatCSCC" type="checkbox" checked />
+									<label for="SecurityAutomatCSCC" style="margin-left: 3px;">Безопасность и автоматизация</label>
+								</div>
+							</div>
+							<div class="textMark">Привести дополнительные параметры в соответствие требованиям Ростехнадзора, оснастив элеватор датчиками.</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="controlCabinetCSCC" type="checkbox" checked />
+									<label for="controlCabinetCSCC" style="margin-left: 3px;">Шкаф управления</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="frequencyConverterCSCC" type="checkbox" />
+									<label for="frequencyConverterCSCC" style="margin-left: 3px;">Частотный преобразователь</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="backupSensorsCSCC" type="checkbox" checked />
+									<label for="backupSensorsCSCC" style="margin-left: 3px;">Датчики подпора</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="speedSensorsCSCC" type="checkbox" checked />
+									<label for="speedSensorsCSCC" style="margin-left: 3px;">Датчики скорости</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="blockNoriaCSBC" class="blockNorias" style="display: none;">
+					<div id="ParConfigBlockCSBC" class="ParConfigBlock">
+						<div id="ParConfigTitleCSBC" class="ParConfigTitle">
+							<div class="blockTitle" style="margin-top: 10px; font-size: 14px;">Параметры и комплектация</div>
+						</div>
+						<div id="parametrsBlockCSBC" class="parametrsBlock">
+							<div id="parBlockCSBC" class="parBlock">
+								<div class="topRow" style="background-color: white; display: flex; width: 100%;">
+									<div style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px;">
+										<div id="efficiencyCSBC" class="parametrsNoria">Производительность, т\ч</div>
+										<select id="choiceProductCSBC" class="choiceProduct">
+											<option>Пшеница</option>
+											<option>Семечка</option>
+											<option>Горчица</option>
+											<option>Чечевица</option>
+											<option>Фасоль</option>
+											<option>Гречка</option>
+											<option>Соя</option>
+											<option>Ячмень</option>
+											<option>Кукуруза</option>
+											<option>Лен</option>
+											<option>Овес</option>
+											<option>Арахис</option>
+											<option>Рис</option>
+											<option>Кубометр</option>
+										</select>
+									</div>
+									<div class="wrapper">
+										<div class="range">
+											<div class="value">0</div>
+											<input type="range" min="0" max="60" value="0" id="rangeCSBC" class="line" />
+											<div class="meaningBlock">
+												<div style="margin-left: 5px;">0</div>
+												<div></div>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="ConLengthBlockCSBC" class="parBlock" style="margin: 5px 0 10px 0;">
+								<div class="topRow" style="background-color: white; display: flex; width: 100%;">
+									<div style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px;">
+										<div id="conveyorLengthCSBC" class="parametrsNoria">Длина транспортера, м</div>
+										<select id="choiceConveyorCSBC" class="choiceProduct">
+											<option>Общая</option>
+											<option>Транспортировки</option>
+											<option>По осям</option>
+										</select>
+									</div>
+									<div class="wrapper">
+										<div class="range">
+											<div class="value" style="margin-left: 0px;">2,46</div>
+											<input type="range" min="1" max="59" value="0" id="conveyorLengthCSBC" class="line" />
+											<div class="meaningBlock">
+												<div style="margin-left: 5px;">2,46</div>
+												<div></div>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>						
+						</div>
+					</div>
+					<div id="blockPriceCSBC" class="blockPrice">
+						<div id="priceWindowCSBC" class="priceWindow">
+							<div class="blockTitle" style="margin-right: 5px;">Цена с НДС:</div>
+							<input id="priceNdsCSBC" class="priceNds">
+							<div class="blockTitle" style="margin-left: 5px;">руб.</div>
+						</div>
+						<div id="modelWindowCSBC" class="modelWindow">
+							<div class="blockTitle" style="margin-right: 5px;">Модель:</div>
+							<div class="blockTitle"></div>
+						</div>
+						<div id="setWindowCSBC" class="setWindow">
+							<div class="blockTitle" style="margin-right: 5px;">В комплектацию входит:</div>
+						</div>
+					</div>
+					<div id="designFeaturesCSBC" class="designFeatures">
+						<div id="allFeaturesCSBC" class="allFeatures">
+							<div class="blockTitle" style="font-size: 14px; margin-bottom: 7px; margin-top: 7px;">Особенности конструкции</div>
+							<div id="executionMaterialCSBC" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Материал исполнения</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="galvanizationCSBC" type="checkbox" checked />
+										<label for="galvanizationCSBC" style="margin-left: 3px;">Оцинковка</label>
+									</div>
+									<div style="display: flex; align-items: center;">
+										<input id="stainlessSteelCSBC" type="checkbox" />
+										<label for="stainlessSteelCSBC" style="margin-left: 3px;">Нержавейка</label>
+									</div>
+								</div>
+							</div>
+
+							<div id="electricMotorCSBC" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Производитель электродвигателя</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="ItalyCSBC" type="checkbox" checked />
+										<label for="ItalyCSBC" style="margin-left: 3px;">Италия</label>
+									</div>
+								</div>
+							</div>
+
+							<div id="protectiveCoversCSBC" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Дополнительные защитные кожуха</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="UpperCSBC" type="checkbox" />
+										<label for="UpperCSBC" style="margin-left: 3px;">Верхний</label>
+									</div>
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="LowerCSBC" type="checkbox" />
+										<label for="LowerCSBC" style="margin-left: 3px;">Нижний</label>
+									</div>
+								</div>
+							</div>
+
+							<div id="dopUnloadingTensionerCSBC" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Дополнительная выгрузка в натяжителе</div>
+								<div class="checkboxBlock" style="flex-direction: row;">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="yesCSBC" type="checkbox" />
+										<label for="yesCSBC" style="margin-left: 3px;">Да</label>
+									</div>
+								</div>
+							</div>
+
+							<div id="bondingVulcanizCSBC" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Склеивание Вулканизацией</div>
+								<div class="checkboxBlock" style="flex-direction: row;">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="yesVulcCSBC" type="checkbox" />
+										<label for="yesVulcCSBC" style="margin-left: 3px;">Да</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="SecurityAutomatBlockCSBC" class="designFeatures">
+						<div id="allOptionsCSBC" class="allFeatures">
+							<div class="blockTitle" style="font-size: 14px; margin-bottom: 7px; margin-top: 7px;">Опции безопасности и автоматизации</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="SecurityAutomatCSBC" type="checkbox" checked />
+									<label for="SecurityAutomatCSBC" style="margin-left: 3px;">Безопасность и автоматизация</label>
+								</div>
+							</div>
+							<div class="textMark">Привести дополнительные параметры в соответствие требованиям Ростехнадзора, оснастив элеватор датчиками.</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="controlCabinetCSBC" type="checkbox" checked />
+									<label for="controlCabinetCSBC" style="margin-left: 3px;">Шкаф управления</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="frequencyConverterCSBC" type="checkbox" />
+									<label for="frequencyConverterCSBC" style="margin-left: 3px;">Частотный преобразователь</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="backupSensorsCSBC" type="checkbox" checked />
+									<label for="backupSensorsCSBC" style="margin-left: 3px;">Датчики подпора</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="speedSensorsCSBC" type="checkbox" checked />
+									<label for="speedSensorsCSBC" style="margin-left: 3px;">Датчики скорости</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="blockNoriaCSE" class="blockNorias" style="display: flex;">
+					<div id="ParConfigBlockCSE" class="ParConfigBlock">
+						<div id="ParConfigTitleCSE" class="ParConfigTitle">
+							<div class="blockTitle" style="margin-top: 10px; font-size: 14px;">Параметры и комплектация</div>
+						</div>
+						<div id="parametrsBlockCSE" class="parametrsBlock">
+							<div id="parBlockCSE" class="parBlock">
+								<div class="topRow" style="background-color: white; display: flex; width: 100%;">
+									<div style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px;">
+										<div id="efficiencyCSE" class="parametrsNoria">Производительность, т\ч</div>
+										<select id="choiceProductCSE" class="choiceProduct">
+											<option>Пшеница</option>
+											<option>Семечка</option>
+											<option>Горчица</option>
+											<option>Чечевица</option>
+											<option>Фасоль</option>
+											<option>Гречка</option>
+											<option>Соя</option>
+											<option>Ячмень</option>
+											<option>Кукуруза</option>
+											<option>Лен</option>
+											<option>Овес</option>
+											<option>Арахис</option>
+											<option>Рис</option>
+											<option>Кубометр</option>
+										</select>
+									</div>
+									<div class="wrapper">
+										<div class="range">
+											<div class="value">0</div>
+											<input type="range" min="0" max="100" value="0" id="range" class="line" />
+											<div class="meaningBlock">
+												<div style="margin-left: 5px;">0</div>
+												<div></div>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="ElHeightBlockCSE" class="parBlock" style="margin: 5px 0 10px 0;">
+								<div class="topRow" style="background-color: white; display: flex; width: 100%;">
+									<div style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px;">
+										<div id="elevatorHeightCSE" class="parametrsNoria">Высота элеватора, м</div>
+										<select id="choiceHeightCSE" class="choiceProduct">
+											<option>Общая</option>
+											<option>До выгрузки</option>
+										</select>
+									</div>
+									<div class="wrapper">
+										<div class="range">
+											<div class="value" style="margin-left: 0px;">3,60</div>
+											<input type="range" min="3" max="11" value="0" id="rangeElHeightCSE" class="line" />
+											<div class="meaningBlock">
+												<div style="margin-left: 5px;">3,60</div>
+												<div></div>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="blockPriceCSE" class="blockPrice">
+						<div id="priceWindowCSE" class="priceWindow">
+							<div class="blockTitle" style="margin-right: 5px;">Цена с НДС:</div>
+							<input id="priceNdsCSE" class="priceNds">
+							<div class="blockTitle" style="margin-left: 5px;">руб.</div>
+						</div>
+						<div id="modelWindowCSE" class="modelWindow">
+							<div class="blockTitle" style="margin-right: 5px;">Модель:</div>
+							<div class="blockTitle"></div>
+						</div>
+						<div id="setWindowCSE" class="setWindow">
+							<div class="blockTitle" style="margin-right: 5px;">В комплектацию входит:</div>
+						</div>
+						<div class="blockBudget">
+							<input id="budgetVersion" type="checkbox" checked />
+							<label for="budgetVersion" style="margin-left: 3px;">Бюджетная версия</label>
+						</div>
+					</div>
+					<div id="designFeaturesCSE" class="designFeatures">
+						<div id="allFeaturesCSE" class="allFeatures">
+							<div class="blockTitle" style="font-size: 14px; margin-bottom: 7px; margin-top: 7px;">Особенности конструкции</div>
+							<div id="executionMaterialCSE" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Материал исполнения</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="galvanizationCSE" type="checkbox" checked />
+										<label for="galvanizationCSE" style="margin-left: 3px;">Оцинковка</label>
+									</div>
+									<div style="display: flex; align-items: center;">
+										<input id="stainlessSteelCSE" type="checkbox" />
+										<label for="stainlessSteelCSE" style="margin-left: 3px;">Нержавейка</label>
+									</div>
+								</div>
+							</div>
+
+							<div id="electricMotorCSE" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Производитель электродвигателя</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="ItalyCSE" type="checkbox" />
+										<label for="ItalyCSE" style="margin-left: 3px;">Италия</label>
+									</div>
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="ChinaCSE" type="checkbox" checked />
+										<label for="ChinaCSE" style="margin-left: 3px;">Китай</label>
+									</div>
+								</div>
+							</div>
+							<div id="protectiveCoversCSE" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Дополнительные защитные кожуха</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="yesCSE" type="checkbox" />
+										<label for="yesCSE" style="margin-left: 3px;">Да</label>
+									</div>
+								</div>
+							</div>
+							<div id="drillHolesTapeCSE" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Сверление отверсий в ленте</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="drillHolesCSE" type="checkbox" />
+										<label for="drillHolesCSE" style="margin-left: 3px;">Да</label>
+									</div>
+								</div>
+							</div>
+							<div id="bucketMaterialCSE" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Материал ковшей</div>
+								<div class="checkboxBlock">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="plasticCSE" type="checkbox" checked />
+										<label for="plasticCSE" style="margin-left: 3px;">Пластик</label>
+									</div>
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="metalCSE" type="checkbox" />
+										<label for="metalCSE" style="margin-left: 3px;">Металл</label>
+									</div>
+								</div>
+							</div>
+							<div id="speedControlCSE" class="blockFeatures">
+								<div class="blockTitle" style="text-align: left; width: 100%; margin-bottom: 5px;">Регулирование скорости</div>
+								<div class="checkboxBlock" style="flex-direction: column; align-items: flex-start;">
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="minSpeedCSE" type="checkbox" />
+										<label for="minSpeedCSE" style="margin-left: 3px;">Минимальная скорость работы</label>
+									</div>
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="normalSpeedCSE" type="checkbox" />
+										<label for="normalSpeedCSE" style="margin-left: 3px;">Обычная скорость работы</label>
+									</div>
+									<div style="display: flex; align-items: center; margin-right: 10px;">
+										<input id="maxSpeedCSE" type="checkbox" checked />
+										<label for="maxSpeedCSE" style="margin-left: 3px;">Максимальная скорость работы</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="SecurityAutomatBlockCSE" class="designFeatures">
+						<div id="allOptionsCSE" class="allFeatures">
+							<div class="blockTitle" style="font-size: 14px; margin-bottom: 7px; margin-top: 7px;">Опции безопасности и автоматизации</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="SecurityAutomatCSE" type="checkbox" checked />
+									<label for="SecurityAutomatCSE" style="margin-left: 3px;">Безопасность и автоматизация</label>
+								</div>
+							</div>
+							<div class="textMark">Привести дополнительные параметры в соответствие требованиям Ростехнадзора, оснастив элеватор датчиками.</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="controlCabinetCSE" type="checkbox" checked />
+									<label for="controlCabinetCSE" style="margin-left: 3px;">Шкаф управления</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="frequencyConverterCSE" type="checkbox" />
+									<label for="frequencyConverterCSE" style="margin-left: 3px;">Частотный преобразователь</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="reverseGearCSE" type="checkbox" checked />
+									<label for="reverseGearCSE" style="margin-left: 3px;">Устройство обратного хода</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="backupSensorsUpCSE" type="checkbox" />
+									<label for="backupSensorsUpCSE" style="margin-left: 3px;">Датчики подпора верхний</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="backupSensorsDownCSE" type="checkbox" checked />
+									<label for="backupSensorsDownCSE" style="margin-left: 3px;">Датчики подпора нижний</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="circuitSpeedCSE" type="checkbox" checked />
+									<label for="circuitSpeedCSE" style="margin-left: 3px;">Датчик скорости</label>
+								</div>
+							</div>
+							<div class="checkboxBlock">
+								<div style="display: flex; align-items: center; margin-left: 5px;">
+									<input id="tapeVanSensorCSE" type="checkbox" checked />
+									<label for="tapeVanSensorCSE" style="margin-left: 3px;">Датчик схода ленты</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+</body> 
+</html> 

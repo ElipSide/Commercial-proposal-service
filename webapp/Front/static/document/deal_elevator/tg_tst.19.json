@@ -1,0 +1,124 @@
+{
+    "id_model": 0,
+    "modelName": "CSBC60",
+    "material": "Сталь оцинкованная",
+    "motor_reductor": "it",
+    "capacity_param": {
+        "capacity": 40,
+        "speed": "1",
+        "turn": "93",
+        "step": "3.704",
+        "bucket": "3",
+        "bucket_load": "1"
+    },
+    "metalThickness": {
+        "bodyT": 2,
+        "capT": 1.5,
+        "liningT": null
+    },
+    "modelSize": {
+        "TransportLength": "14.40",
+        "unloadCenter": 0.16,
+        "loadCenter": 0.42,
+        "unload": 0.2,
+        "load": 0.94,
+        "addUnloadTENS": false
+    },
+    "sectionElement": {
+        "lengthSection": [
+            240,
+            240,
+            240,
+            120
+        ]
+    },
+    "onloadElement": {
+        "load": {
+            "len_size": 1.2,
+            "count": 2,
+            "un_price": 46500
+        }
+    },
+    "otherComponents": {
+        "belt": {
+            "name": "М56С-2-80-1-1,1-0-2-4-185",
+            "count": 24,
+            "un_price": 2600
+        },
+        "converter": {
+            "name": "E2000-0040T3F2KB",
+            "count": 1,
+            "un_price": 21296.8,
+            "kW": 4,
+            "enable": true
+        },
+        "reductor": {
+            "name": "ТС 90",
+            "count": 1,
+            "un_price": 68523.84,
+            "kW": 90
+        },
+        "motor": {
+            "name": "FC 4",
+            "count": 1,
+            "un_price": 17786.04,
+            "kW": 4
+        },
+        "sensorSpeed": {
+            "name": "Датчик контроля минималной скорости IV2B AF81A5-43P-10-LZ (PNP)",
+            "count": "1",
+            "un_price": 6513,
+            "enable": true
+        },
+        "sensorPodpor": {
+            "name": "Емкостные датчики приближения CQ35-25NPP-KW1 (PNP)",
+            "count": "1",
+            "un_price": 11523,
+            "enable": true
+        },
+        "controlBox": {
+            "name": "Шкаф управления ",
+            "count": "1",
+            "un_price": 46800,
+            "enable": true
+        },
+        "streetFulfillmentUpper": {
+            "name": "Уличное исполнение (верх)",
+            "count": 9,
+            "un_price": 7500,
+            "enable": true
+        },
+        "streetFulfillmentBottom": {
+            "name": "Уличное исполнение (низ)",
+            "count": 9,
+            "un_price": 3750,
+            "enable": true
+        },
+        "vulcanBonding": {
+            "name": "Склеивание вулканизацией",
+            "count": 1,
+            "un_price": 15000,
+            "enable": false
+        }
+    },
+    "modelDeliveryData": {
+        "modelMass": "7.00",
+        "modelVolume": "0.87"
+    },
+    "basePrice": 207080,
+    "sectionPrice": {
+        "lengthSectionPrice": 165000
+    },
+    "otherPrice": 336092.68,
+    "onloadPrice": 93000,
+    "modelPrice": 801172.68,
+    "NDS": 1.2,
+    "id_product": "0",
+    "modelCount": 1,
+    "CO_Data": {
+        "coDate": "18.04.2025",
+        "invoice_link": "",
+        "discountValue": "",
+        "deliveryConditions": ""
+    }
+}

@@ -1,0 +1,115 @@
+{
+    "id_model": 1,
+    "modelName": "CSCC30",
+    "material": "Сталь оцинкованная",
+    "motor_reductor": "it",
+    "capacity_param": {
+        "capacity": 47.25,
+        "speed": "0.7",
+        "turn": "71",
+        "step": "3.125",
+        "bucket": "6",
+        "bucket_load": "1"
+    },
+    "metalThickness": {
+        "bodyT": 2,
+        "capT": 1.5,
+        "liningT": 10
+    },
+    "modelSize": {
+        "TransportLength": "3.60",
+        "unloadCenter": 0.28,
+        "loadCenter": 0.54,
+        "unload": 0.26,
+        "load": 0.96
+    },
+    "sectionElement": {
+        "lengthSection": [
+            120
+        ],
+        "leteralSection": [],
+        "verticalSection": [],
+        "doubleSideLateral": false
+    },
+    "otherComponents": {
+        "belt": {
+            "name": "М56С-2-80-1-1,1-0-2-4-186",
+            "count": 7.220000000000001,
+            "un_price": 2509
+        },
+        "lining": {
+            "name": "футеровка CSCC30",
+            "count": 3.6100000000000003,
+            "un_price": 3075.8
+        },
+        "bucket": {
+            "name": "скребок CSCC30",
+            "count": 22.5,
+            "un_price": 156
+        },
+        "converter": {
+            "name": "E2000-0015T3F2KB",
+            "count": 1,
+            "un_price": 14181.3,
+            "kW": 2.2,
+            "enable": true
+        },
+        "reductor": {
+            "name": "XC 90",
+            "count": 1,
+            "un_price": 62100,
+            "kW": 90
+        },
+        "motor": {
+            "name": "BA 90 LA2",
+            "count": 1,
+            "un_price": 17760,
+            "kW": 2.2
+        },
+        "sensorSpeed": {
+            "name": "Датчик контроля минималной скорости IV2B AF81A5-43P-10-LZ (PNP)",
+            "count": "1",
+            "un_price": 6513,
+            "enable": true
+        },
+        "sensorPodpor": {
+            "name": "Емкостные датчики приближения CQ35-25NPP-KW1 (PNP)",
+            "count": "1",
+            "un_price": 11523,
+            "enable": true
+        },
+        "controlBox": {
+            "name": "Шкаф управления ",
+            "count": "1",
+            "un_price": 46800,
+            "enable": true
+        },
+        "streetFulfillment": {
+            "name": "Уличное исполнение",
+            "count": 1,
+            "un_price": 7515,
+            "enable": false
+        }
+    },
+    "modelDeliveryData": {
+        "modelMass": "3.00",
+        "modelVolume": 5.76
+    },
+    "basePrice": 103656.9,
+    "sectionPrice": {
+        "lengthSectionPrice": 10456.7,
+        "leteralSectionPrice": 0,
+        "verticalSectionPrice": 0
+    },
+    "otherPrice": 191605.92,
+    "modelPrice": "394378.18",
+    "NDS": 1.2,
+    "id_product": "0",
+    "modelCount": 1,
+    "CO_Data": {
+        "coDate": "17.04.2025",
+        "invoice_link": "",
+        "discountValue": "",
+        "deliveryConditions": ""
+    }
+}

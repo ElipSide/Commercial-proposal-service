@@ -1,0 +1,117 @@
+{
+    "id_model": 0,
+    "modelName": "CSCC15",
+    "material": "Сталь оцинкованная",
+    "motor_reductor": "it",
+    "capacity_param": {
+        "capacity": 23.73,
+        "speed": "0.65",
+        "turn": "93",
+        "step": "15.6",
+        "bucket": "0.65",
+        "bucket_load": "1"
+    },
+    "metalThickness": {
+        "bodyT": 2,
+        "capT": 1.5,
+        "liningT": 10
+    },
+    "modelSize": {
+        "TransportLength": "5.14",
+        "unloadCenter": 0.16,
+        "loadCenter": 0.42,
+        "unload": 0.2,
+        "load": 0.94
+    },
+    "sectionElement": {
+        "lengthSection": [
+            240
+        ],
+        "leteralSection": [
+            120
+        ],
+        "verticalSection": [],
+        "doubleSideLateral": true
+    },
+    "otherComponents": {
+        "belt": {
+            "name": "M40C-2-63-1-1,2-1-2-2-124",
+            "count": 10.280000000000001,
+            "un_price": 2607.15
+        },
+        "lining": {
+            "name": "футеровка CSCC15",
+            "count": 5.140000000000001,
+            "un_price": 2402.4
+        },
+        "bucket": {
+            "name": "скребок CSCC15",
+            "count": 160.32,
+            "un_price": 100.42
+        },
+        "converter": {
+            "name": "E2000-0015T3F2KB",
+            "count": 1,
+            "un_price": 14181.3,
+            "kW": 1.5,
+            "enable": true
+        },
+        "reductor": {
+            "name": "XC 63",
+            "count": 1,
+            "un_price": 28505.25,
+            "kW": 63
+        },
+        "motor": {
+            "name": "BA 90 SA2",
+            "count": 1,
+            "un_price": 15960,
+            "kW": 1.1
+        },
+        "sensorSpeed": {
+            "name": "Датчик контроля минималной скорости IV2B AF81A5-43P-10-LZ (PNP)",
+            "count": "1",
+            "un_price": 6513,
+            "enable": true
+        },
+        "sensorPodpor": {
+            "name": "Емкостные датчики приближения CQ35-25NPP-KW1 (PNP)",
+            "count": "1",
+            "un_price": 11523,
+            "enable": true
+        },
+        "controlBox": {
+            "name": "Шкаф управления ",
+            "count": "1",
+            "un_price": 46800,
+            "enable": true
+        },
+        "streetFulfillment": {
+            "name": "Уличное исполнение",
+            "count": 1,
+            "un_price": 5010,
+            "enable": true
+        }
+    },
+    "modelDeliveryData": {
+        "modelMass": "4.00",
+        "modelVolume": 3.456
+    },
+    "basePrice": 43862.55,
+    "sectionPrice": {
+        "lengthSectionPrice": 9288.54,
+        "leteralSectionPrice": 10492.61,
+        "verticalSectionPrice": 0
+    },
+    "otherPrice": 183741.72,
+    "modelPrice": "319127.19",
+    "NDS": 1.2,
+    "id_product": "0",
+    "modelCount": 1,
+    "CO_Data": {
+        "coDate": "17.04.2025",
+        "invoice_link": "",
+        "discountValue": "",
+        "deliveryConditions": ""
+    }
+}

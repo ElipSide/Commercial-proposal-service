@@ -1,0 +1,76 @@
+.specification_item:first-child {
+    border-top: 1px solid #000;
+    color: red
+}
+
+.img_width {
+    width: 120px;
+}
+
+.agent {
+    font-size: 14px; 
+    padding: 0
+}
+
+tr:first-child .agent {
+    font-weight: 600;
+    font-size: 14px; 
+    padding: 0
+}
+
+.supply {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.supply_div {
+    margin-bottom: 20px;
+}
+
+.table_td_name {
+    font-size: 12px;
+    padding-top: 10px;
+    border-bottom: 1px solid #5B677D;
+}
+
+.table_td_value {
+    font-weight: 600;
+    border-bottom: 1px solid #5B677D;
+    text-align: right;
+}
+
+.table_td_header {
+    padding-bottom: 5px;
+    font-size: 12px;
+    font-weight: 600;  
+}
+
+.table_td_noria {
+    font-size: 12px; 
+    padding-top: 10px; 
+    text-align: center; 
+    font-weight: 600; 
+    border-bottom: 1px solid #5B677D;
+}
+
+.repherentBox {
+    display: flex;
+    width: 100%;
+    margin: 10px;
+    border-radius: 8px;
+    background: white;
+    border: 2px solid rgba(91,101,121,0.1);
+    border-top: 2px solid rgba(91,101,121,0.05);
+    border-left: 2px solid rgba(91,101,121,0.05);
+    box-shadow: none;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    /* box-shadow: 0px 4px 4px 2px rgba(91, 101, 121, 0.2);  */
+}
+
+.titleRepherent {
+    border-left: 2px solid red; 
+    padding-left: 25px; 
+    margin-bottom: 25px;
+}

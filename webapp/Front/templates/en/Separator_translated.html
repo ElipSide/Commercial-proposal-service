@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html> 
+<head> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=noб user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+	<link href="{{url_for('static',path='/css/Separator.css')}}?u={{last_updated}}" rel="stylesheet">
+	<link href="{{url_for('static',path='/css/Main.css')}}?u={{last_updated}}" rel="stylesheet">
+	<script src="{{url_for('static',path='/js/Separator.js')}}?u={{last_updated}}" defer></script> <!-- Загрузить первым -->
+	<script src="{{url_for('static',path='/js/general/common_function.js')}}?u={{last_updated}}" defer></script> <!-- Загрузить первым -->
+	<script src="{{url_for('static',path='/js/Lib/jquery-3.7.1.min.js')}}?u={{last_updated}}" defer></script> 
+	<script src="{{url_for('static',path='/js/Lib/jquery.maskedinput.min.js')}}?u={{last_updated}}" defer></script> 
+	<script src="{{url_for('static',path='/js/Lib/toastify-js.js')}}?u={{last_updated}}" defer></script> 
+	<script src="{{url_for('static',path='/js/Lib/swiper-element-bundle.min.js')}}?u={{last_updated}}" defer></script> 
+	<script src="https://telegram.org/js/telegram-web-app.js" async></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" async> 
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
+	<script type="text/javascript" src="https://unpkg.com/imask"></script>
+	<title>Photoseparator Calculator</title> 
+	<script>
+		$SCRIPT_ROOT = "";
+	</script>
+</head> 
+<body style=" " id="mainBlock">
+	<div style="display:flex; flex-direction:column; align-items:center; width:100%; margin:5px 10px;">
+		<div id="mainList" class="mainBlock">
+			<div id="cardsBlock" class="cardsBlock" style="justify-content: flex-start;">
+				<div id="parametrsBlock" class="subblock" style="width: 100%;">
+					<div id="productPurposeBlock" class="textInfo">
+						<div class="prodPurposeSublock">
+							<div class="BlockPayment">
+								<div id="productPurpose" class="textHeading" style="margin: 0; margin-bottom: 5px;">Product</div>
+							</div>
+							<div id="productBlock" style="align-items: flex-start; width: 100%;">
+								<select id="chooseProduct" class="selectBlock" style="width: 100%;" onchange="Choice_Prod(this.value)">
+									<option disabled>Select a product</option>
+								</select>
+							</div>
+						</div>
+						<div id="purposeBlock" class="purposeBlock">
+							<div class="BlockPayment">
+								<div id="productPurpose" class="textHeading" style="margin: 0; margin-bottom: 5px;">Purpose</div>
+							</div>
+							<div style="align-items: flex-start; width: 100%;">
+								<select id="choosePurpose" class="selectBlock" style="width: 100%;" onchange="Choice_Purpose(this.value)">
+									<option disabled>Select a purpose</option>
+								</select>
+							</div>
+						</div>
+					</div>
+						<div id="clogBlock" class="textInfoClog">
+								<div class="clogSublock">
+									<div class="blockPaymentClasifier">
+										<div class="BlockPayment">
+											<div id="clogs" class="textHeading" style="margin: 0;">Contaminants</div>
+										</div>
+										<div id="clasifierClogs" style="align-items: flex-start; margin: 0 5px;">
+											<div style="display: none; flex-direction: row; cursor: pointer;" onclick="Choice_Garbage(this.id)">
+												<input type="checkbox" id="choicePimary" style="pointer-events:none; ">
+												<div class="blockTitle">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="blockPhoto" class="blockPhoto">
+										<div id="photoSep">
+											<div id="iconPhoto" class="photoImg" onclick="photoIconOpen(this.id)" style="background-image: url(../img/photo.png);"></div>
+										</div>
+									</div>
+								</div>
+								<div id="Botton_New_Garbage" class="addGarabage" onclick="New_Garbage()" style="width: 100%;">
+									<div class="blockTitle">Add weed</div>
+								</div>
+								<div id="BlockAddGarbage" style="display: none;">
+									<div class="enterClog">
+										<div style="display: flex; align-items: center;">Enter the weed</div>
+										<input id="New_Garbage" class="productClassifier" type="text" style="text-align: center; width: 150px;"> 
+									</div>
+									<div class="buttonBlock">
+										<div id="save_garbage" onclick="Add_Garbage(this.id)" class="addGarabage">Add</div>
+										<div id="close_garbage" onclick="Add_Garbage(this.id)" class="addGarabage">Cancel</div>
+									</div>
+								</div>
+						</div>
+					<div id="Block_indicators" style="filter: blur(2px); pointer-events: none;">
+						<div id="GoltBlock" class="textInfo" style="flex-direction: column; justify-content: space-between;">
+							<div class="BlockPayment" style="width: 290px; margin-bottom: 10px;">
+								<div id="" class="textHeading" style="margin: 0;   ">Reference Information</div>
+							</div>
+							<div style="	align-items: center; margin: 0 10px 10px 10px; display: none;	 justify-content: space-between; width: 290px;">
+								<div id="ElGostNameBlock" class="textHeading" style="margin: 0;	 width: 145px;  "></div>
+								<a id="ElGostBlock" href="" style="	color: #5b6579;"></a>
+							</div>
+						</div>
+						<div id="InitialClogBlock" class="textInfo" style="flex-direction: row; justify-content: space-between;">
+							<div class="BlockPayment">
+								<div id="initialClogging" class="textHeading" style="margin: 0;">Initial contamination %</div>
+							</div>
+							<div style="align-items: flex-start; margin: 0 10px;">
+								<input id="inputInitialClog" class="productClassifier" type="text" style="text-align: center;" oninput="Input_change(this.id)">
+							</div>
+						</div>
+						<div id="requiredQualityBlock" class="textInfo" style="flex-direction: row; justify-content: space-between;">
+							<div class="BlockPayment">
+								<div id="requiredQuality" class="textHeading" style="margin: 0;">Required quality %</div>
+							</div>
+							<div style="align-items: flex-start; margin: 0 10px;">
+								<input id="inputRequiredQuality" class="productClassifier" type="text" style="text-align: center;" oninput="Input_change(this.id)">
+							</div>
+						</div>
+						<div id="efficiencyBlock" class="textInfo" style="flex-direction: row; justify-content: space-between;">
+							<div class="BlockPayment">
+								<div id="efficiency" class="textHeading" style="margin: 0;">Efficiency t/h</div>
+							</div>
+							<div style="align-items: flex-start; margin: 0 10px;">
+								<input id="inputEfficiency" class="productClassifier" type="text" style="text-align: center;" oninput="Input_change_Efficiency(this.id)">
+							</div>
+						</div>
+				</div>
+					<div id="saveInfo" class="saveInfo" onclick="GetInfoSepar()" style="display: none;">
+						<div class="blockTitle">Select a photoseparator</div>
+					</div>	
+				</div>
+				<div id="Block_result" style="display: none; width: 100%; flex-direction: column;">
+					<div id="infoSepar" class="subblock" style="width: 100%;">
+						<div style="display: none; flex-direction: column;">
+							<div class="BlockPayment">
+								<div id="separatorName" class="textHeading">Photoseparator</div>
+							</div>
+							<div id="parametrsSepar" class="textInfo" style="align-items: flex-start">
+								<div style="display: flex; flex-direction: row; margin-bottom: 3px; width: 100%;">
+									<div class="titleParametrs" style="width: 140px;">Model:</div>
+									<select id="modelSepar" class="selectBlock" style="width: 100%;" onchange="Change_separ(this.id)">
+										<option disabled>Select a separator</option>
+										<option style="display: none;"></option>
+									</select>
+								</div>
+								<div style="display: flex; flex-direction: row; margin-bottom: 3px;width: 100%;">
+									<div class="titleParametrs" style="width: 140px;">Configuration:</div>
+									<select id="configurationSepar" class="selectBlock" style="width: 100%;" onchange="Change_config(this.id)">
+										<option disabled>Select a configuration</option>
+										<option style="display: none;"></option>
+									</select>
+								</div>
+								<div id="efficiencySepar" class="titleParametrs">Efficiency:</div>
+								<div style="display: flex; flex-direction: row; margin: 0;">
+									<div id="CountSepar" class="titleParametrs">Quantity:</div>
+									<div class="countBlock">
+										<button class="countButton" onclick="changeCountMinus(this.id);">-</button>
+										<input id="changeBlock" class="inputCount" min="0" max="100" step="1" value="1" disabled style="align-items: center; display: flex; justify-content: center; padding-left: 0px;">
+										<button class="countButton" onclick="changeCountPlus(this.id);">+</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="infoCompressor" class="subblock" style="width: 100%;">
+						<div style="display: none;flex-direction: column;">
+							<div class="BlockPayment">
+								<div id="compressorName" class="textHeading">Compressor</div>
+							</div>
+							<div id="parametrsCompres" class="textInfo" style="align-items: flex-start">
+								<div id="modelCompres" class="titleParametrs">Model:</div>
+								<div id="efficiencyCompres" class="titleParametrs">Efficiency:</div>
+								<div id="CountSepar" class="titleParametrs">Quantity:</div>
+							</div>
+						</div>
+					</div>
+					<div id="infoDopMachine" class="subblock" style="width: 100%;">
+						<div style="display: none; flex-direction: column;">
+							<div class="BlockPayment">
+								<div id="dopMachineName" class="textHeading">Additional equipment</div>
+							</div>
+							<div id="parDopMachine" class="textInfo" style="align-items: flex-start">
+								<div id="modelDopMachine" class="titleParametrs">Model:</div>
+								<div id="CountSepar" class="titleParametrs">Quantity:</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body> 
+</html>

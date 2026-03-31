@@ -1,0 +1,135 @@
+{
+    "motor_reductor": "it",
+    "carefulTransport": false,
+    "bucketMaterial": "bucketPlastic",
+    "modelName": "CSE60",
+    "id_model": 2,
+    "modelPrice": "538805.94",
+    "sectionElement": {
+        "heightSection": [
+            60,
+            120,
+            240,
+            240
+        ]
+    },
+    "modelCount": 1,
+    "sectionPrice": {
+        "heightSectionPrice": 56238
+    },
+    "otherComponents": {
+        "reductor": {
+            "count": 1,
+            "un_price": 62100,
+            "kW": 90,
+            "name": "XC 90"
+        },
+        "streetFulfillment": {
+            "count": 1,
+            "enable": false,
+            "un_price": 10020,
+            "name": "Уличное исполнение"
+        },
+        "converter": {
+            "count": 1,
+            "enable": true,
+            "un_price": 21296.8,
+            "kW": 5.5,
+            "name": "E2000-0040T3F2KB"
+        },
+        "sensorPodporBottom": {
+            "count": "1",
+            "enable": true,
+            "un_price": 11523,
+            "name": "Емкостные датчики приближения CQ35-25NPP-KW1 (PNP)"
+        },
+        "bucket": {
+            "count": 221,
+            "un_price": 108.15,
+            "name": "Масту 030"
+        },
+        "sensorSpeed": {
+            "count": "1",
+            "enable": true,
+            "un_price": 7800,
+            "name": "Датчик контроля минималной скорости IV2B AF81A5-43P-10-LZ (PNP)"
+        },
+        "sensorBelt": {
+            "count": "4",
+            "enable": true,
+            "un_price": 2672,
+            "name": "Индуктивные датчики приближения (НО) IME18-08BPSZW2S (PNP)"
+        },
+        "drillInBelt": {
+            "count": 221,
+            "enable": false,
+            "un_price": 100.2,
+            "name": "Сверление отверстий в ленте"
+        },
+        "motor": {
+            "count": 1,
+            "un_price": 24635.95,
+            "kW": 5.5,
+            "name": "FC 5.5"
+        },
+        "sensorPodporTop": {
+            "count": "1",
+            "enable": true,
+            "un_price": 16700,
+            "name": "Емкостные датчики приближения CQ35-25NPP-KW1 (PNP)"
+        },
+        "backward": {
+            "count": "1",
+            "enable": true,
+            "un_price": 28800,
+            "name": "Устройство обратного хода",
+            "enable_force": false
+        },
+        "controlBox": {
+            "count": "1",
+            "enable": false,
+            "un_price": 46800,
+            "name": "Шкаф управления Z норией"
+        },
+        "belt": {
+            "count": 26,
+            "un_price": 900.3,
+            "name": "2Л-180-3-ЕР-200-1-1"
+        }
+    },
+    "metalThickness": {
+        "bottomT": 3,
+        "headT": 3,
+        "tubeT": 2
+    },
+    "material": "Сталь оцинкованная",
+    "capacity_param": {
+        "capacity": 23.15,
+        "bucket": "0.6",
+        "turn": "70",
+        "step": "8.5",
+        "bucket_load": "0.97",
+        "speed": "1.3"
+    },
+    "id_product": "0",
+    "NDS": 1.2,
+    "CO_Data": {
+        "invoice_link": "",
+        "deliveryConditions": "",
+        "coDate": "04.03.2024",
+        "discountValue": ""
+    },
+    "otherPrice": 230852.7,
+    "economModelType": false,
+    "modelDeliveryData": {
+        "modelMass": "638.00",
+        "modelVolume": "58.77"
+    },
+    "basePrice": 173427.2,
+    "speedTransportMOD": "min",
+    "modelSize": {
+        "load": 0.6,
+        "unload": 0.91,
+        "height": "13.10"
+    }
+}

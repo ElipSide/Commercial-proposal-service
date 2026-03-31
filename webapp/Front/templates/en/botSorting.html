@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=noб user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+	<link id="favicon" rel="icon" type="image/x-icon" href="/favicon.ico">
+	<link href="{{url_for('static',path='/css/botSorting.css')}}?u={{last_updated}}" rel="stylesheet">
+	<link href="{{url_for('static',path='/css/Main.css')}}?u={{last_updated}}" rel="stylesheet">
+		<script src="{{ url_for('static', path='/js/Lib/i18n.js') }}?u={{ last_updated }} " defer></script> <!-- Загрузить первым -->
+
+	<script src="{{url_for('static',path='/js/pages/botSorting.js')}}?u={{last_updated}}" defer></script> <!-- Загрузить первым -->
+	<script src="{{url_for('static',path='/js/pages/general/DBSorting.js')}}?u={{last_updated}}" defer></script> <!-- Загрузить первым -->
+	<script src="{{url_for('static',path='/js/pages/general/common_function.js')}}?u={{last_updated}}" defer></script> <!-- Загрузить первым -->
+	<script src="{{url_for('static',path='/js/Lib/jquery-3.7.1.min.js')}}?u={{last_updated}}" defer></script> 
+	<script src="{{url_for('static',path='/js/Lib/toastify-js.js')}}?u={{last_updated}}" defer></script> 
+	<script src="{{url_for('static',path='/js/Lib/swiper-element-bundle.min.js')}}?u={{last_updated}}" defer></script> 
+	<script src="https://telegram.org/js/telegram-web-app.js" async></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" async> 
+	<title>Sieve Calculator</title> 
+	<script>
+		$SCRIPT_ROOT = "";
+		lang='en'	</script>
+</head> 
+<body> 
+<div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+	<div id="InfoBlockUser">
+		<div id="Info_list">
+			<div class="windowProduct" style="height: 100%; justify-content: flex-start;">
+				<div class="blockIconExit">
+					<img class="exit_iconPhoto" src="{{url_for('img',path='exit_icon.png')}}" onclick="CloseInfo()">
+				</div>
+				<div class="photoImgBlock">
+					<div class="photoImg" style="background-image: url(/off_bot/static/img_machine/схема_работы_муз_8.png); width: 95%; height: 100%; border-radius: 8px; background-size: contain;"></div>
+				</div>
+				<div class="photoImgBlock">
+					<div class="photoImg" style="background-image: url(/off_bot/static/img_machine/схема_работы_муз_16.png); width: 95%; height: 100%; border-radius: 8px; background-size: contain;"></div>
+				</div>
+				<div style="display: flex; flex-direction: column; margin: 10px;">
+					<div style="margin-bottom: 10px; display: flex; flex-direction: row;">
+						<div class="checkboxBlock">
+							<div class="blockTitle" style="min-width: 8px;">A</div>
+							<input type="checkbox" checked>
+						</div>						
+						<div class="blockTitle" style="text-align: left;">
+							use identical sieves within one surface
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="mainBlock" class="mainBlock" style="margin-bottom: 15px; display: none; filter: blur(2px); pointer-events: none;">
+		<div style="margin: 0 12px;">
+			<select id="provider_equipment" size="1" class="block" style="width: 100%;" onchange="Choice_Provider()">
+				<option value="" disabled>Select a supplier</option>
+			</select>
+		</div>
+		<div id="topRow" class="topRow" style="display: none;">
+			<div id="commercialOffer" class="commercialOffer">
+				<div id="commercialOfferTitle" class="commercialOfferTitle">КОММЕРЧЕСКОЕ<br>ПРЕДЛОЖЕНИЕ</div>
+				<div style="display: flex; justify-content: space-between; width: 100%;">
+					<div id="Number">No.</div>
+					<div id="Date"></div>
+				</div>
+			</div>
+			<div id="managerInfoBlock" class="managerInfoBlock">
+				<div class="managerPhoto"></div>
+				<div style="max-width: 260px;">
+					<div id="FIO" class="managerInfo" style="font-weight: bold;">-</div>
+					<div id="post" class="managerInfo">-</div>
+					<div id="company" class="managerInfo">ООО "СиСорт"</div>
+					<div id="mail" class="managerInfo" style="margin-top: 5px;">-</div>
+					<div id="telephone" class="managerInfo">-</div>
+				</div>
+			</div>
+			<div id="clientName" class="clientName">Dear Client</div>
+			<div id="introduction" class="introduction">Thank you for your interest in CSort equipment. We present to you a custom-made offer for equipment and services, including delivery and payment terms. Please contact us if you need any additional information — we’ll be happy to assist you.</div>
+		</div>
+		<div id="ParentList" style="height: 100%; margin: 0 12px;">
+			<div id="windowProduct_0" class="windowProduct" style="display: none;">
+				<div id="blurBlock_0" class="blurBlock" style="display: none;">
+					<div id="blurWindow" class="blurWindow">
+						<div class="slidePhoto">
+							<swiper-container class="mySwiper" space-between="30" pagination="true" pagination-clickable="true">
+								<swiper-slide style="display: none;"></swiper-slide>
+							</swiper-container>
+						</div>
+						<div class="blockButtonPhoto">
+							<div id="buttonAdd" class="buttonChange" onclick="addNewPhoto()">
+								<div class="blockTitle">Add фото</div>
+							</div>
+							<div id="buttonChange" class="buttonChange" onclick="closeWindow(this.id),images_load(this.id)">
+								<div class="blockTitle">Change photo</div>
+							</div>
+							<div id="buttonDelet" class="buttonChange" onclick="deletPhoto()">
+								<div class="blockTitle">Delete photo</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="display: flex; flex-direction: column; width: 100%;">
+					<div id="blockProduct" class="blockProduct">					
+						<div class="infoMark" style="background-image: url(/off_bot/static/img/None_icon_S.png);" onclick="Info()"></div>
+						<select id="productAdd" size="1" class="block" style="width: 100%; margin: 0 5px;" onchange="ChoiceProd(this.id)">
+							<option value="0">Select a product</option>
+						</select>
+						<div class="deteleCart" onclick="DeteleCart(this.id)"></div>
+					</div>
+					<div id="blockChoice" class="blockChoice">
+						<div style="display: flex; flex-direction: column; margin-left: 5px;">
+							<select id="typeMachine" class="block" onchange="rebuild(id)" style="width: 154px; min-height: 33px; margin-top: 0;">
+								<option value="" style="display: none;"></option>
+							</select>
+							<div>
+								<div id="processing" class="block" onclick="openprocessing(this.id)">
+									<span class="blockTitle" style="margin-left: 35px;">Cleaning Type</span>
+									<span class="blockArrow"></span>
+								</div> 
+								<div id="listProcessing" class="list" style="display: none; align-items: stretch;">
+									<div class="checkBoxType" onclick="ClickCheckBoxType(this.id)">
+										<input id="choicePimary" type="checkbox" style="pointer-events:none; cursor: pointer;">
+										<div id="primary" class="blockTitle">Preliminary</div>
+									</div>
+									<div class="checkBoxType" onclick="ClickCheckBoxType(this.id)">
+										<input id="choiceSecondary" type="checkbox" style="pointer-events:none; cursor: pointer;">
+										<div id="secondary" class="blockTitle">Food-grade</div>
+									</div>
+									<div class="checkBoxType" onclick="ClickCheckBoxType(this.id)">
+										<input id="choiceSeed" type="checkbox" style="pointer-events:none; cursor: pointer;">
+										<div id="seed" class="blockTitle">Secondary</div>
+									</div>
+									<div id="CloseClearList" class="addButton" onclick="Closeprocessing(this.id)" style="background-color: white; width: auto;">
+										<div class="blockTitle">Select</div>
+									</div>								
+								</div>
+							</div>
+							<div>
+								<div id="gridPosition" class="block" onclick="openGridPosition(this.id)">
+									<span class="blockTitle" style="margin-left: 17px;">Sieve Position</span>
+									<span class="blockArrow"></span>
+								</div> 
+								<div id="listGridPosition" class="list" style="display: none; align-items: stretch;">
+									<div class="checkBoxType" onclick="ClickCheckBoxletter(this.id)">
+										<input type="checkbox" id="choiceOne" style="pointer-events:none; cursor: pointer;">
+										<div id="gridA" class="blockTitle">A</div>
+									</div>
+									<div class="checkBoxType" onclick="ClickCheckBoxletter(this.id)">
+										<input type="checkbox" id="choiceTwo" style="pointer-events:none; cursor: pointer;">
+										<div id="gridB" class="blockTitle">B</div>
+									</div>
+									<div class="checkBoxType" onclick="ClickCheckBoxletter(this.id)">
+										<input type="checkbox" id="choiceThree" style="pointer-events:none; cursor: pointer;">
+										<div id="gridC" class="blockTitle">C</div>
+									</div>
+									<div id="CloseClearList" class="addButton" onclick="CloseGridPosition(this.id)" style="background-color: white; width: auto;">
+										<div class="blockTitle">Select</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="blockPhoto" class="blockPhoto" style="margin-right: 5px;">
+							<div id="stub_Photo">
+								<div id="photoIcon" class="photoImg" onclick="images_load(this.id)"></div>
+								<input id="fileElem" type="file" style="display:none" onchange="handleFiles(this.files,this.id)">
+							</div>					
+							<div id="SliderPhoto" class="slidePhoto" style="display: none; margin-top: 0px;"> 
+								<swiper-container class="mySwiper">
+									<swiper-slide class="photoIcon" style="display: none;"></swiper-slide>
+								</swiper-container>
+								<div class="expandPhotoWindow">
+									<div id="openPhoto" class="openPhoto" onclick="expandPhoto(this.id)" style="background-color: white; border-radius: 4px; z-index: 1;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+						<div id="ToglMachine" class="sending" onclick="MachineSlider(this.id)">
+							<div id="Text_TognewAd" class="blockTitle">Add a car to Commercial offer</div>
+							<label class="toggler-wrapper style-1" style="pointer-events: none;">
+								<input id="checkbox_TognewAd" type="checkbox">
+								<div class="toggler-slider">
+									<div class="toggler-knob"></div>
+								</div>
+							</label>
+						</div>
+					<div id="blockCleaning" class="blockCleaning">
+						<div style="flex-direction: column; width: 100%;"></div>
+						<div style="flex-direction: column; width: 100%;"></div>
+						<div style="flex-direction: column; width: 100%;"></div>
+						<div style="display: none; flex-direction: column;">
+							<div id="nameText" class="nameText">
+								<div class="blockTitle"></div>
+							</div>
+							<div style="padding: 0 4px;">
+								<div id="lineOne" class="line" style="display: none;">
+									<div style="display: flex; flex-direction: row; width: 100%;">
+										<div id="pointA" class="blockTitle" style="min-width: 8px;">
+											<div>а</div>
+										</div>
+										<input id="choiceA" type="checkbox" onclick="ClickChangeSieves(this.id)" onchange="GetItog(this.id)">
+										<select id="typeA" class="blockTypeText" onchange="ChoiseTypeSieve(this.id)">
+											<option value="-">-</option>
+											<option value="Round">Round</option>
+											<option value="Hexagonal">Hexagonal</option>
+											<option value="Rectangular">Rectangular</option>
+											<option value="Triangular">Triangular</option>
+										</select>
+										<select id="numberA" class="blockTypeSieve" onchange="GetItog(this.id)">
+											<option value="-">-</option>
+										</select>
+										<div class="blockTitlepercent" style="display: none;">
+											<div style="width: 35px;"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="resultText" style="display: none;"> 
+								<div class="blockTitle"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+		<div class="addAndResult">
+			<div id="addButton" class="addButton" onclick="addNewBlock()" style="margin-top: 10px; -webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2);">
+				<div class="blockTitle">Add</div>
+			</div>
+			<div class="windowProduct" style="padding-top: 7px;">
+				<div id="resultSievePrice"> 
+					Total:
+				</div>
+				<div id="resultSieve" class="resultSieve"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</body> 
+</html>

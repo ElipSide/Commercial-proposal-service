@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=noб user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    
+    <link href="{{ url_for('static', path='/css/create_pdf_kp.css') }}" rel="stylesheet">
+    <!-- <link href="C:/Git_rep/WebAppServer-FastApi/webapp/Front/static/css/create_pdf_kp.css" rel="stylesheet"> -->
+    <title>Объявления</title>
+    <style>
+        * {
+            font-family: 'Ubuntu', sans-serif;
+            color: #5B677D;
+            font-size: 14px;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 5px;
+            text-align: left;
+            font-size: 10px;
+
+        }
+
+        table {
+            width: 100%;
+            height: auto;
+        }
+        
+        h1,h2,h3 {
+            margin: 10px 0;
+        }
+
+        h4 {
+            margin: 10px 0;
+            font-weight: normal;
+        }
+
+        .button {
+            padding: 6px 4px;
+            padding-bottom: 25px;
+            border-radius: 3px;
+            line-height: 1.25;
+            text-decoration: none;
+            user-select: none;
+            color: white;
+            font-size: 10px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        
+    </style>
+</head>
+
+<body style="width: 100%;">
+    <!-- 1 ЛИСТ -->
+    <div style="display: flex; height: 970px;">
+        <div style="width: 30%; display: flex; flex-direction: column; justify-content: space-between;">
+            <div style="margin: 0 auto;">
+                <img class="img_width" src="{{ url }}/static/img/logo.png" alt="Лого СиСорт">
+            </div>
+            <div style="margin: 50px auto;">
+                {% if product == 'кофе' %}
+                    <img class="img_width" src="{{ url }}/static/img/qr_coffee.png" alt="QR Кофебот">
+                    <h4><a style="font-size: 20px;" href="https://t.me/csort_coffeerobot">Кофебот</a></h4> 
+                    <p style="font-size: 10px;">
+                        Telegram-канал "Бокасса черный"<br>
+                        <br>
+                        Подписывайтесь, чтобы быть в курсе всех кофейных трендов!<br>
+                    </p>                   
+                {% else %}
+                    <img class="img_width" src="{{ url }}/static/img/qr_hleb.png" alt="QR Хлеборобота">
+                    <h4><a style="font-size: 20px;" href="https://t.me/hleborobot">Хлеборобот</a></h4>
+                    <p style="font-size: 10px;">Канал где мы публикуем аналитические отчеты и последние новости АПК</p>
+                {% endif %}
+                
+            </div>
+        </div>
+        <div style="width: 70%; margin: 0 80px;"> 
+            <div>
+                <h4 style="width: 250px; line-height: 1.7;">ОПТИЧЕСКИЕ СОРТИРОВЩИКИ, СОРТИРОВОЧНЫЕ КОМПЛЕКСЫ, ТРАНСПОРТИРОВОЧНОЕ ОБОРУДОВАНИЕ, СЕРВИС</h4>
+            </div>
+            <div style="height: 850px; display: flex; align-items: center;">
+                <div style="    width: 350px;">
+                    <div>
+                        <p style="font-size: 35px; line-height: 1.1;">КОММЕРЧЕСКОЕ <br> ПРЕДЛОЖЕНИЕ</p>
+                        <div style="display: flex;">
+                            <p>№ {{ key }}</p>
+                            <p style="padding-left: 50px;">{{ today_str }}</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; margin: 70px 0 20px 0;justify-content: space-between; width: 350px;">
+                        <div style="width: 140px;">
+                            <img class="img_width" src="{{ url }}/static/img_manager/{{ chat_id_tg }}.png" alt="Фото представителя" style="width: 100%;max-width: 140px; min-width: 100px; padding: 0 10px;">
+                        </div>
+                        <div style="max-width: 210px;">
+							<div id="FIO" class="agent" style="font-weight: bold;">{{ middle_name_user }} {{ name_user }}</div>
+							<div id="post" class="agent">{{ job_title }}</div>
+							<div id="company" class="agent">{{ company_user }}</div>
+							<div id="mail" class="agent" style="margin-top: 5px;">email: {{ mail_user }}</div>
+							<a id="telephone" class="agent" href="tel:{{ phone_number_user }}">моб. {{ phone_number_user }}</a>
+						</div>
+                    </div>
+                    <p style="padding-bottom: 20px; font-weight: 600;">Уважаемый Клиент</p>
+                    <p style="line-height: 1.5;">Благодарим Вас за интерес проявленный к оборудованию компании CSort. Представляем специально для Вас подготовленное предложение на оборудование и услуги, а также условия доставки и оплаты. Пожалуйста, если Вам необходима дополнительная информация, обязательно свяжитесь с нами, будем рады Вам помочь.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- 2 ЛИСТ -->
+    <div style="height: 930px; page-break-before: always;">
+        <h3 style="font-size: 26px; font-weight: 500; border-left: 2px solid red; padding-left: 25px; margin-bottom: 30px;">СПЕЦИФИКАЦИЯ</h3>
+        <table>
+            <tr style="border-bottom: 1px solid #5B677D;">
+                <td></td>
+                <td></td>
+                <td style="font-size: 12px; text-align: right;">Наименование</td>
+                <td style="font-size: 12px; text-align: center;">Шт</td>
+                <td style="font-size: 12px; text-align: center;">Цена,руб</td>
+                <td style="font-size: 12px; text-align: center;">Сумма,руб</td>
+                {% if total_med_discount != 0 %}
+                <td style="font-size: 12px; text-align: center;">Скидка,%</td>
+                <td style="font-size: 12px; text-align: center;">Цена со<br>скидкой,руб</td>
+                {% endif %}
+            </tr>
+            {% for specification_key, specification_item in specification.items() %}
+                {% if loop.index == 20 %}
+                </table>
+            </div>
+            <div style="height: 930px; page-break-before: always;">
+                <h3 style="font-size: 26px; font-weight: 500; border-left: 2px solid red; padding-left: 25px; margin-bottom: 30px;">СПЕЦИФИКАЦИЯ</h3>
+                <table>
+                    <tr style="border-bottom: 1px solid #5B677D;">
+                        <td></td>
+                        <td></td>
+                        <td style="font-size: 12px; text-align: right;">Наименование</td>
+                        <td style="font-size: 12px; text-align: center;">Шт</td>
+                        <td style="font-size: 12px; text-align: center;">Цена,руб</td>
+                        <td style="font-size: 12px; text-align: center;">Сумма,руб</td>
+                        {% if total_med_discount != 0 %}
+                        <td style="font-size: 12px; text-align: center;">Скидка,%</td>
+                        <td style="font-size: 12px; text-align: center;">Цена со<br>скидкой,руб</td>
+                        {% endif %}
+                    </tr>
+            {% endif %}
+            <tr class = 'specification_item' >
+                <td>{{ loop.index }}</td>
+                <td style="padding: 2px 0 0 0;">
+                    <img src="{{ specification_item['specification_photo'] }}" alt="" style="width: 32px; height: 32px; object-fit: contain;">
+                </td>
+                <td style="font-size: 12px; padding: 0; text-align: right; font-weight: 600; width: 200px; height: 32px;">{{ specification_item['specification_name'] | replace('без конфигурации', '') | replace('(Extra light)', '') | safe }}</td>
+                <td style="font-size: 12px; padding: 0; text-align: center; padding-left: 10px;">{{ specification_item['specification_count'] }}</td>
+                <td style="font-size: 12px; padding: 0; text-align: center; ">{{ specification_item['specification_price'] }}</td>
+                <td style="font-size: 12px; padding: 0; text-align: center; ">{{ specification_item['specification_sum'] }}</td>
+                {% if total_med_discount != 0 %}
+                    {% if specification_item['specification_discount'] != 0 %}
+                        <td style="font-size: 12px; padding: 0; text-align: center;">{{ specification_item['specification_discount'] }}</td>
+                    {% else %}
+                        <td style="font-size: 12px; padding: 0; text-align: center;">-</td>
+                    {% endif %}
+                <td style="font-size: 12px; padding: 0; text-align: center;">{{ specification_item['specification_discount_price'] }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            <tr style="border-top: 1px solid #5B677D;">
+                <td></td>
+                <td></td>
+                <td style="font-size: 12px; padding: 5px 0 0 0; text-align: right;">Итого:</td>
+                <td></td>
+                <td></td>
+                <td style="font-size: 12px; padding: 5px 0 0 0; text-align: center; ">{{ total_specification_sum }}</td>
+                {% if total_med_discount != 0 %}
+                <td style="font-size: 12px; padding: 5px 0 0 0; text-align: center; ">{{ total_med_discount }}</td>
+                <td style="font-size: 12px; padding: 5px 0 0 0; text-align: center; ">{{ total_specification_discount_price }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td style="font-size: 12px; padding: 5px 0 0 0; text-align: right;">в т.ч. НДС {{ nds_now }}%:</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                {% if total_med_discount != 0 %}
+                <td></td>
+                <td style="font-size: 12px; padding: 5px 0 0 0; text-align: center; ">{{ total_specification_discount_sum_nds }}</td>
+                {% endif %}
+            </tr>
+        </table>
+
+        {% if product =='кофе' %}
+        <div style="display: flex; flex-direction: column; margin-top: 50px; gap: 10px;">
+
+            <div style="display: flex;">
+                <!-- Видео сортировки -->
+                <div style="flex: 1; margin-right: 20px;">
+                    <p style="text-transform: uppercase; font-weight: 600; margin: 20px 0;">видео сортировки</p>
+                    <div style="font-size: 0; padding-bottom: 20px; border-bottom: 2px solid #5B677D;"> 
+                        <div style="display: inline-block; width: 48%; vertical-align: top; font-size: 14px;">
+                            <img src="{{ url }}/static/img_spec/сортировка зеленый.png" alt="" style="width: 100%; border-radius: 8px;">
+                            <p style="margin: 5px 0 0 0; text-decoration: underline; font-size: 14px; text-align: center;">
+                                <a href="https://vkvideo.ru/playlist/-62677065_-2/video-62677065_456239250">Зеленый кофе</a>
+                            </p>
+                        </div>
+                        <div style="display: inline-block; width: 48%; vertical-align: top; font-size: 14px; margin-left: 10px;">
+                            <img src="{{ url }}/static/img_spec/сортировка жареный.png" alt="" style="width: 100%; border-radius: 8px;">
+                            <p style="margin: 5px 0 0 0; text-decoration: underline; font-size: 14px; text-align: center;">
+                                <a href="https://vkvideo.ru/video-62677065_456239257">Жареный кофе</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Протокол сортировки -->
+                <div style="flex: 1;">
+                    <p style="text-transform: uppercase; font-weight: 600; margin: 20px 0;">протокол сортировки</p>
+                    <div style="font-size: 0; padding-bottom: 17px; border-bottom: 2px solid #5B677D;"> 
+                        <div style="display: inline-block; width: 48%; vertical-align: top; font-size: 14px;">
+                            <img src="{{ url }}/static/img_spec/Плашка Пдф.png" alt="" style="width: 100%; border-radius: 8px;">
+                            <p style="margin: 5px 0 0 0; text-decoration: underline; font-size: 14px; text-align: center;">
+                                <a href="https://csort-tech.ru/uploads/pdf/протокол_зеленый.pdf">Зеленый кофе</a>
+                            </p>
+                        </div>
+                        <div style="display: inline-block; width: 48%; vertical-align: top; font-size: 14px; margin-left: 10px;">
+                            <img src="{{ url }}/static/img_spec/Плашка Пдф.png" alt="" style="width: 100%; border-radius: 8px;">
+                            <p style="margin: 5px 0 0 0; text-decoration: underline; font-size: 14px; text-align: center;">
+                                <a href="https://csort-tech.ru/uploads/pdf/протокол_жареный.pdf">Жареный кофе</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div style="display: flex;">
+                <!-- Материалы -->
+                <div style="flex: 1; margin-right: 20px;">
+                    <p style="text-transform: uppercase; font-weight: 600; margin: 20px 0;">материал</p>
+                    <div style="font-size: 0; padding-bottom: 36px; border-bottom: 2px solid #5B677D;"> 
+                        <div style="display: inline-block; width: 48%; vertical-align: top; font-size: 14px;">
+                            <img src="{{ url }}/static/img_spec/Плашка Материалы.png" alt="" style="width: 100%; border-radius: 8px;">
+                            <p style="margin: 5px 0 0 0; text-decoration: underline; font-size: 14px; text-align: center;">
+                                <a href="https://csort-tech.ru/uploads/pdf/кофе_флаер.pdf">Буклет СмартСорт</a>
+                            </p>
+                        </div>
+                    </div>                    
+                </div>
+        
+                <!-- 3D модель -->
+                <div style="flex: 1;">
+                    <p style="text-transform: uppercase; font-weight: 600; margin: 20px 0;">3D модель</p>
+                    <div style="padding-bottom: 16px; border-bottom: 2px solid #5B677D;">
+                        <div style="display: inline-block; width: 48%; vertical-align: top; font-size: 14px;">
+                            <img src="{{ url }}/static/img_spec/3д модель плашка.png" alt="" style="width: 100%; border-radius: 8px;">
+                            <p style="margin: 5px 0 0 0; text-decoration: underline; font-size: 14px; text-align: center;">
+                                <a href="https://www.assembly3d.ru/coffeeLine/">3D модель <br> СмартСорт</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex;">
+                <!-- Документы -->
+                <div style="flex: 1; margin-right: 20px;">
+                    <p style="text-transform: uppercase; font-weight: 600; margin: 20px 0;">документ</p>
+                    <div style="font-size: 0; padding-bottom: 20px; border-bottom: 2px solid #5B677D;"> 
+                        <div style="display: inline-block; width: 48%; vertical-align: top; font-size: 14px;">
+                            <img src="{{ url }}/static/img_spec/Плашка документ.png" alt="" style="width: 100%; border-radius: 8px;">
+                            <p style="margin: 5px 0 0 0; text-decoration: underline; font-size: 14px; text-align: center;">
+                                <a href="https://csort-tech.ru/uploads/doc/Соглашение_о_тестировании_оборудования.docx">Соглашение о тестировании</a>
+                            </p>
+                        </div>
+                    </div>                   
+                </div>
+                <div style="flex: 1;"></div>
+            </div>
+        {% endif %}
+        {% if product is defined and product and product != 'кофе' %}
+            <div style="display: flex;">
+                <!-- Отчеты -->
+                <div style="flex: 1; margin-right: 20px;">
+                    <p style="text-transform: uppercase; font-weight: 600; margin: 20px 0;">отчет</p>
+                    <div style="font-size: 0; padding-bottom: 20px; border-bottom: 2px solid #5B677D;"> 
+                        <div style="display: inline-block; width: 48%; vertical-align: top; font-size: 14px;">
+                            <img src="{{ url }}/static/img_spec/Плашка документ.png" alt="" style="width: 100%; border-radius: 8px;">
+                            <p style="margin: 5px 0 0 0; text-decoration: underline; font-size: 14px; text-align: center;">
+                                <a href="https://csort-tech.ru/report/reports/Отчет по {{ product_datv }} от {{ today_str }} за 60 дней.pdf">Отчет по продукту</a>
+                            </p>
+                        </div>
+                    </div>                   
+                </div>
+                <div style="flex: 1;"></div>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+
+
+    <!-- 3 ЛИСТ -->
+    <div style="page-break-before: always;">
+        <h3 style="font-size: 26px; font-weight: 500; border-left: 2px solid red; padding-left: 25px; margin-bottom: 30px;">УСЛОВИЯ ПОСТАВКИ</h3>
+
+        <div class="supply_div">
+            <h4 class="supply">Оплата</h4>
+            <p>{{ payment }}</p>        
+        </div>
+
+        <div class="supply_div">
+            <h4 class="supply">Срок поставки</h4>
+            <p>{{ delivery }}</p>
+        </div>
+        
+        <div class="supply_div">
+            <h4 class="supply">Гарантия</h4>
+            <p>{{ warranty }}</p>
+        </div>
+        {% if id_row_photo_sorter %}
+        <div>
+            <h4 class="supply">Ввод в эксплуатацию</h4>
+            <p>Для фотосепараторов ввод в эксплуатацию осуществляется в течение 7 рабочих дней с момента получения заявки и подтверждения готовности оборудования к запуску.</p>
+        </div>
+        {% endif%}
+        
+    </div>
+
+
+    <!-- 4 ЛИСТ ФОТОСЕПАРАТОРЫ -->
+    {% for info in dop_info_photo %}
+    <div style="page-break-before: always;">
+        <!-- заголовок -->
+        <h3 style="font-size: 26px; font-weight: 500; border-left: 2px solid red; padding-left: 25px; margin-bottom: 30px;">ОСНОВНЫЕ ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ <br> {{ info.name | replace('без конфигурации', '') | replace('(Extra light)', '') | safe }}</h3>
+    </div>
+    <div style="display: flex;">
+        <!-- левая часть 50% -->
+        <div style="width: 50%;">
+            <!-- осн. часть -->
+            <p style="font-size: 12px; line-height: 1.5; height: 75px;">{{ info.desc_dop_info }}</p>
+            <div style="margin-right: 10px;">
+                <table style="margin-top: 229px;">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td style="padding-bottom: 12px; font-size: 14px; font-weight: 600;">Основные характеристики:</td>
+                        </tr>
+                        {% set counter = 1 %}
+                        {% if info.count_channel is defined and info.count_channel %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Количество каналов, шт.</td>
+                            <td class="table_td_value">{{ info.count_channel }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.efficiency is defined and info.efficiency %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Прозводительность(пшеница), т/ч, не менее*</td>
+                            <td class="table_td_value">{{ info.efficiency }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.clean_coeff is defined and info.clean_coeff %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Коэффициент очистки, %, не менее*</td>
+                            <td class="table_td_value">{{ info.clean_coeff }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.matrix is defined and info.matrix %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Разрешение CCD-матрицы(на лоток),  пиксель</td>
+                            <td class="table_td_value">{{ info.matrix }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.voltage is defined and info.voltage %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Напряжение питания, В</td>
+                            <td class="table_td_value">{{ info.voltage }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.network is defined and info.network %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Частота питающей сети, Гц </td>
+                            <td class="table_td_value">{{ info.network }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.power_consumption is defined and info.power_consumption %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Номинальная потребляемая мощность, кВт</td>
+                            <td class="table_td_value">{{ info.power_consumption }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.pressure is defined and info.pressure %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Давление воздуха, МПа</td>
+                            <td class="table_td_value">{{ info.pressure }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px;">Класс чистоты воздуха по ГОСТ 17433, ISO 8573-1:</td>
+                        </tr>
+                        {% if info.class_clean_hard_particles is defined and info.class_clean_hard_particles %}
+                        <tr>
+                            <td></td>
+                            <td style="font-size: 12px; padding-bottom: 0;">По твердым частицам</td>
+                            <td style="font-weight: 600; padding-bottom: 0; text-align: right;">{{ info.class_clean_hard_particles }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if info.class_clean_wet is defined and info.class_clean_wet %}
+                        <tr>
+                            <td></td>
+                            <td style="font-size: 12px; padding-top: 0; padding-bottom: 0; ">По влажности</td>
+                            <td style="font-weight: 600; padding-top: 0; padding-bottom: 0; text-align: right;">{{ info.class_clean_wet }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if info.class_clean_oil is defined and info.class_clean_oil %}
+                        <tr>
+                            <td></td>
+                            <td style="font-size: 12px; padding-top: 0; border-bottom: 1px solid #5B677D;">По содержанию масел</td>
+                            <td style="font-weight: 600; padding-top: 0; border-bottom: 1px solid #5B677D;text-align: right;">{{ info.class_clean_oil }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.air_consumptio_def is defined and info.air_consumptio_def %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Расход воздуха на технологический процесс (пшеница), м³/час, не более*:</td>
+                            <td class="table_td_value">{{ info.air_consumptio_def }}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- правая часть 50% -->
+        <div style="width: 50%;">
+            <div style="height: 270px; display: flex;    justify-content: center;">
+                <img style="max-width: 280px; max-height: 270px;" src="{{ info.photo }}" alt="">
+            </div>
+
+            <div>
+                <div style="display: flex; justify-content: space-evenly; margin: 20px;">
+                    <div style="width: 100px; display: flex; align-items: center;">
+                        <img style="width: 30px" src="{{ url }}/static/img_machine/куб_1.png" alt="высота">
+                        <p style="font-size: 10px; font-weight: 600; padding: 0 4px">{{ info.height }} мм</p>
+                    </div>
+                    <div style="width: 100px; display: flex; align-items: center;">
+                        <img style="width: 30px" src="{{ url }}/static/img_machine/куб_2.png" alt="глубина">
+                        <p style="font-size: 10px; font-weight: 600; padding: 0 4px">{{ info.depth }} мм</p>
+                    </div>
+                    <div style="width: 100px; display: flex; align-items: center;">
+                        <img style="width: 30px" src="{{ url }}/static/img_machine/куб_3.png" alt="ширина">
+                        <p style="font-size: 10px; font-weight: 600; padding: 0 4px">{{ info.width }} мм</p>
+                    </div>
+                </div>
+
+                <table>
+                    <tbody>
+                        {% set counter = counter + 1 %}
+                        {% if info.air_consumptio_max is defined and info.air_consumptio_max %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Максимальный расход воздуха(при давлении 0,6 МПа), м³/ч</td>
+                            <td class="table_td_value">{{ info.air_consumptio_max }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.weight is defined and info.weight %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Масса, кг, не более </td>
+                            <td class="table_td_value">{{ info.weight }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.class_clean_protection is defined and info.class_clean_protection %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Класс защиты от поражения электрическим током по ГОСТ IEC 61140-2012</td>
+                            <td class="table_td_value">{{ info.class_clean_protection }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.level_of_protection is defined and info.level_of_protection %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Степень защиты оболочки по ГОСТ 14254</td>
+                            <td class="table_td_value">{{ info.level_of_protection }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.temperature_of_medium is defined and info.temperature_of_medium %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Температура окружающей среды, °С</td>
+                            <td class="table_td_value">{{ info.temperature_of_medium }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.wet is defined and info.wet %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Относительная влажность воздуха при температуре 25 °С, %</td>
+                            <td class="table_td_value">{{ info.wet }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">срок службы, лет</td>
+                            <td class="table_td_value">10</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="padding-left: 10px; font-size: 10px; text-align: left;">* При исходной засоренности не более 2%, объемной<br>массе продукта 0,750 т/м³.</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <!-- 5 ЛИСТ РЕШЕТНЫЕ МАШИНЫ-->
+    {% for info in dop_info_machine %}
+    <div style="page-break-before: always;">
+        <!-- заголовок -->
+        <h3 style="font-size: 26px; font-weight: 500; border-left: 2px solid red; padding-left: 25px; margin-bottom: 30px;">ОСНОВНЫЕ ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ <br> {{ info.name }}</h3>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+        <!-- левая часть 51% -->
+        <div style="width: 51%;">
+            <!-- осн. часть -->
+            <p style="font-size: 12px; line-height: 1.5; height: 75px;">{{ info.desc_dop_info }}</p>
+            <div>
+                <table style="margin-top: 229px;">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td style="padding-bottom: 12px; font-size: 14px; font-weight: 600;">Основные характеристики:</td>
+                        </tr>
+                        {% set counter = 1 %}
+                        {% if info.level_of_protection is defined and info.level_of_protection %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Производительность: Предварительная очистка, т/час</td>
+                            <td class="table_td_value">{{ info.level_of_protection }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.prod_clean is defined and info.prod_clean %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Продовольственная очистка, т/час</td>
+                            <td class="table_td_value">{{ info.prod_clean }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.secondary_clean is defined and info.secondary_clean %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Вторичная очистка, т/час</td>
+                            <td class="table_td_value">{{ info.secondary_clean }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.power_electric_sieves_stakan is defined and info.power_electric_sieves_stakan %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Мощность эл. двигателя решетного стана, кВт/час</td>
+                            <td class="table_td_value">{{ info.power_electric_sieves_stakan }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.power_electric_ventilator is defined and info.power_electric_ventilator %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Мощность эл. двигателя вентилятора, кВт/час</td>
+                            <td class="table_td_value">{{ info.power_electric_ventilator }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.air_consumptio_def is defined and info.air_consumptio_def %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Потребление воздуха, м3/час</td>
+                            <td class="table_td_value">{{ info.air_consumptio_def }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.square_sieves is defined and info.square_sieves %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Площадь решёт, м2</td>
+                            <td class="table_td_value">{{ info.square_sieves }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.count_sieves is defined and info.count_sieves %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Количество решет, шт.</td>
+                            <td class="table_td_value">{{ info.count_sieves }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.size_sieves is defined and info.size_sieves %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Размеры решет, мм</td>
+                            <td class="table_td_value">{{ info.size_sieves }}</td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endif %}
+                        {% if info.weight is defined and info.weight %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Масса, кг</td>
+                            <td class="table_td_value">{{ info.weight }}</td>
+                        </tr>
+                        {% endif %}
+                        {% set counter = counter + 1 %}
+                        {% if info.rated_pre_cleaning is defined and info.rated_pre_cleaning %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Номинальная производительность при предварительной очистке</td>
+                            <td class="table_td_value">{{ info.rated_pre_cleaning }}</td>
+                        </tr>
+                        {% endif %}
+                        {% set counter = counter + 1 %}
+                        {% if info.rated_primary_cleaning is defined and info.rated_primary_cleaning %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Номинальная производительность при первичной очистке</td>
+                            <td class="table_td_value">{{ info.rated_primary_cleaning }}</td>
+                        </tr>
+                        {% endif %}
+                        {% set counter = counter + 1 %}
+                        {% if info.rated_secondary_cleaning is defined and info.rated_secondary_cleaning %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Номинальная производительность при вторичной очистке</td>
+                            <td class="table_td_value">{{ info.rated_secondary_cleaning }}</td>
+                        </tr>
+                        {% endif %}
+                        {% set counter = counter + 1 %}
+                        {% if info.total_area_sieves is defined and info.total_area_sieves %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Суммарная площадь решет</td>
+                            <td class="table_td_value">{{ info.total_area_sieves }}</td>
+                        </tr>
+                        {% endif %}
+                        {% set counter = counter + 1 %}
+                        {% if info.total_installed_capacity_without_aspiration_system_fan is defined and info.total_installed_capacity_without_aspiration_system_fan %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Суммарная установленная мощность, без вентилятора системы аспирации</td>
+                            <td class="table_td_value">{{ info.total_installed_capacity_without_aspiration_system_fan }}</td>
+                        </tr>
+                        {% endif %}
+                        {% set counter = counter + 1 %}
+                        {% if info.total_installed_capacity is defined and info.total_installed_capacity %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Суммарная установленная мощность</td>
+                            <td class="table_td_value">{{ info.total_installed_capacity }}</td>
+                        </tr>
+                        {% endif %}
+                        {% set counter = counter + 1 %}
+                        {% if info.power_electric_motor_fan is defined and info.power_electric_motor_fan %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Мощность эл. двигателя (вентилятора)</td>
+                            <td class="table_td_value">{{ info.power_electric_motor_fan }}</td>
+                        </tr>
+                        {% endif %}
+                        {% set counter = counter + 1 %}
+                        {% if info.power_electric_motor_grating_mill is defined and info.power_electric_motor_grating_mill %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Мощность эл. двигателя (решетного стана)</td>
+                            <td class="table_td_value">{{ info.power_electric_motor_grating_mill }}</td>
+                        </tr>
+                        {% endif %}
+                        {% set counter = counter + 1 %}
+                        {% if info.power_electric_motor_sieve_cleaning_mechanism is defined and info.power_electric_motor_sieve_cleaning_mechanism %}
+                        <tr>
+                            <td>{{ counter }}</td>
+                            <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Мощность эл. двигателя (механизма очистки решет)</td>
+                            <td class="table_td_value">{{ info.power_electric_motor_sieve_cleaning_mechanism }}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- правая часть 48% -->
+        <div style="width: 48%;">
+            <div style="height: 270px;">
+                <img style="max-width: 280px; max-height: 320px;" src="{{ info.photo }}" alt="">
+            </div>
+
+            <div>
+                <div style="display: flex; justify-content: space-evenly; margin: 20px;">
+                    <div style="width: 100px; display: flex; align-items: center;">
+                        <img style="width: 30px" src="{{ url }}/static/img_machine/куб_1.png" alt="высота">
+                        <p style="font-size: 10px; font-weight: 600; padding: 0 4px">{{ info.height }} мм</p>
+                    </div>
+                    <div style="width: 100px; display: flex; align-items: center;">
+                        <img style="width: 30px" src="{{ url }}/static/img_machine/куб_2.png" alt="глубина">
+                        <p style="font-size: 10px; font-weight: 600; padding: 0 4px">{{ info.depth }} мм</p>
+                    </div>
+                    <div style="width: 100px; display: flex; align-items: center;">
+                        <img style="width: 30px" src="{{ url }}/static/img_machine/куб_3.png" alt="ширина">
+                        <p style="font-size: 10px; font-weight: 600; padding: 0 4px">{{ info.width }} мм</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <!-- 6 ЛИСТ КОМПРЕССОРЫ -->
+    {% for info in dop_info_compressor %}
+    <!-- заголовок -->
+    <div style="page-break-before: always;">
+        <!-- заголовок -->
+        <h3 style="font-size: 26px; font-weight: 500; border-left: 2px solid red; padding-left: 25px; margin-bottom: 30px;">ОСНОВНЫЕ ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ <br> {{ info.name }}</h3>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 49%;">
+            <p style="font-size: 12px; line-height: 1.5; height: 75px; padding-right: 5px;">{{ info.desc_dop_info }}</p>
+        </div>
+        <div style="width: 49%;">
+            <div>  
+                <img style="height: 100%; width: 280px;" src="{{ info.photo }}" alt="">
+            </div>
+
+            <div>
+                <div style="display: flex; justify-content: space-evenly; margin: 20px;">
+                    <div style="width: 100px; display: flex; align-items: center;">
+                        <img style="width: 30px" src="{{ url }}/static/img_machine/куб_1.png" alt="высота">
+                        <p style="font-size: 10px; font-weight: 600; padding: 0 4px">{{ info.height }} мм</p>
+                    </div>
+                    <div style="width: 100px; display: flex; align-items: center;">
+                        <img style="width: 30px" src="{{ url }}/static/img_machine/куб_2.png" alt="глубина">
+                        <p style="font-size: 10px; font-weight: 600; padding: 0 4px">{{ info.depth }} мм</p>
+                    </div>
+                    <div style="width: 100px; display: flex; align-items: center;">
+                        <img style="width: 30px" src="{{ url }}/static/img_machine/куб_3.png" alt="ширина">
+                        <p style="font-size: 10px; font-weight: 600; padding: 0 4px">{{ info.width }} мм</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <!-- осн. часть -->
+        <div>
+            <table style="margin-top: 50px;">
+                <tbody>
+                    <tr>
+                        <td style="width: 10px;"></td>
+                        <td style="padding-bottom: 12px; font-size: 14px; font-weight: 600;">Основные характеристики:</td>
+                    </tr>
+                    {% set counter = 1 %}
+                    {% if info.efficiency is defined and info.efficiency %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Производительность, м3/мин</td>
+                        <td class="table_td_value">{{ info.efficiency }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.size_receiver is defined and info.size_receiver %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Объем ресивера, л</td>
+                        <td class="table_td_value">{{ info.size_receiver }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Elevator_height is defined and info.Elevator_height %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Производительность на выходе, л/м</td>
+                        <td class="table_td_value">{{ info.Elevator_height }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.work_pressure is defined and info.work_pressure %}
+                    <tr> 
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Рабочее давление, бар</td>
+                        <td class="table_td_value">{{ info.work_pressure }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.engine_power is defined and info.engine_power %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Мощность двигателя, кВт</td>
+                        <td class="table_td_value">{{ info.engine_power }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.supply_voltage is defined and info.supply_voltage %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Напряжение питания, В</td>
+                        <td class="table_td_value">{{ info.supply_voltage }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.frequency_network is defined and info.frequency_network %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Частота питающей сети, Гц</td>
+                        <td class="table_td_value">{{ info.frequency_network }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.number_phases is defined and info.number_phases %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Число фаз</td>
+                        <td class="table_td_value">{{ info.number_phases }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.weight is defined and info.weight %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Масса, кг</td>
+                        <td class="table_td_value">{{ info.weight }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.dehumidifier is defined and info.dehumidifier %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Осушитель</td>
+                        <td class="table_td_value">{{ info.dehumidifier }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.filter is defined and info.filter %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Фильтра</td>
+                        <td class="table_td_value">{{ info.filter }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.receiver is defined and info.receiver %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Ресивер</td>
+                        <td class="table_td_value">{{ info.receiver }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.diameter_air is defined and info.diameter_air %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Диаметр воздуховыпускного отверстия</td>
+                        <td class="table_td_value">{{ info.diameter_air }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.volume_material is defined and info.volume_material %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Объем смазочного материала, л</td>
+                        <td class="table_td_value">{{ info.volume_material }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.noise_level is defined and info.noise_level %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Уровень шума, дб</td>
+                        <td class="table_td_value">{{ info.noise_level }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.management_method is defined and info.management_method %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Метод управления</td>
+                        <td class="table_td_value">{{ info.management_method }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.launch_method is defined and info.launch_method %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Метод запуска</td>
+                        <td class="table_td_value">{{ info.launch_method }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.pressure is defined and info.pressure %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Давление, бар</td>
+                        <td class="table_td_value">{{ info.pressure }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.power is defined and info.power %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Мощность, кВт</td>
+                        <td class="table_td_value">{{ info.power }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.joining is defined and info.joining %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td style="font-size: 12px; border-bottom: 1px solid #5B677D;">Присоединение, дюйм</td>
+                        <td class="table_td_value">{{ info.joining }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- 7 ЛИСТ НОРИ -->
+    {% for info in dop_info_elevator %}
+    <div style="page-break-before: always;">
+        <!-- заголовок -->
+        <h3 style="font-size: 26px; font-weight: 500; border-left: 2px solid red; padding-left: 25px; margin-bottom: 30px;">{{ info.name_print }}</h3>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 49%;">
+            {% if info.CSCCTechnic == 'flex' or info.CSBCTechnic == 'flex' or info.CSETechnic == 'flex' or info.CSZETechnic == 'flex' %}
+                <img style="max-width: 280px; max-height: 320px;" src="{{ url }}/static/img_noria/eacce.PNG" alt="">
+                <p style="font-size: 12px; line-height: 1.5; height: 75px; padding-right: 5px;">{{ info.desc_dop_info }}</p>
+            {% endif %}
+        </div>
+        <div style="width: 49%;">
+            <div style="height: 270px; text-align: center;">
+                <img style="max-width: 280px; max-height: 320px;" src="{{ info.photo }}" alt="">
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+        <!-- осн. часть -->
+        <div style="width: 48%;">
+            <table style="margin-top: 50px;">
+                <tbody>
+                    <tr>
+                        <td style="width: 10px;"></td>
+                        <td class="table_td_header">ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <tbody>
+                    {% if info.efficiency is defined and info.efficiency %}
+                    {% set counter = 1 %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Производительность, м3/ч</td>
+                        <td class="table_td_value">{{ info.efficiency }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.efficiency_wheat is defined and info.efficiency_wheat %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Производительность({{ info.product_name }}), т/ч</td>
+                        <td class="table_td_value">{{ info.efficiency_wheat }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.CSETransportLength is defined and info.CSETransportLength %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Высота транспортировки, м</td>
+                        <td class="table_td_value">{{ info.CSETransportLength }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Elevator_height is defined and info.Elevator_height %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Высота элеватора, м</td>
+                        <td class="table_td_value">{{ info.Elevator_height }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.TransportLength is defined and info.TransportLength %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Длина транспортировки, м</td>
+                        <td class="table_td_value">{{ info.TransportLength }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.TotalLengthElevator is defined and info.TotalLengthElevator %}
+                    <tr> 
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Общая длина элеватора, м </td>
+                        <td class="table_td_value">{{ info.TotalLengthElevator }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Noria_height is defined and info.Noria_height %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Высота нории, м</td>
+                        <td class="table_td_value">{{ info.Noria_height }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Length is defined and info.Length %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Длина общая, м</td>
+                        <td class="table_td_value">{{ info.Length }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.CSEBeltSpeed is defined and info.CSEBeltSpeed %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Скорость ленты, м/с</td>
+                        <td class="table_td_value">{{ info.CSEBeltSpeed }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.LengthUpperSection is defined and info.LengthUpperSection %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Длина верхнего участка, м </td>
+                        <td class="table_td_value">{{ info.LengthUpperSection }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.LengthLowerSection is defined and info.LengthLowerSection %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Длина нижнего участка, м</td>
+                        <td class="table_td_value">{{ info.LengthLowerSection }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.BucketStep is defined and info.BucketStep %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Шаг ковшей, шт./м</td>
+                        <td class="table_td_value">{{ info.BucketStep }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.BeltSpeed is defined and info.BeltSpeed %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Скорость цепи, м/с</td>
+                        <td class="table_td_value">{{ info.BeltSpeed }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.ScraperStep is defined and info.ScraperStep %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Шаг скребка, шт./м</td>
+                        <td class="table_td_value">{{ info.ScraperStep }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Bucket_volume is defined and info.Bucket_volume %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Объем ковшей, литров</td>
+                        <td class="table_td_value">{{ info.Bucket_volume }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.size_outlet_pipes is defined and info.size_outlet_pipes %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Размер выходных патрубков, мм</td>
+                        <td class="table_td_value">{{ info.size_outlet_pipes }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.DrumStep is defined and info.DrumStep %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Частота вращения барабана, об./мин.</td>
+                        <td class="table_td_value">{{ info.DrumStep }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.DefDrumDesign is defined and info.DefDrumDesign %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Конструкция барабана</td>
+                        <td class="table_td_value">{{ info.DefDrumDesign }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.rated_power_consumption is defined and info.rated_power_consumption %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Номинальная потребляемая мощность, кВт</td>
+                        <td class="table_td_value">{{ info.rated_power_consumption }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Material is defined and info.Material %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Материал исполнения</td>
+                        <td class="table_td_value">{{ info.Material }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.CSCCScraperMaterial is defined and info.CSCCScraperMaterial %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Матерал скребков</td>
+                        <td class="table_td_value">{{ info.CSCCScraperMaterial }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if info.BucketMaterial is defined and info.BucketMaterial %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Матерал ковшей</td>
+                        <td class="table_td_value">{{ info.BucketMaterial }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Motor is defined and info.Motor %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Электродвигатель</td>
+                        <td class="table_td_value">{{ info.Motor }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Reductor is defined and info.Reductor %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Редуктор</td>
+                        <td class="table_td_value">{{ info.Reductor }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="width: 48%;">
+            <table style="margin-top: 50px;">
+                <tbody>
+                    <tr>
+                        <td style="width: 10px;"></td>
+                        <td class="table_td_header">КОМПЛЕКТАЦИЯ</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <tbody>
+                    {% set counter = 1 %}
+                    {% if info.DefRevisionWindow is defined and info.DefRevisionWindow %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Ревизионное окно, шт.</td>
+                        <td class="table_td_value">{{ info.DefRevisionWindow }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.DefHatchesStripping is defined and info.DefHatchesStripping %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Лючки для зачистки в горизонтальных сегментах, шт.</td>
+                        <td class="table_td_value">{{ info.DefHatchesStripping }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.DefLoadingPorts is defined and info.DefLoadingPorts %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Патрубки загрузки / выгрузки из нержавейки, шт.</td>
+                        <td class="table_td_value">{{ info.DefLoadingPorts }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Explosion is defined and info.Explosion %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Взрыворазрядитель, шт.</td>
+                        <td class="table_td_value">{{ info.Explosion }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.CSCCDefSuctionConnect is defined and info.CSCCDefSuctionConnect %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Аспирационный патрубок, шт.</td>
+                        <td class="table_td_value">{{ info.CSCCDefSuctionConnect }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.DefWindowB is defined and info.DefWindowB %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Ревизионное окно в нижней секции, шт.</td>
+                        <td class="table_td_value">{{ info.DefWindowB }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.DefSuctionConnect is defined and info.DefSuctionConnect %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Загрузочный патрубок, шт.</td>
+                        <td class="table_td_value">{{ info.DefSuctionConnect }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.DefWindow is defined and info.DefWindow %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Смотровое окно в нижней секции, шт.</td>
+                        <td class="table_td_value">{{ info.DefWindow }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Converter is defined and info.Converter %}
+                    <tr> 
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Частотный преобразователь</td>
+                        <td class="table_td_value">{{ info.Converter }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.ControlBox is defined and info.ControlBox %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Шкаф управления</td>
+                        <td class="table_td_value">{{ info.ControlBox }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Backward is defined and info.Backward %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Устройство обратного хода</td>
+                        <td class="table_td_value">{{ info.Backward }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.SpeedSensor is defined and info.SpeedSensor %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Датчик скорости</td>
+                        <td class="table_td_value">{{ info.SpeedSensor }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.SensorPodpor is defined and info.SensorPodpor %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Датчик подпора</td>
+                        <td class="table_td_value">{{ info.SensorPodpor }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.TapeSensor is defined and info.TapeSensor %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Датчики схода ленты</td>
+                        <td class="table_td_value">{{ info.TapeSensor }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.SupportSensorTop is defined and info.SupportSensorTop %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Датчик подпора верхний</td>
+                        <td class="table_td_value">{{ info.SupportSensorTop }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.SupportSensorBot is defined and info.SupportSensorBot %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Датчик подпора нижний</td>
+                        <td class="table_td_value">{{ info.SupportSensorBot }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.StreetFulfillmentUpper is defined and info.StreetFulfillmentUpper %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Дополнительные защитные кожуха(Верх)</td>
+                        <td class="table_td_value">{{ info.StreetFulfillmentUpper }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.StreetFulfillmentBottom is defined and info.StreetFulfillmentBottom %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Дополнительные защитные кожуха(Низ)</td>
+                        <td class="table_td_value">{{ info.StreetFulfillmentBottom }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.AddUnloadTENS is defined and info.AddUnloadTENS %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Реверсивное исполнение транспортера</td>
+                        <td class="table_td_value">{{ info.AddUnloadTENS }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.VulcanBonding is defined and info.VulcanBonding %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Склеивание Вулканизацией</td>
+                        <td class="table_td_value">{{ info.VulcanBonding }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.ChainSensor is defined and info.ChainSensor %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Датчики обрыва цепи</td>
+                        <td class="table_td_value">{{ info.ChainSensor }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Backload is defined and info.Backload %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Боковая загрузка</td>
+                        <td class="table_td_value">{{ info.Backload }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.DoubleSideBackload is defined and info.DoubleSideBackload %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Боковая загрузка с 2-х сторон</td>
+                        <td class="table_td_value">{{ info.DoubleSideBackload }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.Vertical is defined and info.Vertical %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Вертикальная загрузка</td>
+                        <td class="table_td_value">{{ info.Vertical }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.AddLoad is defined and info.AddLoad %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Дополнительная загрузка</td>
+                        <td class="table_td_value">{{ info.AddLoad }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.AddUnload is defined and info.AddUnload %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Дополнительная выгрузка</td>
+                        <td class="table_td_value">{{ info.AddUnload }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.StreetFulfillment is defined and info.StreetFulfillment %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Дополнительные защитные кожуха</td>
+                        <td class="table_td_value">{{ info.StreetFulfillment }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.DrillInBelt is defined and info.DrillInBelt %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Сверление отверсий в ленте</td>
+                        <td class="table_td_value">{{ info.DrillInBelt }}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            <table style="margin-top: 5px;">
+                <tbody>
+                    <tr>
+                        <td style="width: 10px;"></td>
+                        <td style="padding-bottom: 0;" class="table_td_header">ТОЛЩИНА МЕТАЛЛА</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <tbody>
+                    {% set counter = 1 %}
+                    {% if info.supporting_structures is defined and info.supporting_structures %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Несущие конструкции, мм </td>
+                        <td class="table_td_value">{{ info.supporting_structures }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.not_supporting_structures is defined and info.not_supporting_structures %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Не несущие конструкции, мм</td>
+                        <td class="table_td_value">{{ info.not_supporting_structures }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.MetallSection is defined and info.MetallSection %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Секции, мм</td>
+                        <td class="table_td_value">{{ info.MetallSection }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.MetallOther is defined and info.MetallOther %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Башмак и Головная часть, мм</td>
+                        <td class="table_td_value">{{ info.MetallOther }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.bodyT is defined and info.bodyT %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Стенка и днище, мм</td>
+                        <td class="table_td_value">{{ info.bodyT }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.capT is defined and info.capT %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Крышка, мм</td>
+                        <td class="table_td_value">{{ info.capT }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                    {% endif %}
+                    {% if info.liningT is defined and info.liningT %}
+                    <tr>
+                        <td>{{ counter }}</td>
+                        <td class="table_td_name">Футеровка, мм</td>
+                        <td class="table_td_value">{{ info.liningT }}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 8 ЛИСТ НОРИ(ОБЩИЙ ВИД) -->
+    <div style="page-break-before: always;">
+        <!-- заголовок -->
+        <h3 style="font-size: 26px; font-weight: 500; border-left: 2px solid red; padding-left: 25px; margin-bottom: 30px;">Общий вид</h3>
+    </div>
+    <div>
+        <img style="width: 100%;" src="{{ url }}/static/img_noria/{{ info.name }}.png" alt="">
+    </div>
+    <div>   
+        <table style="margin-top: 5px;">
+            <tbody>
+                <tr>
+                    <td style="width: 10px;"></td>
+                    <td class="table_td_header">ОСНОВНЫЕ РАЗМЕРЫ</td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                {% set counter = 1 %}
+                {% if info.Elevator_height is defined and info.Elevator_height %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Высота элеватора, м</td>
+                    <td class="table_td_value">{{ info.Elevator_height }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.SizeHeightTransport is defined and info.SizeHeightTransport %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Высота транспортировки, м</td>
+                    <td class="table_td_value">{{ info.SizeHeightTransport }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.LengthUpperSection is defined and info.LengthUpperSection %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Длина верхнего участка, м</td>
+                    <td class="table_td_value">{{ info.LengthUpperSection }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.Length_before_unloading is defined and info.Length_before_unloading %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Длина до выгрузки, м</td>
+                    <td class="table_td_value">{{ info.Length_before_unloading }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.LengthLowerSection is defined and info.LengthLowerSection %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Длина нижнего участка, м</td>
+                    <td class="table_td_value">{{ info.LengthLowerSection }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.Length_before_loading is defined and info.Length_before_loading %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Длина до загрузки, м</td>
+                    <td class="table_td_value">{{ info.Length_before_loading }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.TotalLength is defined and info.TotalLength %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Общая длина, м</td>
+                    <td class="table_td_value">{{ info.TotalLength }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.LengthAxis is defined and info.LengthAxis %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Длина по осям, м</td>
+                    <td class="table_td_value">{{ info.LengthAxis }}</td>
+                </tr>
+                {% endif %}
+                {% if info.Length is defined and info.Length %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Длина общая, м</td>
+                    <td class="table_td_value">{{ info.Length }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.TransportLength is defined and info.TransportLength %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Длина транспортировки, м</td>
+                    <td class="table_td_value">{{ info.TransportLength }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 9 ЛИСТ НОРИ(Упаковочный лист) -->
+    <div style="page-break-before: always;">
+        <!-- заголовок -->
+        <h3 style="font-size: 26px; font-weight: 500; border-left: 2px solid red; padding-left: 25px; margin-bottom: 30px;">Упаковочный лист {{ info.namePhoto }}</h3>
+    </div>
+    <div>
+        <table style="margin-top: 10px;">
+            <tbody>
+                <tr>
+                    <td style="width: 10px;"></td>
+                    <td style="padding-bottom: 12px; font-size: 12px; font-weight: 600;">НАИМЕНОВАНИЕ</td>
+                    <td style="padding-bottom: 12px; text-align: center; font-size: 12px; font-weight: 600;">ЕДИНИЦА ИЗМЕРЕНИЯ</td>
+                    <td style="padding-bottom: 12px; text-align: center; font-size: 12px; font-weight: 600;">КОЛИЧЕСТВО</td>
+                </tr>
+                {% set counter = 1 %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">{{ info.name_print }}</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.modelCount }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        {% if info.TotalLength_mm is defined and info.TotalLength_mm %}
+            <p style="font-size: 12px; margin: 30px 0; font-weight: bold;">Комплектность (высота {{ info.Elevator_height_mm }} мм, длина {{ info.TotalLength_mm }} мм):</p>
+        {% elif info.Length_mm is defined and info.Length_mm %}
+            <p style="font-size: 12px; margin: 30px 0; font-weight: bold;">Комплектность (высота {{ info.Length_mm }} мм):</p>
+        {% else %}
+            <p style="font-size: 12px; margin: 30px 0; font-weight: bold;">Комплектность (высота {{ info.Elevator_height_mm }} мм):</p>
+        {% endif %}
+        <p style="font-size: 12px; margin: 30px 0; font-weight: bold;">оборудование поставляется в разобранном и разукомплектованном* виде:</p>
+    </div>
+    <div>
+        <table style="margin-top: 10px;">
+            <tbody>
+                <tr>
+                    <td style="width: 10px;"></td>
+                    <td style="padding-bottom: 12px; font-size: 12px; font-weight: 600;">НАИМЕНОВАНИЕ</td>
+                    <td style="padding-bottom: 12px; text-align: center; font-size: 12px; font-weight: 600;">ЕДИНИЦА ИЗМЕРЕНИЯ</td>
+                    <td style="padding-bottom: 12px; text-align: center; font-size: 12px; font-weight: 600;">КОЛИЧЕСТВО</td>
+                </tr>
+                {% set counter = 1 %}
+                {% if info.DefStretchSection is defined and info.DefStretchSection %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Секция натяжная</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.DefStretchSection }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.DefDriveSection is defined and info.DefDriveSection %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Секция приводная</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.DefDriveSection }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.DefCornerSection is defined and info.DefCornerSection %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Секция угловая</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.DefCornerSection }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.DefElevatorShoe is defined and info.DefElevatorShoe %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Башмак элеватора</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.DefElevatorShoe }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.DefElevatorHead is defined and info.DefElevatorHead %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Голова элеватора</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.DefElevatorHead }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.section_element is defined and info.section_element %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Секция удлинения</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.section_element }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.bucketElement is defined and info.bucketElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Лента с ковшами</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.bucketElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.CSECountMotorReductorElement is defined and info.CSECountMotorReductorElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Привод элеватора</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.CSECountMotorReductorElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.controlBoxElement is defined and info.controlBoxElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Пульт управления</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.controlBoxElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.sensorPodporBottomElement is defined and info.sensorPodporBottomElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Датчик емкостной</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.sensorPodporBottomElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.sensorSpeedElement is defined and info.sensorSpeedElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Датчик индуктивный(датчики скорости)</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.sensorSpeedElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.sensorBeltElement is defined and info.sensorBeltElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Датчик индуктивный(датчик схода ленты)</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.sensorBeltElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.chainElement is defined and info.chainElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Цепь</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.chainElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.CSCCBucketElement is defined and info.CSCCBucketElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Скребки</td>
+                    <td class="table_td_noria">комплект</td>
+                    <td class="table_td_noria">{{ info.CSCCBucketElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.CSZEBucketElement is defined and info.CSZEBucketElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Ковши</td>
+                    <td class="table_td_noria">комплект</td>
+                    <td class="table_td_noria">{{ info.CSZEBucketElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.OneChainElement is defined and info.OneChainElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Лента</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.OneChainElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.motorReductorElement is defined and info.motorReductorElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Мотор-Редуктор</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.motorReductorElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.sensorPodporElement is defined and info.sensorPodporElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Датчик подпора</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.sensorPodporElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.CSCCsensorSpeedElement is defined and info.CSCCsensorSpeedElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Датчик РКС</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.CSCCsensorSpeedElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.passportElement is defined and info.passportElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Паспорт</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.passportElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.manualElement is defined and info.manualElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Руководство по эксплуатации</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.manualElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+                {% if info.toolsElement is defined and info.toolsElement %}
+                <tr>
+                    <td>{{ counter }}</td>
+                    <td class="table_td_name">Набор метизов для сборки</td>
+                    <td class="table_td_noria">шт.</td>
+                    <td class="table_td_noria">{{ info.toolsElement }}</td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endif %}
+            </tbody>
+        </table>
+        <div style="margin-top: 50px;">
+            {% if info.controlBoxElement == 0 or info.sensorPodporBottomElement == 0 or info.sensorSpeedElement == 0 or info.sensorBelt == 0 or info.passportElement == 0 %}
+            <p><b>в комплект поставки оборудования не входит:</b><br>
+            {% if info.controlBoxElement == 0 %}
+                Пульт управления,
+            {% endif %}
+            {% if info.sensorPodporBottomElement == 0 %}
+                Датчик емкостной,
+            {% endif %}
+            {% if info.sensorSpeedElement == 0 %}
+                Датчик индуктивный(датчики скорости),
+            {% endif %}
+            {% if info.sensorBelt == 0 %}
+                Датчик индуктивный(датчик схода ленты),
+            {% endif %}
+            {% if info.sensorPodpor == 0 %}
+                Датчик подпора,
+            {% endif %}
+            {% if info.sensorSpeed == 0 %}
+                Датчик РКС,
+            {% endif %}
+            Паспорт.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if info.elevator_dxf %}
+    <!-- 11 ЛИСТ -->
+    <div style="page-break-before: always;">
+        <!-- заголовок -->
+        <h3 style="font-size: 26px; font-weight: 500; border-left: 2px solid red; padding-left: 25px; margin-bottom: 30px;">
+            DXF
+        </h3>
+        <button class="button"><a href="{{elevator_dxf}}">Ссылка на dxf</a></button>
+    </div>
+    <div style="text-align: center;">
+        <img style="width: 80%;" src="{{elevator_svg}}" alt="">
+    </div>
+    {% endif %}
+    {% endfor %}
+    <!-- 11 ЛИСТ РЕФЕРЕНТЫ-->
+    {% if product =='кофе' %}
+    <div style="page-break-before: always;">
+        <div class="titleRepherent">
+            <!-- заголовок -->
+            <h3 style="font-size: 26px; font-weight: 500;">Нам доверяют</h3>
+            <h4 style="font-size: 16px;">Отзывы и кейсы от реальных клиентов</h4>
+        </div>
+        <div style="display: flex; justify-content: center; flex-wrap: wrap; align-items: center;">
+            <div class=repherentBox>
+                <div style="width: 150px; flex-shrink: 0;">
+                    <a href="https://znakcoffee.shop/">
+                        <img style="width: 100%;" src="{{ url }}/static/img_referents/znak.png" alt="znak">
+                    </a>
+                </div>
+                <div style="flex: 1; padding: 0 20px;">
+                    <p style="padding-bottom: 20px;">
+                        «Проще поставить один раз фотосепаратор,<br> чем чинить 100 кофемашин из-за сорного кофе».
+                    </p>
+                    <p style="font-weight: bold; font-size: 12px; padding-bottom: 20px;">
+                        Никита, начальник производства компании «Знак Кофе»
+                    </p>
+                    <p style="width: 160px; margin-bottom: 20px; border-radius: 8px; padding: 10px 25px; background-color: rgb(185, 0, 0);">
+                        <a style="color: white; text-decoration: none;" href="https://csort.ru/case/znak_coffee/">ЧИТАТЬ КЕЙС</a>
+                    </p>
+                </div>
+
+            </div>
+            <div class=repherentBox>
+                <div style="width: 150px; flex-shrink: 0;">
+                    <a href="https://gemma-coffee.ru/">
+                        <img style="width: 100%;" src="{{ url }}/static/img_referents/gemma.png" alt="gemma">
+                    </a>
+                </div>
+                <div style="flex: 1; padding: 0 20px;">
+                    <p style="padding-bottom: 20px;">
+                        «Фотосепаратор не только защищает оборудование,<br>
+                        но и улучшает качество кофе за счет чистого сырья.<br>
+                        Это не просто оборудование, а инструмент<br>
+                        для масштабирования бизнеса».
+                    </p>
+                    <p style="font-weight: bold; font-size: 12px; padding-bottom: 20px;">
+                        Максим Скрипников, мастер обжарочного цеха, специалист по обжарке кофе Gemma
+                    </p>
+                    <p style="width: 160px; margin-bottom: 20px; border-radius: 8px; padding: 10px 25px; background-color: rgb(185, 0, 0);">
+                        <a style="color: white; text-decoration: none;" href="https://csort.ru/case/gemma/">ЧИТАТЬ КЕЙС</a>
+                    </p>
+                </div>
+            </div>
+            <div class=repherentBox>
+                <div style="width: 150px; flex-shrink: 0;">
+                    <a href="https://frumentum.ru/">
+                        <img style="width: 100%;" src="{{ url }}/static/img_referents/frumentum.png" alt="frumentum">
+                    </a>
+                </div>
+                <div style="flex: 1; padding: 0 20px;">
+                    <p style="padding-bottom: 20px;">
+                        «Мы легко встроили фотосепаратор в текущий цикл.<br>
+                        И он уже стал производственной необходимостью».<br>
+                    </p>
+                    <p style="font-weight: bold; font-size: 12px; padding-bottom: 20px;">
+                        Игорь, учредитель компании Frumentum.
+                    </p>
+                    <p style="width: 160px; margin-bottom: 20px; border-radius: 8px; padding: 10px 25px; background-color: rgb(185, 0, 0);">
+                        <a style="color: white; text-decoration: none;" href="https://csort.ru/case/frumentum/">ЧИТАТЬ КЕЙС</a>
+                    </p>
+                </div>
+            </div>
+            <div style="display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 20px;">
+                <div style="width: 100px; flex-shrink: 0;">
+                    <a href="https://produktorium.ru/">
+                        <img style="width: 100%;" src="{{ url }}/static/img_referents/orange_produktorium.png" alt="orange_produktorium">
+                    </a>
+                </div>
+                <div style="width: 100px; flex-shrink: 0;">
+                    <a href="https://almafoodservice.ru/">
+                        <img style="width: 100%;" src="{{ url }}/static/img_referents/almafood.png" alt="almafood">
+                    </a>
+                </div>
+                <div style="width: 100px; flex-shrink: 0;">
+                    <a href="https://aurora.coffee/">
+                        <img style="width: 100%;" src="{{ url }}/static/img_referents/aurora.png" alt="aurora">
+                    </a>
+                </div>
+                <div style="width: 100px; flex-shrink: 0;">
+                    <a href="https://stdrogo.ru/">
+                        <img style="width: 100%;" src="{{ url }}/static/img_referents/saint_drogo.png" alt="saint_drogo">
+                    </a>
+                </div>
+                <div style="width: 100px; flex-shrink: 0;">
+                    <a href="https://konstantacoffee.ru/">
+                        <img style="width: 100%;" src="{{ url }}/static/img_referents/konstanacoffee.png" alt="konstanacoffee">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+<!-- C:\Git_rep\WebAppServer-FastApi\webapp\Front -->
+</body>
+</html>

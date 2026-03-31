@@ -1,0 +1,546 @@
+.startWindow{
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  width: 100%;    
+  margin: 5px 10px;    
+  height: 100%; 
+}
+.exit_iconPhoto{
+  display: flex; 
+  height: 27px; 
+  width: 27px; 
+  padding: 8px; 
+  padding-right: 8px;
+  cursor: pointer;
+}
+.blockIconExit{
+  width: 100%; 
+  display: flex; 
+  justify-content: flex-end;
+}
+.photoImgBlock{
+  display: flex; 
+  flex-direction: column; 
+  width: 100%;
+  height: 100%;  
+  justify-content: space-between;     
+  align-items: center; 
+}
+.checkboxBlock{
+  display: flex; 
+  flex-direction: row; 
+  pointer-events: none; 
+  padding: 0px 8px; 
+  border-radius: 4px;
+}
+.block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: white;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  border: solid 2px;
+  border-color: white;
+  min-height: 29px;
+  text-align: center;
+  width: 150px;
+  margin-top: 8px;
+  -webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2);
+  outline: none;
+  color: #5b6579;
+}
+.block:hover {
+  border-color:#9C9C9C;
+}
+.blurBlock{
+  top:0;
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.blurWindow{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  min-height: 300px;
+  width: 100%;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+}
+.blockButtonPhoto{
+  display: flex; 
+  width: 100%; 
+  justify-content: space-around; 
+  align-items: center;
+}
+.buttonChange{
+  display: flex;
+  width: 100%;
+  max-width: 180px;
+  justify-content: center;
+  background-color: white;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  border: solid 2px;
+  border-color: white;
+  height: 45px;
+  min-height: 35px;
+  margin: 5px;
+}
+.buttonChange:hover{
+  border-color:#9C9C9C;
+}
+.blockProduct{
+  width: 100%; 
+  display: flex; 
+  justify-content: center;     
+  margin: 10px 0 8px 0;
+  align-items: center;
+}
+.infoMark{
+  width: 38px;
+  height: 27px;
+  background-size: contain;
+  margin-left: 9px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-position-x: center;
+  background-position-y: center;
+}
+.deteleCart{
+  width: 35px;     
+  height: 25px;     
+  background-image: url(/off_bot/static/img/exit_icon.png);     
+  background-size: cover;     
+  margin-right: 10px;     
+  background-repeat: no-repeat; 
+  cursor: pointer;
+}
+.blockChoice{
+  display: flex; 
+  flex-direction: row; 
+  padding:0 4px; 
+  align-items: center; 
+  justify-content: space-between;
+}
+.blockArrow{
+  display: flex;
+  background-image: url("../img/arrow.png");
+  width: 17px;
+  height: 20px;
+  background-size: contain;
+}
+.list{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  align-items: flex-start;
+  cursor: pointer;
+  border-radius: 8px;
+  border: solid 2px;
+  border-color: white;
+  min-height: 30px;
+  text-align: center;
+  width: 150px;
+  margin-top: 8px;
+}
+.checkBoxType{
+  display: flex; 
+  flex-direction: row; 
+  margin: 5px;
+}
+.expandPhotoWindow{
+  display: flex;
+  justify-content: flex-end;    
+  position: absolute;
+  margin-top: 85px;
+  margin-left: 85px;
+}
+.sending{
+  display: flex;
+  margin: 0 8px;
+  padding: 0 10px;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: white;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: solid 2px;
+  border-color: white;
+  min-height: 34px;
+  -webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2);
+  -moz-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2);
+  box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2);
+}
+.blockCleaning{
+  display: flex; 
+  flex-direction: column; 
+  width: 100%; 
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+.nameText{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  margin-top: 8px;
+  width: 300px;
+}
+.line{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.blockTypeText{
+  display: flex;
+  flex-direction: row;
+  background-color: #DDDDDD;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  border: solid 2px;
+  border-color: #DDDDDD;
+  min-height: 34px;
+  text-align: center;
+  width: 100%;
+  outline: none;
+  margin: 3px;
+  color: #5b6579;
+  min-width: 122px;
+}
+.blockTypeSieve{
+  display: flex;
+  flex-direction: row;
+  background-color: #DDDDDD;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  border: solid 2px;
+  border-color: #DDDDDD;
+  min-height: 34px;
+  text-align: center;
+  width: 100%;
+  outline: none;
+  margin: 3px;
+  color: #5b6579;
+}
+.blockTitlepercent{
+  background-color: #DDDDDD;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  align-self: center;
+  text-align: center;
+  margin: 2px;
+}
+.resultText{
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  width: 100%;
+}
+.addAndResult{
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-end; 
+  margin: 0 12px;
+}
+.resultSieve {
+  display: flex;
+  width: 100%;
+  font-size: 14px;
+  margin-left: 10px;
+  flex-direction: column;
+  padding: 5px;
+}
+.blockFillings{
+  display: flex; 
+  flex-direction: column; 
+  width: 100%; 
+  height: 100%;
+}
+.addButtonWindow{
+  display: flex; 
+  width: 320px; 
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+.openBlockInfo{
+  font-size: 15px; 
+  padding: 8px 0px 8px 12px;
+  font-weight: bold; 
+  border-radius: 4px;    
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+}
+.imgChange{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 8px;
+  margin-left: 2px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  background-size: contain;
+}
+.blockResults{
+  display: flex; 
+  flex-direction: row; 
+  justify-content: space-between; 
+  width: 100%;
+}
+.modelParametr{
+  width: 100%;
+}
+.windowProductAd{
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+.scrollBlockAdd {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-align: left;
+  font-size: 12px;
+  outline: none;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-snap-stop: always;
+  border-radius: 3px;
+  max-height: 400px;
+  overflow-x: clip;
+  margin-top: 4px;
+  min-height: 0;
+  margin: 0px 10px; 
+  background-color: white;
+}
+.scrollBlockAdd::-webkit-scrollbar {
+  width: 34px;
+  background-color: white;
+}
+.scrollBlockAdd::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: lightslategray;
+  border: solid;
+  border-color: white;
+  width: 8px;
+  height: 12px;
+  border-left-width: 14px;
+  border-right-width: 8px;
+} 
+.scrollBlockAdd::-webkit-scrollbar-track-piece{
+  background: white;
+  width: 12px;
+}
+.scrolSearchlBlock{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 12px;
+  outline: none;
+  border-radius: 3px;
+  margin-top: 10px;
+  min-height: 0;
+  width: 100%;
+}
+@media screen and (max-height: 700px) {
+  .scrolSearchGrouplBlock{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 480px;
+    overflow-x: hidden;
+  }
+}
+@media screen and (min-height: 700px) {
+  .scrolSearchGrouplBlock{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 550px;
+    overflow-x: hidden;
+  }
+}
+.scrolSearchEllBlock{
+  width: 96%;
+  font-size: 14px;
+  padding: 5px;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px;
+  max-width: 300px;
+  height: auto;
+  cursor: pointer;
+}
+.El_search_param{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0px;
+}
+.name_search_param{
+  font-weight: bold;
+  margin-left: 10px;
+}
+.buyersDetails{
+  font-size: 15px;
+  padding: 8px 0px 8px 12px;
+  font-weight: bold; 
+  border-radius: 4px;    
+  display: flex;
+  justify-content: space-between;
+  border-radius: 4px; 
+  cursor: pointer;
+}
+.buyersDetails:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.photoZoom{
+  background-image: url(/off_bot/static/img/zoom.png);    
+  width: 20px;     
+  height: 20px;     
+  display: flex;
+  background-color: transparent;     
+  background-size: cover;     
+  margin-right: 10px;
+}
+.togglerScoreContract{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.blockCounter{
+  width: 100%;    
+  display: flex;     
+  flex-direction: row;     
+  justify-content: space-around;     
+  align-items: center;     
+  font-size: 13px;     
+  background-color: white;     
+  border-radius: 8px;
+}
+.addButtonChange{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #e01818;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  border: solid 2px;
+  border-color: #e01818;
+  min-height: 32px;
+  text-align: center;
+  color:white
+}
+#SelectProxy{
+  width: 100%;
+  color: #737373;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 34px;
+  margin-bottom: 10px;
+  margin-top: 0;
+  justify-content: flex-start;
+  text-align: left;
+  padding-left: 8px;
+}
+#InfoBlockUser{
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  max-width: 350px;
+}
+#Info_list {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80%;
+  min-height: 300px;
+  width: 90%;
+  background-color: transparent;
+  border-radius: 8px;
+}
+#drop-area {
+  border: 2px dashed #aaa;
+  padding: 20px;
+  text-align: center;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 8px;
+  height: 80px;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+}
+.inputButton{
+  display: flex;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  text-align: center;
+  outline: none;
+  color: #434B4D;
+  min-height: 30px;
+  background-color: white;
+  border-color: lightslategray;
+  border: solid 1px;
+  cursor: pointer;
+  margin-left: 5px;
+  width: 32px;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 13;
+  min-width: 32px;
+}

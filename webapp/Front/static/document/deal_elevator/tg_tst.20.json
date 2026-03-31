@@ -1,0 +1,136 @@
+{
+    "id_model": 0,
+    "modelName": "CSBC60",
+    "material": "Сталь нержавеющая",
+    "motor_reductor": "it",
+    "capacity_param": {
+        "capacity": 80.01,
+        "speed": "2",
+        "turn": "93",
+        "step": "3.704",
+        "bucket": "3",
+        "bucket_load": "1"
+    },
+    "metalThickness": {
+        "bodyT": 2,
+        "capT": 1.5,
+        "liningT": null
+    },
+    "modelSize": {
+        "TransportLength": "38.70",
+        "unloadCenter": 0.16,
+        "loadCenter": 0.42,
+        "unload": 0.2,
+        "load": 0.94,
+        "addUnloadTENS": true
+    },
+    "sectionElement": {
+        "lengthSection": [
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            240,
+            120,
+            30
+        ]
+    },
+    "onloadElement": {
+        "load": {
+            "len_size": 1.2,
+            "count": 0,
+            "un_price": 46500
+        }
+    },
+    "otherComponents": {
+        "belt": {
+            "name": "М56С-2-80-1-1,1-0-2-4-185",
+            "count": 72.60000000000001,
+            "un_price": 2600
+        },
+        "converter": {
+            "name": "E2000-0110T3F2KB ",
+            "count": 1,
+            "un_price": 31000,
+            "kW": 9.2,
+            "enable": true
+        },
+        "reductor": {
+            "name": "ТС 112",
+            "count": 1,
+            "un_price": 101228.4,
+            "kW": 112
+        },
+        "motor": {
+            "name": "FC 9.2",
+            "count": 1,
+            "un_price": 34414.87,
+            "kW": 9.2
+        },
+        "sensorSpeed": {
+            "name": "Датчик контроля минималной скорости IV2B AF81A5-43P-10-LZ (PNP)",
+            "count": "1",
+            "un_price": 6513,
+            "enable": true
+        },
+        "sensorPodpor": {
+            "name": "Емкостные датчики приближения CQ35-25NPP-KW1 (PNP)",
+            "count": "1",
+            "un_price": 11523,
+            "enable": true
+        },
+        "controlBox": {
+            "name": "Шкаф управления ",
+            "count": "1",
+            "un_price": 46800,
+            "enable": true
+        },
+        "streetFulfillmentUpper": {
+            "name": "Уличное исполнение (верх)",
+            "count": 31,
+            "un_price": 7500,
+            "enable": true
+        },
+        "streetFulfillmentBottom": {
+            "name": "Уличное исполнение (низ)",
+            "count": 31,
+            "un_price": 3750,
+            "enable": true
+        },
+        "vulcanBonding": {
+            "name": "Склеивание вулканизацией",
+            "count": 1,
+            "un_price": 15000,
+            "enable": false
+        }
+    },
+    "modelDeliveryData": {
+        "modelMass": "19.00",
+        "modelVolume": "2.31"
+    },
+    "basePrice": 207080,
+    "sectionPrice": {
+        "lengthSectionPrice": 682500
+    },
+    "otherPrice": 768989.27,
+    "onloadPrice": 0,
+    "modelPrice": 2548149.27,
+    "NDS": 1.2,
+    "id_product": "0",
+    "modelCount": 1,
+    "CO_Data": {
+        "coDate": "18.04.2025",
+        "invoice_link": "",
+        "discountValue": "",
+        "deliveryConditions": ""
+    }
+}

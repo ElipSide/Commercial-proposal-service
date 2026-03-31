@@ -1,0 +1,535 @@
+<html > 
+<head> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=noб user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+
+	<link href="{{ url_for('static', path='/css/botSorting.css') }}?u={{ last_updated }}" rel="stylesheet">
+	<link href="{{ url_for('static', path='/css/Main.css') }}?u={{ last_updated }}" rel="stylesheet">
+
+	<script src="{{ url_for('static', path='/js/general/botSortingKP.js') }}?u={{ last_updated }} " defer></script> <!-- Загрузить первым -->
+	<script src="{{ url_for('static', path='/js/general/DBSorting.js') }}?u={{ last_updated }} " defer></script> <!-- Загрузить первым -->
+	<script src="{{ url_for('static', path='/js/general/common_function.js') }}?u={{ last_updated }} " defer></script> <!-- Загрузить первым -->
+
+	<script src="{{ url_for('static', path='/js/Lib/jquery-3.7.1.min.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="{{ url_for('static', path='/js/Lib/jquery.maskedinput.min.js') }}?u={{ last_updated }}" defer ></script> 
+
+	<script src="{{ url_for('static', path='/js/Lib/toastify-js.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="{{ url_for('static', path='/js/Lib/swiper-element-bundle.min.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="https://telegram.org/js/telegram-web-app.js" async ></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"async > 
+
+
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
+	<script type="text/javascript" src="https://unpkg.com/imask"></script>
+
+	
+	<title>Коммерческое предложение</title> 
+	<script>
+		$SCRIPT_ROOT = "";
+
+	</script>
+
+</head> 
+
+
+
+<body style=" " > 
+	<div id="gifLoad" class="gifLoad">
+		<img src="{{ url_for('img', path='loadGif.gif') }}" alt="" >
+		<div>Загружаем данные....</div>
+
+	</div>
+	<div class="startWindow">
+		<div id="windowProductAd" class="windowProductAd" style="display: none;">
+			<div style="display: flex; flex-direction: column; width: 100%; height: 100%;">
+				<div style="display: flex; flex-direction: column;">
+					<div id="search_subtitle_nomenclature" class="block_subtitle" style="margin: 0 10px; margin-right: 43px;">
+						<div style="width: 43px;" class="BlockBackInfo">
+							<img id="BlockBackInfo" src="{{ url_for('img', path='arrow.png') }}"  style="display:none; height:27px; width:27px; padding:8px; padding-right:8px;" onclick="BackInfo(this.id)">
+						</div>
+						<div id="NomenclatureTitle" class="NomenclatureTitle">Добавить позицию</div>
+					</div>
+
+					<div id="search_block_nomenclature_global" class="columnBlock">
+						<div id="search_block_nomenclature_0" class="resultBlock">
+							<div id="search_block_numDel_0" class="numberBlock" >
+								<div id="search_block_number_0" class="elementNumber">1</div>
+								<div id="search_delete_button_0" class="deleteButton" onclick="removeBlock(this.id)">-</div>
+							</div>
+							<div id="search_filter_teg_0" class="filter" style="display:none; background-color:#f2f2f2; padding-top: 4px;">
+								<div class="resultTag" onclick="clearTeg_search(this.innerHTML,this.id)" style="display: none;"></div>
+							</div>
+						</div>
+					</div>
+					<div id="search_filterBlock" class="filterBlock" style="margin-bottom: 10px;">
+						<div class="scrollRow" style="max-width: 100%; margin: 0px 10px;">
+							<input id="search_Search_teg" class="inputFilter" placeholder="ВЫБОР НОМЕНКЛАТУРЫ" oninput="Search_prod_add()"></input>							
+						</div>
+					</div>
+					<div id="search_dropdownBlock" class="scrollBlockAdd" style="margin: 0px 10px;">
+						<div id="search_scrollBlock" class="dropdownBlock" style="margin-right: 0px;">
+							<div id="search_scrollRow" class="scrollRow" style="display:none; max-width: 100%; border-color: white;">
+								<div class="search_inputOption" readonly></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="BlockAddRow" class="cardsBlock" style="display: none;">
+					<div class="subblockWindow" style="align-items: normal">
+						<div id="BlockChoiceMachine" class="BlockTextInfo">
+							<textarea id="ChoiceMachine" class="inputBlock" type="text" placeholder="" rows="2" cols="33"  style="resize: none; height: 68px;" onblur="CheckCompany()"></textarea>
+						</div>
+						<div id="Select_provider" class="BlockTextInfo" style="display: none; flex-direction: column;">
+							<div class="textHeading">Поставщик</div>
+							<select id="seleckBlock_provider" class="inputBlock" onchange="ChoiceProviderSieve()">
+								<option value="" disabled>Выберете поставщика</option>
+							</select>
+						</div>
+						<div id="Select_elevator" class="BlockTextInfo" style="display: none; flex-direction: column;">
+							<div class="textHeading">Введите id расчета</div>
+							<input class="inputBlock"> 
+							
+						</div>
+
+						<div id="Separ_configuration" class="BlockTextInfo" style="display: none;">
+							<div class="textHeading">Конфигрурация</div>
+							<select id="seleckBlock_lotoc" class="inputBlock" style="width: 50%;">
+								<option value="" disabled>Выберете конфигрурацию</option>
+							</select>
+						</div>
+						<div id="SelectSieve" class="BlockTextInfo" style="margin-bottom: 0; display: none;">
+							<div class="textHeading" style="width: 100%; height: 100%;">Размер отверстий</div>
+							<select id="seleckBlock" class="inputBlock" onchange="Choiceremainder_Count()">
+								<option value="" disabled>Выберете размер</option>
+							</select>
+						</div>
+						<div id="quantityPieces" class="BlockTextInfo">
+							<div class="blockTitle" style="margin-right: 10px;">Количество</div>
+							<div class="countBlock">
+								<button class="countButton" onclick="unloadCountMinus();">-</button>
+								<input class="inputCount" id="quantityBlock" min="0" max="100" step="1" value="1" type="number" disabled="">
+								<button class="countButton" onclick="unloadCountPlus();" >+</button>
+							</div>
+						</div>
+						<div id="remainder" class="BlockTextInfo" style="display: none; width: 290px; padding: 5px; border-radius: 8px;">
+							<div class="blockTitle" style="margin-right: 10px;">Остаток на складе: </div>
+							<div id="remainder_Count" class="blockTitle" style="margin-right: 10px;"> </div>
+						</div>
+					</div>
+					<div style="display: flex; width: 320px; justify-content: flex-end; margin-bottom: 15px;">
+						<div id="buttonNewCard" class="addButtonAd" onclick="addNewCard(this.id)" style="margin-top: 7px; width: 100%;">
+							<div class="blockTitle">Добавить</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="Search_block" class="mainBlock" style="display: none; justify-content: flex-start;">
+			<div id="Search_item" class="topRow" style="display: flex; height: 100%; margin-bottom:0px">
+				<div class="topRowChild" style="height: 100%;">
+					<input id="Search_el" class="inputBlock" inputmode="text" type="search" placeholder="Введите краткое название компании" oninput="StartSearch()">								
+					<div id="scrollBlock_Search" style="height: 100%; display: flex;">
+						<div id="SearchEl_scrollBlock" class="scrolSearchlBlock">
+							<div class="scrolSearchGrouplBlock">
+								<div class="scrolSearchEllBlock" onclick="Choice_SearchEl(this.id)" style="display:none;">
+									<div class="El_search_param">
+										<div class="name_search_param">какие-то циферки</div>
+									</div>
+									<div class="El_search_param">
+										<div class="name_search_param">какие-то циферки</div>
+									</div>
+									<div class="El_search_param">
+										<div class="name_search_param">какие-то циферки</div>
+									</div>
+								</div>
+							</div>							
+						</div>
+					</div>					
+					<div id="addButtonEl" class="addButton" onclick="addcounterparty()" style="width: 100%; margin-top: 10px; -webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2);">
+						<div class="blockTitle">Выбрать</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="UserInfo_Block" class="mainBlock" style="margin-bottom: 15px; display: none; justify-content: flex-start;">
+			<div style="padding: 0 10px;">
+				<div class="buyersDetails" onclick="OpenSearch()">
+					<div>Данные покупателя / Найти</div>
+					<div class="photoZoom"></div>
+				</div>
+				<div style="display: flex; justify-content: space-around;"> 
+					<div class="addButton" onclick="Recognize_data()" style="width: 100%; margin-top: 10px; margin-bottom: 5px; margin-right: 5px;">
+						<div class="blockTitle">Распознать данные</div>
+						<input id="fileElem_Recognize" type="file" style="display:none" onchange="RecognizeFiles(this.files,this.id)" capture>
+					</div>
+					<div class="addButton" onclick="ClearRecognize_data()" style="width: 100%; margin-top: 10px; margin-bottom: 5px;">
+						<div class="blockTitle">Очистить данные</div>
+					</div>
+				</div>
+				<div class="togglerScoreContract" onclick="changeScoreContract()" style="display: none;">
+					<div id="TextScoreContract" class="textToggler">Договор</div>
+					<label class="toggler-wrapper style-1" style="pointer-events: none;">
+						<input id="checkbox_ScoreContract" type="checkbox" checked>
+						<div class="toggler-slider">
+							<div class="toggler-knob"></div>
+						</div>
+					</label>
+				</div>
+				<div id="Name_CompanyBlock" class="Name_ofService" onclick="OpenBlock(this.id)">
+					<div style="display: flex; flex-direction: column;">
+						<div>Компания</div>
+						<div id="Comp_shortname"></div>
+					</div>
+					<div class="photoArrow_up"></div>
+				</div>
+				<div id="CompanyBlock" style="display: flex; flex-direction: column;">
+					<div class="BlockTextInfo">
+						<input id="mask-inn-organization" class="inputBlock" inputmode="numeric" type="text" maxlength="14" placeholder="ИНН" onblur="INNWrite(); CheckCompany()">
+					</div>
+					<div class="BlockTextInfo">
+						<textarea id="AdresUser" class="inputBlock" type="text" placeholder="Юр. адрес"  rows="5" cols="33"  style="resize: vertical; height: 74px;" onblur="CheckCompany()"></textarea>
+					</div>
+					<div class="BlockTextInfo">
+						<input id="UserData_inputNumber" class="inputBlock" type="text" placeholder="Телефон" onblur="CheckCompany()">
+					</div>
+					<div class="BlockTextInfo">
+						<input id="emailUser" class="inputBlock" type="email" placeholder="Почта" onblur="CheckCompany()">
+					</div>
+				</div>
+				<div id="Name_CheckBlock" class="Name_ofService" onclick="OpenBlock(this.id)">
+					<div>Счёт</div>
+					<div class="photoArrow_up"></div>
+				</div>
+				<div  id="CheckBlock" style="display: flex; flex-direction: column;">
+					<div class="BlockTextInfo">
+						<input id="mask-bik" class="inputBlock" inputmode="numeric" placeholder="БИК" onblur="bicWrite();Checkcheck()">
+					</div>
+					<div class="BlockTextInfo">
+						<input id="mask-account" class="inputBlock" maxlength="20" inputmode="numeric" placeholder="Расчетный счет" onblur="accountWrite();Checkcheck()">
+					</div>
+				</div>
+				<div id="Name_SignerBlock" class="Name_ofService" onclick="OpenBlock(this.id)">
+					<div>Подписант</div>
+					<div class="photoArrow_up"></div>
+				</div>
+				<div id="SignerBlock" style="display: flex; flex-direction: column;">
+					<div class="BlockTextInfo">
+						<input class="inputBlock" type="text" placeholder="Фамилия" onblur="CheckSigner()">
+					</div>
+					<div class="BlockTextInfo">
+						<input class="inputBlock" type="text" placeholder="Имя"onblur="CheckSigner()">
+					</div>
+					<div class="BlockTextInfo">
+						<input class="inputBlock" type="text" placeholder="Отчество"onblur="CheckSigner()">
+					</div>
+					<div class="BlockTextInfo">
+						<input class="inputBlock" type="text" placeholder="Должность"onblur="CheckSigner()">
+					</div>
+					<div style="font-size: 15px; padding: 0px 0px 5px 12px; ">Действует на основании</div>
+					<select id="SelectProxy" class="tableSelect" onchange="UserValid();CheckSigner()">
+						<option value="Устав">Устав</option>
+						<option value="Свидетельство">Свидетельство</option>
+						<option value="Доверенность">Доверенность</option>
+					</select>
+					<div id="NumberProxy" class="BlockTextInfo" style="display: none;">
+						<textarea id='textareaValid' class="inputBlock" style="height: 68px; resize: vertical" type="text" placeholder="Введите номер и дату доверенности"onblur="CheckSigner()"></textarea>
+					</div>
+				</div>
+				<div id="drop-area">
+					<div class="drop-icon">
+						<i class="fa-light fa-file-upload"></i>
+					</div>
+					<div class="drop-text">Загрузите подписанный договор</div>
+				</div>
+				<input id="URLCOPY" style="display: none;">
+				<div style="display: flex; flex-direction: row; justify-content: space-between;">
+					<div id="download_agreement" class="addButton" onclick="openFullList()" style="width: 100%; -webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2); margin-bottom: 10px; margin-right: 10px; height: 32px;">
+						<div class="blockTitle">Создать договор</div>
+					</div>	
+					<div id="download_invoice" class="addButton" onclick="Getcheck()" style="width: 100%; -webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2); margin-bottom: 10px; height: 32px;">
+						<div class="blockTitle">Получить счет</div>
+					</div>
+				</div>
+				
+
+				
+				<div id="BackKPBlock" class="addButton" onclick="BackKP()" style="  display: none;   width: 100%;      width: 100%;-webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2);    margin-top: 25px;    margin-bottom: 10px;">
+					<div class="blockTitle">Назад</div>
+				</div>
+			</div>
+		</div>
+		<div id="ListFullData" class="mainBlock" style="display: none; align-items: center; margin-bottom: 15px; justify-content: flex-start; height: auto;">
+			<div class="buyerBlock">
+				<div>Проверьте правильность введенных данных</div>
+			</div>
+			<div class="buyerBlock">
+				<div>Преамбула</div>
+			</div>
+			<div class="BlockTextInfo">
+				<textarea id="preambulBlock" class="inputBlock" type="text" placeholder="Преамбула" rows="10" cols="38" style="resize: vertical; height: 330px; width: 100%;"></textarea>
+			</div>
+			<div id="Name_Comterms" class="buyerBlock" onclick="OpenBlock(this.id)">
+				<div>Адрес доставки</div>
+				<div class="photoArrow_up"></div>
+			</div>
+			<div id="Comterms" style="display: flex; flex-direction: column; width: 100%;margin-bottom: 10px">
+				<textarea id="paymentyBlock" class="inputBlock" type="text" placeholder="Условия оплаты" cols="38" style="resize: vertical; height: auto; width: 100%; margin-bottom: 10px;display: none;" readonly></textarea>
+				<textarea id="deliveryBlock" class="inputBlock" type="text" placeholder="Условия доставки"  cols="38" style="resize: vertical; height: auto; width: 100%;margin-bottom: 10px;display: none;"readonly></textarea>
+				<textarea id="WarrantyBlock" class="inputBlock" type="text" placeholder="Гарантия"   cols="38" style="resize: vertical; min-height: 175px; width: 100%;display: none;"readonly></textarea>
+
+
+				<textarea id="address_user" name="address_user" type="text" class="inputBlock" style="    height: auto;resize: none;"></textarea>
+
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+				<link href="http://cdn.jsdelivr.net/npm/suggestions-jquery@22.6.0/dist/css/suggestions.min.css" rel="stylesheet" />
+				<script src="http://cdn.jsdelivr.net/npm/suggestions-jquery@22.6.0/dist/js/jquery.suggestions.min.js"></script>
+
+
+			</div>
+			<div id="Name_buyerBlock" class="buyerBlock" onclick="OpenBlock(this.id)">
+				<div>Покупатель</div>
+				<div class="photoArrow_up"></div>
+			</div>
+			<div id="buyerBlock" style="display: flex; flex-direction: column; width: 100%;">
+				<div class="BlockTextInfo">
+					<input id="AbbreviatedBuyer" class="inputBlock" type="text" placeholder="Название организации (сокращенное)">
+				</div>
+				<div class="BlockTextInfo" style="display: none;">
+					<input id="USRofLEBuyer" class="inputBlock" inputmode="numeric" type="text" maxlength="15"  placeholder="ЕГРЮЛ">
+				</div>
+				<div class="BlockTextInfo">
+					<input id="TheMSRNBuyer" class="inputBlock" inputmode="numeric" type="text" maxlength="15"  placeholder="ОГРН">
+				</div>
+				<div class="BlockTextInfo">
+					<input id="TINBuyer" class="inputBlock" inputmode="numeric" type="text" maxlength="14"  placeholder="ИНН">
+				</div>
+				<div class="BlockTextInfo">
+					<input id="CRSBuyer" class="inputBlock" inputmode="numeric" type="text" maxlength="11"  placeholder="КПП">
+				</div>
+				<div class="BlockTextInfo">
+					<textarea  id="AdresBuyer" class="inputBlock" type="text" placeholder="Юр. адрес"  rows="5" cols="33"  style="resize: vertical; min-height: 80px;"></textarea>
+				</div>
+				<div class="BlockTextInfo">
+					<input id="telephoneBuyer" class="inputBlock" type="text" maxlength="11"  placeholder="Телефон">
+				</div>
+				<div class="BlockTextInfo">
+					<input id="emailBuyer" class="inputBlock" type="email" placeholder="email">
+				</div>
+				<div class="BlockTextInfo">
+					<input id="PaymentBuyer" class="inputBlock" inputmode="numeric" type="text" maxlength="22"  placeholder="Расчётный счёт">
+				</div>
+				<div class="BlockTextInfo">
+					<textarea id="bankBuyer" class="inputBlock" type="text" placeholder="Банк"  rows="5" cols="33"  style="resize: vertical; height: 68px;"></textarea>
+				</div>
+				<div class="BlockTextInfo">
+					<input id="CorresAccountBuyer" class="inputBlock"  inputmode="numeric" type="text" maxlength="22" placeholder="Корреспондентский счёт">
+				</div>
+				<div class ="BlockTextInfo">
+					<input id="BIKBuyer" class="inputBlock" inputmode="numeric" maxlength="11" placeholder="БИК">
+				</div>
+				
+			</div>
+			<div id="Good_download_agreement" class="addButton" onclick="GetAgreement()" style="width: 100%; -webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2); margin-top: 10px; margin-bottom: 10px;">
+				<div class="blockTitle">Получить договор</div>
+			</div>	
+		</div>
+		<div id="mainBlock" class="mainBlock" style="margin-bottom: 15px; display: flex; ">
+			<div id="topRow" class="topRow" style="display: flex;">
+				<div class="topRowChild">
+					<div id="commercialOffer" class="commercialOffer">
+						<div style="display: flex; justify-content: space-between;">
+							<div id="commercialOfferTitle" class="commercialOfferTitle">КОММЕРЧЕСКОЕ<br>ПРЕДЛОЖЕНИЕ</div>
+							<div id="blockPhoto" class="blockIcon" style="margin-right: 5px;">
+								<div class="photoIcon"></div>
+							</div>
+						</div>
+						<div style="display: flex; justify-content: space-between; width: 100%;">
+							<div id="Number" style="font-size: 15px;">№ </div>
+							<div id="Date"></div>
+						</div>
+					</div>
+					<div id="managerInfoBlock" class="managerInfoBlock">				
+						<div style="display: flex; flex-direction: column; align-items: center;">
+							<img id="BlockmanagerPhoto" class="managerPhoto" style="margin-bottom: 10px; max-width: 34mm;" src="/off_bot/static/img_manager/2013519822.png">
+
+							<div id="addButton" class="addButton" onclick="SendManagerInfo()" style="width: 100%; width: 130px; -webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2);">
+								<div class="blockTitle">Связаться с менеджером</div>
+							</div>
+						</div>
+						<div style="max-width: 260px; height: 100%; margin-left: 10;width: 100%;">
+							<div id="FIO" class="managerInfo" style="font-weight: bold;">Костырченко Екатерина</div>
+							<div id="post" class="managerInfo">Менеджер по продажам</div>
+							<div id="company" class="managerInfo">ООО "СИСОРТ"</div>
+							<div id="mail" class="managerInfo" style="margin-top: 5px;">ekaterina.prodd@gmail.com</div>
+							<div id="telephone" class="managerInfo">89520015452</div>						
+						</div>
+					</div>
+					<div id="clientName" class="clientName">Уважаемый Клиент</div>
+					<div id="introduction" class="introduction">Благодарим Вас за интерес проявленный к оборудованию компании CSort. Представляем специально для Вас подготовленное предложение. Пожалуйста, если Вам необходима дополнительная информация, обязательно свяжитесь с нами, будем рады Вам помочь.</div>
+					<div style="display: flex; justify-content: space-between;">
+						<div id="GetKP_button" class="addButton" onclick="SavePDF()" style="margin-top: 10px; -webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2);">
+							<div class="blockTitle">Получить КП</div>
+						</div>
+						<div id="UserInfoBotton" class="addButton" onclick="openUserInfo()" style="display: none; margin-top: 10px; -webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2);">
+							<div class="blockTitle">Получить договор</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="blockTable" class="blockTable" style="padding: 0 10 10px 10px;">
+				<div id="ParentBlock" style="display: flex; flex-direction: row; width: 100%; justify-content: space-around;">
+					<div id="symbolNumber" style="display: flex; flex-direction: column-reverse;">
+						<div id="number" class="table">№</div>
+					</div>
+					<div style="display: flex; flex-direction: column-reverse;">
+						<div id="name" class="table">наименование</div>
+					</div>
+					<div style="display: flex; flex-direction: column-reverse; align-items: center;">
+						<div id="quantityAndPrice" class="table" style="height: 10px;">кол-во/цена</div>
+						<select id="nds" class="tableSelect" style="width: 75px;">
+							<option value="0">руб</option>
+						</select>
+					</div>
+
+					<div id="Blockprice_nds" style="display: flex;    flex-direction: column-reverse;">
+						<div id="SumRow" class="table" style="    height: 10px;">сумма</div>
+						<select id="nds" class="tableSelect" style="    width: 104px;" onchange="rebildPrice(this.id)">
+							<option value="">ндс 20%</option>
+							<option value="">ндс 0%</option>
+						</select>
+					</div>
+				</div>
+				<div id="tableDepartment" class="tableDepartment" style="display: none; width: 100%;">
+					<div class="lineNumber" onclick="deleteRowInfo(this.id)" style="display: flex;"></div>
+					<div class="deleteRow" onclick="deleteRowInfo(this.id)" style="display: none;">X</div>
+					<div id="typeGrid" class="typeGrid"></div>
+					<div class="quantityPrice" style="margin-right: 30px; cursor: pointer;" onclick="ChangeCount(this.id)">
+						<input id="quantity" type=""  min="1" max="50" class="inputQuantity" readonly ='true'>
+						<div id="price" ></div>
+					</div>
+					<div class="sumNds" style="flex-direction: column; margin-right: 15px;">
+						<div id="sumNds" class="sumNds" style="height: 28px;"></div>
+						<div style="font-size: 11.5;"></div>
+					</div>
+				</div>
+				<div id="windowChange" style="display: none; width: 100%; flex-direction: column;">
+					<div class="blockCounter">
+						<div id="typeGrid" class="typeGrid"></div>
+						<div style="display: flex; flex-direction: column;">
+							<div class="countBlock" style="width: 96px; margin: 5px 0;">
+								<button class="countButton" onclick="changeCountMinus();">-</button>
+								<input id="changeBlock" class="inputCount" min="0" max="100" step="1" value="1" type="number" disabled="">
+								<button class="countButton" onclick="changeCountPlus();">+</button>
+							</div>
+						</div>
+					</div>
+					<div id="SaveChange" class="addButtonChange" onclick="SaveChange(this.id)" style="margin-top: 7px;">
+						<div class="blockTitle">Сохранить</div>
+					</div>
+				</div>
+			</div>
+			<div id="add_button" style="display: flex; width: 100%; justify-content: flex-end;">
+				<div id="addButton_pos" class="addButton" onclick="openAD()" style=" width: 100%;   margin-top: 10px;-webkit-box-shadow: 0px 4px 8px 0px rgba(91, 101, 121, 0.2);">
+					<div class="blockTitle" onclick="">Добавить</div>
+				</div>
+			</div>
+			<div id="results" class="results">	
+				<div class="blockResults">
+					<div style="display: flex; flex-direction: row; align-items: center;">
+						<div id="discount_text" style="margin-right: 3px; min-width: 50px;">Скидка: </div>
+						<input id="discount_input" class="tableSelect" style="margin-right: 3px; background-color: #f2f2f2;" value="0" readonly/>
+						<div id="discount" style="margin-right: 3px;">%</div>
+					</div>
+					<div style="display: flex; flex-direction: row; align-items: center;">
+						<div id="Price_text" style="margin-right: 3px; min-width: 50px;">Итого: </div>
+						<input id="Price_input" class="tableSelect" style="margin-right: 3px; background-color: #f2f2f2;width: 100px;" value="0" readonly/>
+						<div id="discount" style="margin-right: 3px;">руб</div>
+					</div>
+				</div>
+				<div style="display: flex; flex-direction: column;">
+					<div id="discountNumber"></div>
+					<div id="totalNumber"></div>
+				</div>
+			</div>
+			<div id="infoBlock" class="infoBlock" style="display: none;">
+				<div id="paymenTerms" class="subblock">
+					<div class="BlockPayment">
+						<div id="headingPaymenTerms" class="textHeading">Условия оплаты</div>
+						<select id="TermspaymentSelect" class="tableSelect" style="width: 144px; margin: 0 0 10 0;display: none;" onchange="Termsofpayment()">
+							<option value="-" style="display: none;"></option>
+						</select>
+					</div>
+					<div id="textPaymenTerms" class="textInfo" style="align-items: flex-start; margin: 0 10px;"></div>
+				</div>
+				<div id="deliveryTime" class="subblock">
+					<div class="BlockPayment">
+						<div id="headingDeliveryTime" class="textHeading">Сроки поставки</div>
+						<select id="DeliveryTimeSelect" class="tableSelect" style="width: 144px; margin: 0 0 10 0;display: none;" onchange="DeliveryTime()">
+							<option value="-" style="display: none;"></option>
+						</select>
+					</div>
+					<div id="textDeliveryTime" class="textInfo" style="align-items: flex-start; margin: 0 10px;"></div>
+				</div>
+				<div id="warranty" class="subblock">
+					<div class="BlockPayment">
+						<div id="headingWarranty" class="textHeading">Гарантия</div>
+						<select id="WarrantySelect" class="tableSelect" style="width: 144px; margin: 0 0 10 0; display: none;" onchange="Warranty()">
+							<option value="-" style="display: none;"></option>
+						</select>
+					</div>
+					<div id="textWarranty" class="textInfo" style="align-items: flex-start; margin: 0 10px;"></div>
+				</div>
+				<div id="Parentdescription" style="display: flex; flex-direction: column;">
+					<div id="description" class="subblock" style="display: none; padding: 0;">
+						<div id="headingDescription" class="textHeading" style="height: 40px; margin: 0 15px;">Описание</div>
+						<div id="textDescription" class="textInfo">
+							<div>
+								<img id="photoMUZ16" class="photo" src="">
+							</div>
+							<div style="display: flex; flex-direction: row; justify-content: center;">
+								<div class="modelSize">
+									<div class="modelImage" style="background-image: url(/off_bot/static/img/sizeH.png);"></div>
+									<div id="sizeHeight" class="modelImageText">
+										<div></div>
+										<div style="margin-left: 2;">мм</div>
+									</div>
+								</div>
+								<div class="modelSize">
+									<div class="modelImage" style="background-image: url(/off_bot/static/img/sizeW.png);"></div>
+									<div id="sizeDeep" class="modelImageText">
+										<div></div>
+										<div style="margin-left: 2;">мм</div>
+									</div>
+								</div>
+								<div class="modelSize">
+									<div class="modelImage" style="background-image: url(/off_bot/static/img/sizeL.png);"></div>
+									<div id="sizeWidth" class="modelImageText">
+										<div></div>
+										<div style="margin-left: 2;">мм</div>
+									</div>
+								</div>
+							</div>
+							<div class="headings">Основные характеристики:</div>
+							<div class="modelParametr">
+								<div id="modelBlockInfo" class="optionRow" style="display: none;">
+									<div id="parametrsInfo" class="tableBox">
+										<div class="optionDescription"></div>
+										<div class="optionValue"></div>
+									</div>
+								</div>
+							</div>				
+						</div>
+					</div>
+				</div>
+				<div id="term" class="subblock" style="padding: 0;">
+					<div id="headingTerm" class="textHeading" style="height: 40px; margin: 0 15px;">Срок действия предложения</div>
+					<div id="textTerm" class="textInfo" style="align-items: flex-start; margin: 0 10 10px 10px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body> 
+</html> 

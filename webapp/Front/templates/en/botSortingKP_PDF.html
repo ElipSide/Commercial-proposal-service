@@ -1,0 +1,195 @@
+<html > 
+<head> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=noб user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+
+	<link href="{{ url_for('static', path='/css/botSorting.css') }}?u={{ last_updated }}" rel="stylesheet">
+	<link href="{{ url_for('static', path='/css/Main.css') }}?u={{ last_updated }}" rel="stylesheet">
+
+	<script src="{{ url_for('static', path='/js/botSortingKP_PDF.js') }}?u={{ last_updated }} " defer></script> <!-- Загрузить первым -->
+	<script src="{{ url_for('static', path='/js/client/common_function.js') }}?u={{ last_updated }} " defer></script> <!-- Загрузить первым -->
+
+	<script src="{{ url_for('static', path='/js/Lib/jquery-3.7.1.min.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="https://telegram.org/js/telegram-web-app.js" async ></script>
+
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<title>Пустая страница</title> 
+	<script>
+
+		$SCRIPT_ROOT = "";
+		lang='en'
+	</script>
+
+</head> 
+
+<body> 
+	<div class="startWindow" style="margin: 0 10px;">
+		<div id="mainBlock" class="mainBlock"  style="margin-bottom: 15px;">
+			<div id="topRow" class="topRow" style="display: flex;">
+				<div class="topRowChild">
+					<div id="commercialOffer" class="commercialOffer">
+						<div style="display: flex; justify-content: space-between;">
+							<div id="commercialOfferTitle" class="commercialOfferTitle">КОММЕРЧЕСКОЕ<br>ПРЕДЛОЖЕНИЕ</div>
+							<div id="blockPhoto" class="blockIcon" style="margin-right: 5px;">
+								<div class="photoIcon"></div>
+							</div>
+						</div>
+						<div style="display: flex; justify-content: space-between; width: 100%;">
+							<div id="Number" style="font-size: 15px;">№ </div>
+							<div id="Date"></div>
+						</div>
+					</div>
+					<div id="managerInfoBlock" class="managerInfoBlock">											
+						<div style="display: flex; flex-direction: column; align-items: center;">
+							<video autoplay loop playsinline muted id="BlockmanagerPhoto" class="managerPhoto" src="" poster="{{ url_for('img', path='IconProfil.png') }}"  style="margin-bottom: 10px; max-width: 34mm;">
+							</video>
+						</div>
+						<div style="max-width: 260px; height: 100%; margin-left: 10;">
+							<div id="FIO" class="managerInfo" style="font-weight: bold;">Алиса Исаева</div>
+							<div id="post" class="managerInfo">Менеджер по продажам</div>
+							<div id="company" class="managerInfo">ООО "СиСорт"</div>
+							<div id="mail" class="managerInfo" style="margin-top: 5px;">Csort_order@index.ru</div>
+							<div id="telephone" class="managerInfo">8-123-456-7890</div>					
+						</div>
+					</div>
+					<div id="clientName" class="clientName">Уважаемый Клиент</div>
+					<div id="introduction" class="introduction">Благодарим Вас за интерес проявленный к оборудованию компании CSort. Представляем специально для Вас подготовленное предложение. Пожалуйста, если Вам необходима дополнительная информация, обязательно свяжитесь с нами, будем рады Вам помочь.</div>
+				</div>
+			</div>
+			<div id="blockTable" class="blockTable" style="padding: 0 10 10px 10px;">
+				<div id="ParentBlock" style="display: flex; flex-direction: row; width: 100%; justify-content: space-around;">
+					<div style="display: flex; flex-direction: column-reverse;">
+						<div id="number"  class="table">№</div>
+					</div>
+					<div style="display: flex; flex-direction: column-reverse;">
+						<div id="name" class="table">наименование</div>
+					</div>
+					<div style="display: flex; flex-direction: column-reverse; align-items: center;">
+						<div id="quantityAndPrice" class="table" style="height: 10px;">кол-во/цена</div>
+						<select id="nds" class="tableSelect" style="width: 75px;" onchange="">
+							<option value="0">руб</option>
+						</select>						
+					</div>
+					<div style="display: flex; flex-direction: column-reverse;">
+						<div class="table" style="height: 10px;">сумма</div>
+						<select id="nds" class="tableSelect" style="width: 104px;" onchange="rebildPrice(this.id)">
+							<option value="nds">с ндс</option>						
+						</select>						
+					</div>
+				</div>
+				<div id="tableDepartment" class="tableDepartment" style="display: none; width: 100%;">
+					<div class="lineNumber" style="display: flex;"></div>
+					<div class="deleteRow" style="display: none;" onclick="deleteRowInfo(this.id)">X</div>
+					<div id="typeGrid" class="typeGrid"></div>
+					<div class="quantityPrice">
+						<input id="quantity" type="" min="1" max="50" class="inputQuantity" readonly ='true'>
+						<div id="price"></div>
+					</div>
+					<div id="sumNds" class="sumNds"></div>
+				</div>
+			</div>
+			<div style="display: flex; width: 100%;justify-content: flex-end;"></div>
+			<div id="results" class="results">				
+				<div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;">					
+					<div style="display: flex; flex-direction: row; align-items: center;">
+						<div id="discount_text" style="margin-right: 3px; min-width: 50px;">Скидка: </div>
+						<input id="discount_input" class="tableSelect" style="margin-right: 3px; background-color: #f2f2f2;" value="0" readonly/>
+						<div id="discount" style="margin-right: 3px;">%</div>
+					</div>
+					<div style="display: flex; flex-direction: row; align-items: center;">
+						<div id="Price_text" style="margin-right: 3px; min-width: 50px;">Итого: </div>
+						<input id="Price_input" class="tableSelect" style="margin-right: 3px; background-color: #f2f2f2;" value="0" readonly/>
+						<div id="discount" style="margin-right: 3px;">руб</div>
+					</div>
+				</div>
+				<div style="display: flex; flex-direction: column;">
+					<div id="discountNumber"></div>
+					<div id="totalNumber"></div>
+				</div>
+			</div>
+			<div id="infoBlock" class="infoBlock" style="margin-bottom: 20px;">
+				<div id="paymenTerms" class="subblock">
+					<div class="BlockPayment">
+						<div id="headingPaymenTerms" class="textHeading">Условия оплаты</div>
+						<select id="TermspaymentSelect" class="tableSelect" style="width: 144px; margin: 0 0 10 0;" onchange="Termsofpayment()">
+							<option value="-" style="display: none;"></option>
+						</select>
+					</div>
+					<div id="textPaymenTerms" class="textInfo" style="align-items: flex-start; margin: 0 10px;"></div>
+				</div>
+				<div id="deliveryTime" class="subblock">
+					<div class="BlockPayment">
+						<div id="headingDeliveryTime" class="textHeading">Сроки поставки</div>
+						<select id="DeliveryTimeSelect" class="tableSelect" style="width: 144px; margin: 0 0 10 0;" onchange="DeliveryTime()">
+							<option value="-" style="display: none;"></option>
+						</select>
+					</div>
+					<div id="textDeliveryTime" class="textInfo" style="align-items: flex-start; margin: 0 10px;"></div>
+				</div>
+				<div id="warranty" class="subblock">
+					<div class="BlockPayment">
+						<div id="headingWarranty" class="textHeading">Гарантия</div>
+						<select id="WarrantySelect" class="tableSelect" style="width: 144px; margin: 0 0 10 0;" onchange="Warranty()">
+							<option value="-" style="display: none;"></option>
+						</select>
+					</div>
+					<div id="textWarranty" class="textInfo" style="align-items: flex-start; margin: 0 10px;"></div>
+				</div>
+				<div id="Parentdescription" style="display: flex; flex-direction: column;">				
+					<div id="description" class="subblock" style="display: none; padding: 0;">
+						<div id="headingDescription" class="textHeading" style="height: 40px; margin: 0 15px;">Описание</div>
+						<div id="textDescription" class="textInfo">
+							<div>
+								<img id="photoMUZ16" class="photo" src="">
+							</div>
+							<div style="display: flex; flex-direction: row; justify-content: center;">
+								<div class="modelSize">
+									<div class="modelImage" style="background-image: url(/off_bot/static/img/sizeH.png);"></div>
+									<div id="sizeHeight" class="modelImageText">
+										<div></div>
+										<div style="margin-left: 2;">мм</div>
+									</div>
+								</div>
+								<div class="modelSize">
+									<div class="modelImage" style="background-image: url(/off_bot/static/img/sizeW.png);"></div>
+									<div id="sizeDeep" class="modelImageText">
+										<div></div>
+										<div style="margin-left: 2;">мм</div>
+									</div>
+								</div>
+								<div class="modelSize">
+									<div class="modelImage" style="background-image: url(/off_bot/static/img/sizeL.png);"></div>
+									<div id="sizeWidth" class="modelImageText">
+										<div></div>
+										<div style="margin-left: 2;">мм</div>
+									</div>
+								</div>
+							</div>
+							<div class="headings">Основные характеристики:</div>
+							<div class="modelParametr">
+								<div id="modelBlockInfo" class="optionRow" style="display: none;">
+									<div id="parametrsInfo" class="tableBox">
+										<div class="optionDescription"></div>
+										<div class="optionValue"></div>
+									</div>
+								</div>
+							</div>				
+						</div>
+					</div>
+				</div>
+				<div id="term" class="subblock" style="padding: 0;">
+					<div id="headingTerm" class="textHeading" style="height: 40px; margin: 0 15px;" >Срок действия предложения</div>
+					<div id="textTerm" class="textInfo" style="align-items: flex-start; margin: 0 10 10px 10px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body> 
+</html> 

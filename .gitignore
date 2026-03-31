@@ -1,0 +1,127 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# Secrets / local config
+# =========================
+.env
+.env.*
+!.env.example
+creeds.env
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets.json
+credentials.json
+
+# Google / service credentials
+Front/static/json/crend.json
+**/crend.json
+
+# =========================
+# IDE / OS
+# =========================
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# Build / packaging
+# =========================
+dist/
+build/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# =========================
+# Runtime / temp files
+# =========================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# =========================
+# Generated project files
+# =========================
+# Uploaded/temporary manager files
+Front/static/img_manager/files/
+
+# Generated manager images
+Front/static/img_manager/*.png
+!Front/static/img_manager/.gitkeep
+
+# Generated sieve analytics images
+Front/static/img_sieve/
+
+# Saved transport calculator JSON
+Front/static/document/deal_elevator/
+
+# Generated documents / exports
+Front/static/document/**/*.pdf
+Front/static/document/**/*.docx
+Front/static/document/**/*.xlsx
+Front/static/document/**/*.json
+
+# Optional upload/output dirs
+process/
+uploads/
+output/
+media/
+
+# =========================
+# Database / local dumps
+# =========================
+*.sqlite3
+*.db
+*.sql
+*.dump
+
+# =========================
+# Node / frontend tools
+# =========================
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.npm/
+.parcel-cache/
+.next/
+
+# =========================
+# Test artifacts
+# =========================
+pytestdebug.log
+nosetests.xml
+junit.xml

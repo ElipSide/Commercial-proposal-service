@@ -1,0 +1,339 @@
+<html > 
+<head> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=noб user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+	<link id="favicon" rel="icon" type="image/x-icon" href="/favicon.ico">
+
+	<link href="{{ url_for('static', path='/css/botSorting.css') }}?u={{ last_updated }}" rel="stylesheet">
+	<link href="{{ url_for('static', path='/css/Main.css') }}?u={{ last_updated }}" rel="stylesheet">
+
+	<script src="{{ url_for('static', path='/js/botSorting_adminMenu.js') }}?u={{ last_updated }}" defer></script> <!-- Загрузить первым -->
+
+
+	<script src="{{ url_for('static', path='/js/Lib/jquery-3.7.1.min.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="{{ url_for('static', path='/js/Lib/toastify-js.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="{{ url_for('static', path='/js/Lib/swiper-element-bundle.min.js') }}?u={{ last_updated }}" defer ></script> 
+	<script src="https://telegram.org/js/telegram-web-app.js" async ></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"async > 
+	<title>Калькулятор решет</title> 
+	<script>
+		$SCRIPT_ROOT = "";
+	</script>
+</head> 
+
+<body> 
+	<div class="commonDiv">
+		<div id="mainPage" class="mainPage">
+			<div id="setItem" class="menuButtons" onclick="openSetItem()">
+				<div class="blockTitle">Настройка номенклатуры</div>
+			</div>
+			<div id="listUsers" class="menuButtons" onclick="openListUsers()">
+				<div class="blockTitle">Список пользователей</div>
+			</div>
+		</div>
+		<div id="blockMainList" class="blockCommonList" style="display: none;">
+			<div id="separatorList" class="dobMenuButton" onclick="openSeparatorList()">
+				<div class="blockTitle">Фотосепараторы</div>
+			</div>
+			<div id="compressorList" class="dobMenuButton" onclick="openCompressorList()">
+				<div class="blockTitle">Компрессоры</div>
+			</div>
+			<div id="elevatorList" class="dobMenuButton" onclick="openElevatorList()">
+				<div class="blockTitle">Элеваторы</div>
+			</div>
+			<div id="sieveList" class="dobMenuButton" onclick="openSieveList()">
+				<div class="blockTitle">Решета</div>
+			</div>
+			<div id="grainMachinList" class="dobMenuButton" onclick="openGrainMachinList()">
+				<div class="blockTitle">Зерноочистительные машины</div>
+			</div>
+		</div>
+		<div id="blockDopList" class="blockDopList" style="display: none;">
+			<div id="separatorPage" class="pageLists" style="display: none;">
+				<div id="separatorBlock" class="dobPageButton">
+					<div class="blockTitle">Фотосепараторы</div>
+				</div>
+				<div id="machineListSepar" class="machineList">
+					<div id="setup__Separator" class="photoSetting" onclick="SetupSepar()"></div>
+				</div>
+			</div>
+			<div id="compressorPage" class="pageLists" style="display: none;">
+				<div id="compressorBlock" class="dobPageButton">
+					<div class="blockTitle">Компрессоры</div>
+				</div>
+				<div id="machineListCompressor" class="machineList">
+					<div id="setup__Compressor" class="photoSetting" onclick="SetupCompressor()"></div>
+				</div>
+			</div>
+			<div id="elevatorPage" class="pageLists" style="display: none;">
+				<div id="elevatorBlock" class="dobPageButton">
+					<div class="blockTitle">Элеваторы</div>
+				</div>
+				<div id="machineListElevator" class="machineList">
+					<div  id="setup__Elevator" class="photoSetting" onclick="SetupElevator()"></div>
+				</div>
+			</div>
+			<div id="sievePage" class="pageLists" style="display: none;">
+				<div id="sieveBlock" class="dobPageButton">
+					<div class="blockTitle">Решета</div>
+				</div>
+				<div id="machineListSieve" class="machineList">
+					<div id="setup__Sieve" class="photoSetting" onclick="SetupSieve()"></div>
+				</div>
+			</div>
+			<div id="grainMachinPage" class="pageLists" style="display: none;">
+				<div id="grainMachinBlock" class="dobPageButton">
+					<div class="blockTitle">Зерноочистительные машины</div>
+				</div>
+				<div id="machineListGrain" class="machineList">
+					<div id="setup__Grain" class="photoSetting" onclick="SetupGrain()"></div>
+				</div>
+			</div>
+
+			<div id="blockNavig" class="blockCommonList" style="justify-content: flex-end;">
+				<div id="addNomen" class="menuButtons" onclick="openAddNomen(this.id)">
+					<div class="blockTitle">Добавить номеклатуру</div>
+				</div>
+				<div id="returnList" class="menuButtons" onclick="closeDopList(this.id)">
+					<div class="blockTitle">Назад</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="blockSetupList" class="blockSetupList" style="display: none;">
+			<div id="separCard" class="cardInfoMachines" style="display: none;">
+				<div id="cardSeparator" class="cardsMachine">
+					<div class="buttonDopSave">
+						<div class="backParamSepar" onclick="backListCard()"></div>
+						<div id="infoSeparator" class="dopInfo" onclick="openParametrs(this.id)"></div>
+					</div>
+					<div class="changeData">Изменить данные</div>
+					<div style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
+						<div id="photoSepar" class="photoMachinesCard">
+							<div id="machineSepar">
+								<div id="iconSepar" class="photoImg" onclick="machinesOpen(this.id)"></div>
+								<input id="elemSepar"  type="file"  accept="image/*" style="display:none" onchange="handleFiles(this.files,this.id)">
+							</div>
+						</div>
+						<div style="display: flex; flex-direction: column;">
+							<input id="bitrixIdSepar" class="inputInfoMachines" type="text" placeholder="ID Bitrix">
+							<input id="ERPIdSepar" class="inputInfoMachines" type="text" placeholder="ID ERP">
+						</div>
+					</div>
+					<textarea id="nameModelSepar" class="textMachine"  placeholder="Наименование"></textarea>
+					<textarea id="namePrintSepar" class="textMachine" placeholder="Наименование для печати"></textarea>
+					<input id="modelSeriesSepar" class="inputInfoMachines" type="text" placeholder="Серия модели">
+					<input id="configSepar" class="inputInfoMachines" type="text" placeholder="Конфигурация">
+					<select id="manufacturerSepar" class="selectMachine">
+						<option>Производитель</option>
+					</select>
+					<input id="priceSepar" class="inputInfoMachines" type="text" placeholder="Цена">
+					<input id="lengthSepar" class="inputInfoMachines" type="text" placeholder="Длина">
+					<input id="widthSepar" class="inputInfoMachines" type="text" placeholder="Ширина">
+					<input id="depthSepar" class="inputInfoMachines" type="text" placeholder="Глубина" style="margin-bottom: 10px;">
+				</div>
+			</div>
+
+			<div id="compresCard" class="cardInfoMachines" style="display: none;">
+				<div id="cardCompressor" class="cardsMachine">
+					<div class="buttonDopSave">
+						<div class="backParamSepar" onclick="backListCard(this.id)"></div>
+						<div id="infoSeparator" class="dopInfo" onclick="openParametrs(this.id)"></div>
+					</div>
+					<div class="changeData">Изменить данные</div>
+					<div style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
+						<div id="photoCompres" class="photoMachinesCard">
+							<div id="machineCompres">
+								<div id="iconCompres" class="photoImg" onclick="machinesOpen(this.id)"></div>
+								<input id="elemCompres"  type="file"  accept="image/*" style="display:none" onchange="handleFiles(this.files,this.id)">
+							</div>
+						</div>
+						<div style="display: flex; flex-direction: column;">
+							<input id="bitrixIdCompres" class="inputInfoMachines" type="text" placeholder="ID Bitrix">
+							<input id="ERPIdCompres" class="inputInfoMachines" type="text" placeholder="ID ERP">
+						</div>
+					</div>
+					<textarea id="nameModelCompres" class="textMachine"  placeholder="Наименование"></textarea>
+					<textarea id="namePrintCompres" class="textMachine" placeholder="Наименование для печати"></textarea>
+					<select id="manufacturerCompres" class="selectMachine">
+						<option>Производитель</option>
+					</select>
+					<input id="priceCompres" class="inputInfoMachines" type="text" placeholder="Цена">
+					<input id="lengthCompres" class="inputInfoMachines" type="text" placeholder="Длина">
+					<input id="widthCompres" class="inputInfoMachines" type="text" placeholder="Ширина">
+					<input id="depthCompres" class="inputInfoMachines" type="text" placeholder="Глубина" style="margin-bottom: 10px;">
+				</div>
+			</div>
+
+			<div id="elevatorCard" class="cardInfoMachines" style="display: none;">
+				<div id="cardElevator" class="cardsMachine">
+					<div class="buttonDopSave">
+						<div class="backParamSepar" onclick="backListCard(this.id)"></div>
+						<div id="infoSeparator" class="dopInfo" onclick="openParametrs(this.id)"></div>
+					</div>
+					<div class="changeData">Изменить данные</div>
+					<div style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
+						<div id="photoElevator" class="photoMachinesCard">
+							<div id="machineElevator">
+								<div id="iconElevator" class="photoImg" onclick="machinesOpen(this.id)"></div>
+								<input id="elemElevator"  type="file"  accept="image/*" style="display:none" onchange="handleFiles(this.files,this.id)">
+							</div>
+						</div>
+						<div style="display: flex; flex-direction: column;">
+							<input id="bitrixIdElevator" class="inputInfoMachines" type="text" placeholder="ID Bitrix">
+							<input id="ERPIdElevator" class="inputInfoMachines" type="text" placeholder="ID ERP">
+						</div>
+					</div>
+					<textarea id="nameModelElevator" class="textMachine"  placeholder="Наименование"></textarea>
+					<textarea id="namePrintElevator" class="textMachine" placeholder="Наименование для печати"></textarea>
+					<select id="manufacturerElevator" class="selectMachine">
+						<option>Производитель</option>
+					</select>
+					<input id="priceElevator" class="inputInfoMachines" type="text" placeholder="Цена">
+					<input id="lengthElevator" class="inputInfoMachines" type="text" placeholder="Длина">
+					<input id="widthElevator" class="inputInfoMachines" type="text" placeholder="Ширина">
+					<input id="depthElevator" class="inputInfoMachines" type="text" placeholder="Глубина" style="margin-bottom: 10px;">
+				</div>
+			</div>
+
+			<div id="sieveCard" class="cardInfoMachines" style="display: none;">
+				<div id="cardSieve" class="cardsMachine">
+					<div class="buttonDopSave">
+						<div class="backParamSepar" onclick="backListCard(this.id)"></div>
+						<div id="infoSeparator" class="dopInfo" onclick="openParametrs(this.id)"></div>
+					</div>
+					<div class="changeData">Изменить данные</div>
+					<div style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
+						<div id="photoSieve" class="photoMachinesCard">
+							<div id="machineSieve">
+								<div id="iconSieve" class="photoImg" onclick="machinesOpen(this.id)"></div>
+								<input id="elemSieve"  type="file"  accept="image/*" style="display:none" onchange="handleFiles(this.files,this.id)">
+							</div>
+						</div>
+						<div style="display: flex; flex-direction: column;">
+							<input id="bitrixIdSieve" class="inputInfoMachines" type="text" placeholder="ID Bitrix">
+							<input id="typeSieve" class="inputInfoMachines" type="text" placeholder="Тип решета">
+						</div>
+					</div>
+					<input id="sizeSieve" class="inputInfoMachines" type="text" placeholder="Размер">
+					<select id="manufacturerSieve" class="selectMachine">
+						<option>Поставщик</option>
+					</select>
+					<input id="priceSieve" class="inputInfoMachines" type="text" placeholder="Цена" style="margin-bottom: 10px;">
+				</div>
+			</div>
+
+			<div id="grainCard" class="cardInfoMachines" style="display: none;">
+				<div id="cardGrain" class="cardsMachine">
+					<div class="buttonDopSave">
+						<div class="backParamSepar" onclick="backListCard(this.id)"></div>
+						<div id="infoSeparator" class="dopInfo" onclick="openParametrs(this.id)"></div>
+					</div>
+					<div class="changeData">Изменить данные</div>
+					<div style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
+						<div id="photoGrain" class="photoMachinesCard">
+							<div id="machineGrain">
+								<div id="iconGrain" class="photoImg" onclick="machinesOpen(this.id)"></div>
+								<input id="elemGrain"  type="file"  accept="image/*" style="display:none" onchange="handleFiles(this.files,this.id)">
+							</div>
+						</div>
+						<div style="display: flex; flex-direction: column;">
+							<input id="bitrixIdGrain" class="inputInfoMachines" type="text" placeholder="ID Bitrix">
+							<input id="ERPIdGrain" class="inputInfoMachines" type="text" placeholder="ID ERP">
+						</div>
+					</div>
+					<textarea id="nameModelGrain" class="textMachine"  placeholder="Наименование"></textarea>
+					<textarea id="namePrintGrain" class="textMachine" placeholder="Наименование для печати"></textarea>
+					<input id="modelGrain" class="inputInfoMachines" type="text" placeholder="Модель">
+					<select id="manufacturerGrain" class="selectMachine">
+						<option>Производитель</option>
+					</select>
+					<input id="priceGrain" class="inputInfoMachines" type="text" placeholder="Цена">
+					<input id="lengthGrain" class="inputInfoMachines" type="text" placeholder="Длина">
+					<input id="widthGrain" class="inputInfoMachines" type="text" placeholder="Ширина">
+					<input id="depthGrain" class="inputInfoMachines" type="text" placeholder="Глубина" style="margin-bottom: 10px;">
+				</div>
+			</div>
+
+			<div id="cardButtons" class="cardButtons">
+				<div id="saveData" class="menuButtons" onclick="saveChanges(this.id)">
+					<div class="blockTitle">Сохранить</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="dopSetupMachine" class="blockSetupList" style="display: none;">
+			<div id="dopInfo" class="cardInfoMachines">
+				<div class="cardsMachine">
+					<div class="buttonDopSave">
+						<div class="backParamSepar" onclick="backParametrs()"></div>
+						<div class="saveParamSepar" onclick="saveParametrs(this.id)"></div>
+					</div>
+					<input id="bitrixIdDop" class="inputInfoMachines" type="text" placeholder="ID Bitrix">
+					<textarea id="dopName" class="textMachine" placeholder="Название"></textarea>
+					<input id="meaningDop" class="inputInfoMachines" type="text" placeholder="Значение">
+					<input id="unitDop" class="inputInfoMachines" type="text" placeholder="Единица измерения" style="margin-bottom: 7px;">
+				</div>
+			</div>
+		</div>
+
+		<div id="cardAddNomen" class="cardAddNomen" style="display: none;">
+			<div class="cardInfo">
+				<div id="blockPhotoInfo" class="blockPhotoInfo">
+					<div id="machinePhoto">
+						<div id="photoIcon" class="photoImg" onclick="images_load(this.id)"></div>
+						<input id="infoElem"  type="file"  accept="image/*" style="display:none" onchange="handleFiles(this.files,this.id)">
+					</div>
+				</div>
+				<div id="Inform" class="Inform">
+					<input id="nameMachine" class="inputButtonInform" type="text" placeholder="Наименование">
+					<input id="price" class="inputButtonInform" type="text" placeholder="Цена">
+				</div>
+			</div>
+			<div id="returnCard" class="menuButtons" onclick="closeCard(this.id)">
+				<div class="blockTitle">Назад</div>
+			</div>
+		</div>
+
+		<div id="blockListUsers" class="blockCommonList" style="display: none;">
+			<div id="cardAdmin" class="cardAdmin">
+				<div id="blockInfo" class="blockInfo">
+					<input id="firstName" class="inputButtonAdmin" type="text" placeholder="Фамилия">
+					<input id="secondName" class="inputButtonAdmin" type="text" placeholder="Имя">
+					<input id="telephone" class="inputButtonAdmin" type="text" maxlength="11" placeholder="Телефон">
+				</div>
+				<div style="display: flex; flex-direction: column;">
+					<div id="block_client" class="blockClientManager" onclick="client_manager(this.id)">
+						<label id="client" class="client_manager" for="client">Клиент</label>
+
+						<label class="toggler-wrapper style-1">
+							<input type="checkbox" id="checkbox_client">
+							<div class="toggler-slider">
+								<div class="toggler-knob"></div>
+							</div>
+						</label>
+					</div>
+					<div id="block_manager" class="blockClientManager" onclick="client_manager(this.id)">
+						<label id="manager" class="client_manager" for="manager">Менеджер</label>
+
+						<label class="toggler-wrapper style-1" style="margin-bottom: 5px;">
+							<input type="checkbox" id="checkbox_manager" checked>
+							<div class="toggler-slider">
+								<div class="toggler-knob"></div>
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="returnMenu" class="menuButtons" onclick="closeDopmenu(this.id)" style="display: none;">
+			<div class="blockTitle">Вернуться в меню</div>
+		</div>
+	
+	</div>
+</body> 
+</html> 

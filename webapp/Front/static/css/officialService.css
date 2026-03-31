@@ -1,0 +1,256 @@
+.startPage{
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  width: 100%;    
+  margin: 0 10px; 
+}
+.windowProdPhoto{
+  display: flex; 
+  height: 27px; 
+  width: 27px; 
+  padding: 8px; 
+  padding-right: 8px; 
+  cursor: pointer;
+}
+.blockPage{
+  display: flex; 
+  flex-direction: column; 
+  width: 100%; 
+  height: 100%;
+}
+.photoArrow{
+  display: none; 
+  height: 27px; 
+  width: 27px; 
+  padding: 8px; 
+  padding-right: 8px;
+}
+.blockButtonNewCard{
+  display: flex; 
+  width: 320px; 
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+.buyersDetails{
+  font-size: 15px;
+  padding: 8px 0px 8px 12px;
+  font-weight: bold; 
+  border-radius: 4px;    
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+}
+.ParentBlock{
+  display: flex; 
+  flex-direction: row; 
+  width: 100%; 
+  justify-content: space-around;
+}
+.imgChange{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 8px;
+  margin-left: 2px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  background-size: contain;
+}
+.resultsBlock{
+  display: flex; 
+  flex-direction: row; 
+  justify-content: space-between; 
+  width: 100%;
+}
+.windowProductAd{
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%; 
+  width: 100%;
+}
+.scrollBlockAdd {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-align: left;
+  font-size: 12px;
+  outline: none;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-snap-stop: always;
+  border-radius: 3px;
+  max-height: 400px;
+  overflow-x: clip;
+  margin-top: 4px;
+  min-height: 0;
+}
+.scrollBlockAdd::-webkit-scrollbar {
+  width: 34px;
+  background-color: white;
+}
+.scrollBlockAdd::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: lightslategray;
+  border: solid;
+  border-color: white;
+  width: 8px;
+  height: 12px;
+  border-left-width: 14px;
+  border-right-width: 8px;
+} 
+.scrollBlockAdd::-webkit-scrollbar-track-piece{
+  background: white;
+  width: 12px;
+}
+.scrolSearchlBlock{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 12px;
+  outline: none;
+  border-radius: 3px;
+  margin-top: 10px;
+  min-height: 0;
+  width: 100%;
+}
+@media screen and (max-height: 700px) {
+  .scrolSearchGrouplBlock{
+    width: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      height: 480px;
+      overflow-x: hidden;
+  }
+}
+@media screen and (min-height: 700px) {
+  .scrolSearchGrouplBlock{
+    width: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      height: 550px;
+      overflow-x: hidden;
+  }
+}
+.scrolSearchEllBlock{
+  width: 96%;
+  font-size: 14px;
+  padding: 5px;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px;
+  max-width: 300px;
+  height: auto;
+  cursor: pointer;
+}
+.El_search_param{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0px;
+}
+.name_search_param{
+  font-weight: bold;
+  margin-left: 10px;
+}
+.buyerDetailsFind{
+  font-size: 15px; 
+  padding: 8px 0px 8px 12px;
+  font-weight: bold; 
+  border-radius: 4px;    
+  display: flex;
+  justify-content: space-between;
+  background-color: #f1f1f1;
+  border-radius: 4px; 
+  cursor: pointer;
+}
+.photoZoom{
+  background-image: url(/static/img/zoom.png);    
+  width: 20px;     
+  height: 20px;     
+  display: flex;
+  background-color: transparent;     
+  background-size: cover;     
+  margin-right: 10px;
+}
+.Comterms{
+  flex-direction: column; 
+  width: 100%;
+  margin-bottom: 10px
+}
+.openPhotoBlock{
+  display: flex; 
+  justify-content: flex-end; 
+  position: absolute; 
+  margin-top: 85px; 
+  margin-left: 85px;
+}
+.ParentBlock{
+  display: flex; 
+  flex-direction: row; 
+  width: 100%; 
+  justify-content: space-around;
+}
+.windowChangeBlock{
+  width: 100%;     
+  display: flex;     
+  flex-direction: row;     
+  justify-content: space-around;     
+  align-items: center;     
+  font-size: 13px;     
+  background-color: white;    
+  border-radius: 8px;
+}
+.addButtonChange{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #DDDDDD;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  border: solid 2px;
+  border-color: #DDDDDD;
+  min-height: 32px;
+  text-align: center;
+}
+#SelectProxy{
+  width: 100%;
+  color: #737373;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 34px;
+  margin-bottom: 10px;
+  margin-top: 0;
+  justify-content: flex-start;
+  text-align: left;
+  padding-left: 8px;
+}
+#drop-area {
+  border: 2px dashed #aaa;
+  padding: 20px;
+  text-align: center;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 8px;
+  height: 80px;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+}
