@@ -1,60 +1,86 @@
 # uvicorn main:app --reload
-from fastapi import FastAPI, Request, Depends, HTTPException, Form, status
+import hashlib
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+from fastapi import Depends, FastAPI, Form, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse, FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi_login import LoginManager
-from fastapi.staticfiles import StaticFiles
-import os
-import hashlib
 from fastapi_login.exceptions import InvalidCredentialsException
-from routers import auth, users, page_CalcSorting, page_CalcKP, page_Service, page_Separator, page_Noria, admin
-from routers.API import page_API, calc_sorting
-from db.db_ext import Database
-from db.db_ext_func import UserRepository
 from passlib.hash import bcrypt
 
-app = FastAPI(root_path="/off_bot", redirect_slashes=False)
-favicon_path = 'favicon.ico'
+from db.db_ext import Database
+from db.db_ext_func import UserRepository
+from routers import (
+    admin,
+    auth,
+    page_CalcKP,
+    page_CalcSorting,
+    page_Noria,
+    page_Separator,
+    page_Service,
+    users,
+)
+from routers.API import calc_sorting, page_API
 
-# --- Настройка менеджера аутентификации ---
-SECRET_KEY = "your-secret-key-here-change-it"  # Замени на реальный секрет!
-manager = LoginManager(SECRET_KEY, token_url="/off_bot/login", use_cookie=True)
+
+BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(BASE_DIR / ".env")
+
+
+def _get_env(name: str, default: str | None = None, required: bool = False) -> str:
+    value = os.getenv(name, default)
+    if required and (value is None or str(value).strip() == ""):
+        raise RuntimeError(f"Environment variable '{name}' is required")
+    return value or ""
+
+
+APP_ROOT_PATH = "/off_bot"
+ 
+# Чувствительные значения оставляем в .env
+DB_NAME = _get_env("DB_NAME", "")
+DB_USER = _get_env("DB_USER", "")
+DB_PASSWORD = _get_env("DB_PASSWORD", "")
+DB_HOST = _get_env("DB_HOST", "")
+DB_PORT = _get_env("DB_PORT", "")
+
+
+conninfo = f"dbname={DB_NAME} user={DB_USER} password={DB_PASSWORD} host={DB_HOST} port={DB_PORT}"
+
+app = FastAPI(root_path=APP_ROOT_PATH, redirect_slashes=False)
+manager = LoginManager("change-me-super-secret-key", token_url="/off_bot/login", use_cookie=True)
 manager.cookie_name = "auth_token"
 
-conninfo = "dbname=webapp_fastapi user=sammy password=PkMeuygrpcrZWK!ccIO85^n^LOnpc( host=v2210764.hosted-by-vdsina.ru port=5432"
 db_off = Database(conninfo)
 user_repository = None
 global tech_work
 tech_work = False
 
 templates = Jinja2Templates(directory="Front/templates")
-MYDIR = 'Front/static/js'
 
-@app.get('/favicon.ico', include_in_schema=False)
+
+@app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
-    return FileResponse(favicon_path)
+    return FileResponse("favicon.ico")
 
-# --- CORS ---
-origins = [
-    "https://localhost.tiangolo.com",
-    "https://localhost",
-    "https://localhost:8080",
-    "http://109.202.10.224",
-    "https://109.202.10.224"
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Упрощаем для разработки
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+
 # --- Хэширование пароля ---
 def hash_password(password: str) -> str:
     return hashlib.sha256(password.encode()).hexdigest()
+
 
 # --- Получение пользователя из БД ---
 @manager.user_loader()
@@ -63,13 +89,16 @@ async def load_user(login: str):
     row = await db_off.fetchrow(query, login)
     return {"login": row[0], "password_hash": row[1]} if row else None
 
+
 # --- Статика ---
 app.mount("/static", StaticFiles(directory="Front/static"), name="static")
 app.mount("/img", StaticFiles(directory="Front/static/img"), name="img")
 
+
 @app.get("/")
 async def index():
     return "Hello, World enemy!"
+
 
 # --- Страница входа ---
 @app.get("/login")
@@ -82,8 +111,14 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     try:
         return bcrypt.verify(plain_password, hashed_password)
     except Exception:
-        return False
-    
+        try:
+            import bcrypt as raw_bcrypt
+            return raw_bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
+        except Exception as e:
+            print(f"Password verification error: {e}")
+            return False
+
+
 # --- Обработка входа ---
 @app.post("/login")
 async def login(
@@ -91,9 +126,9 @@ async def login(
     login: str = Form(...),
     password: str = Form(...)
 ):
-    user = await load_user(login)  # возвращает dict с 'login' и 'password_hash'
-    if user and verify_password(password, user['password_hash']):
-        response = RedirectResponse(url="/off_bot/admin", status_code=303)
+    user = await load_user(login)
+    if user and verify_password(password, user["password_hash"]):
+        response = RedirectResponse(url=f"{APP_ROOT_PATH}/admin", status_code=303)
         manager.set_cookie(response, manager.create_access_token(data={"sub": login}))
         return response
     return templates.TemplateResponse(
@@ -102,14 +137,6 @@ async def login(
         {"error": "Неверный логин или пароль"},
         status_code=401
     )
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    try:
-        # Используем напрямую bcrypt вместо passlib
-        import bcrypt
-        return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
-    except Exception as e:
-        print(f"Password verification error: {e}")
-        return False
 
 
 async def require_admin(request: Request):
@@ -117,9 +144,9 @@ async def require_admin(request: Request):
     if not token:
         raise HTTPException(
             status_code=status.HTTP_307_TEMPORARY_REDIRECT,
-            headers={"Location": "/off_bot/login"}
+            headers={"Location": f"{APP_ROOT_PATH}/login"}
         )
-    
+
     try:
         user = await manager.get_current_user(token)
         if not user:
@@ -129,31 +156,39 @@ async def require_admin(request: Request):
         print(f"Auth error: {e}")
         raise HTTPException(
             status_code=status.HTTP_307_TEMPORARY_REDIRECT,
-            headers={"Location": "/off_bot/login"}
+            headers={"Location": f"{APP_ROOT_PATH}/login"}
         )
+
 
 # --- Защита /admin ---
 @app.get("/admin")
 async def admin_index(
     request: Request,
-    user = Depends(require_admin)
+    user=Depends(require_admin)
 ):
     return templates.TemplateResponse(
         request=request,
         name="admin.html",
-        context={'last_updated': dir_last_updated(MYDIR)}
+        context={"last_updated": dir_last_updated("Front/static/js")}
     )
+
+
 # --- Выход ---
 @app.get("/logout")
 async def logout():
-    response = RedirectResponse(url="/off_bot/login")
+    response = RedirectResponse(url=f"{APP_ROOT_PATH}/login")
     response.delete_cookie("auth_token")
     return response
 
+
+
 def dir_last_updated(folder):
-    return str(max(os.path.getmtime(os.path.join(root_path, f))
-                   for root_path, dirs, files in os.walk(folder)
-                   for f in files))
+    return str(max(
+        os.path.getmtime(os.path.join(root_path, f))
+        for root_path, dirs, files in os.walk(folder)
+        for f in files
+    ))
+
 
 # --- Startup / Shutdown ---
 @app.on_event("startup")
@@ -162,9 +197,11 @@ async def startup():
     global user_repository
     user_repository = UserRepository(db_off)
 
+
 @app.on_event("shutdown")
 async def shutdown():
     await db_off.close()
+
 
 # --- Подключение роутеров ---
 app.include_router(auth.router)

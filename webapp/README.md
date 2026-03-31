@@ -1,355 +1,269 @@
 # webapp
 
-## Quickstart
+Веб-приложение для расчётов, формирования КП, счетов и договоров, а также работы с Telegram WebApp для оборудования Csort.
 
-Для запуска приложения необходимо выполнить:
-```uvicorn main:app --reload ```
+## Что делает проект
 
-## Backend
-<!-- csort-news.ru -->
-API доступен по адресу ```http://127.0.0.1:8000```
+`webapp` — это backend на FastAPI и набор frontend-страниц/скриптов для:
+- расчёта решётных машин;
+- подбора фотосепараторов и связанного оборудования;
+- формирования коммерческих предложений;
+- генерации счетов, договоров и PDF;
+- работы с данными пользователей, контрагентов и поставщиков;
+- интеграций с Telegram Bot API, DaData, Bitrix и внешними сервисами распознавания.
 
-Документация к API: ```http://127.0.0.1:8000/docs```
+## Стек
 
-## Таблицы
+- Python
+- FastAPI
+- PostgreSQL
+- Jinja2 templates
+- JavaScript / Telegram WebApp
+- Uvicorn
 
-```sieve_table``` - список решет, колонки -  `id(key), id_bitrix, sieve_type, size, price, provider`
-```calc_sieve```- таблица с данными решет, колонки -  ` product, sieve_type_letter, clean_type, sieve_type, min, max, count_sieve, form_sieve`
-```calc_sieve_index``` - таблица с индексом производительности по продукту, колонки -  `product, index`
-```separat_table``` - список сепараторов , колонки -`id_provider, id_bitrix, name, name_print, photo, addit_params, addit_equipment, id_row(key), price`
-```calc_sieve_size``` - таблица с размером решет, колонки -  ` sieve_form, size`
+## Структура
 
+Примерно проект устроен так:
 
+```text
+webapp/
+├── main.py
+├── .env
+├── README.md
+├── push_message.py
+├── create_pdf_kp.py
+├── company_information.py
+├── routers/
+│   ├── auth.py
+│   ├── users.py
+│   ├── page_API.py
+│   ├── page_CalcKP.py
+│   ├── page_CalcSorting.py
+│   ├── page_Separator.py
+│   ├── page_Service.py
+│   ├── page_Noria.py
+│   ├── dadata_search.py
+│   ├── ReadCheck.py
+│   └── ReadCheckHtml.py
+├── db/
+│   ├── db_ext.py
+│   └── db_ext_func.py
+└── Front/
+    ├── templates/
+    └── static/
+```
 
-```provider_list```
-# webapp
+## Запуск
 
-## Quickstart
+### 1. Установить зависимости
 
-Для запуска приложения необходимо выполнить:
-```uvicorn main:app --reload ```
+```bash
+pip install -r requirements.txt
+```
 
-## Backend
+Если `requirements.txt` пока не полный, обычно дополнительно нужны:
 
-API доступен по адресу ```http://127.0.0.1:8000```
+```bash
+pip install fastapi uvicorn python-dotenv jinja2 requests pillow python-docx psycopg[binary] passlib bcrypt gspread oauth2client dadata
+```
 
-Документация к API: ```http://127.0.0.1:8000/docs```
+### 2. Создать `.env`
 
-## Таблицы
+Файл `.env` рекомендуется хранить в корне проекта рядом с `main.py`.
 
-```sieve_table``` - список решет, колонки -  `id(key), id_bitrix, sieve_type, size, price, provider`
-```calc_sieve```- таблица с данными решет, колонки -  ` product, sieve_type_letter, clean_type, sieve_type, min, max, count_sieve, form_sieve`
-```calc_sieve_index``` - таблица с индексом производительности по продукту, колонки -  `product, index`
-```separat_table``` - список сепараторов , колонки -`id_provider, id_bitrix, name, name_print, photo, addit_params, addit_equipment, id_row(key), price`
-```calc_sieve_size``` - таблица с размером решет, колонки -  ` sieve_form, size`
+Минимальный пример:
 
+```env
+DB_NAME=your_db_name
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_HOST=127.0.0.1
+DB_PORT=5432
 
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+DADATA_TOKEN=your_dadata_token
 
-```provider_list```
+GOOGLE_CREDENTIALS_PATH=Front/static/json/crend.json
+GOOGLE_SPREADSHEET_ID=your_google_sheet_id
+GOOGLE_WORKSHEET_NAME=main
 
+BITRIX_COMPANY_API_URL=https://example.com/api/v1/company-for-deal
+BITRIX_BEARER_TOKEN=your_bitrix_token
 
------------------------------------------------------------------------ TABLES LIST ----------------------------------------------------------------------- 
+IMAGE_TO_JSON_URL=http://127.0.0.1:8443/image_to_json
+```
 
- Schema |         Name          | Type  | Owner 
---------+-----------------------+-------+-------
- public | additional_parameters | table | sammy
- public | calc_sieve            | table | sammy - таблица с данными решет, колонки -
- public | calc_sieve_index      | table | sammy - таблица с индексом производительности по продукту, колонки -
- public | calc_sieve_size       | table | sammy - таблица с размером решет, колонки -
- public | currency              | table | sammy
- public | delivery_terms        | table | sammy
- public | list_of_created_cp    | table | sammy
- public | payment_method        | table | sammy
- public | provider_list         | table | sammy
- public | separat_table         | table | sammy - список сепараторов , колонки -
- public | sessions              | table | sammy
- public | sieve_table           | table | sammy - список решет, колонки -
- public | struct_created_cp     | table | sammy
- public | user_credentials      | table | sammy
- public | user_info             | table | sammy
- public | user_list             | table | sammy
- public | warranty              | table | sammy
+### 3. Запустить приложение
 
------------------------------------------------------------------------ END TABLES LIST ----------------------------------------------------------------------- 
+```bash
+uvicorn main:app --reload
+```
 
+## Локальные адреса
 
+Если приложение поднято локально:
 
+- API: `http://127.0.0.1:8000`
+- Swagger: `http://127.0.0.1:8000/docs`
+- с учётом `root_path=/off_bot`: основные маршруты будут доступны через `/off_bot/...`
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                                            Table "public.additional_parameters"
-       Column        |         Type          | Collation | Nullable |                        Default                        
----------------------+-----------------------+-----------+----------+-------------------------------------------------------
- id_row              | integer               |           | not null | nextval('additional_parameters_id_row_seq'::regclass)
- id                  | character varying(30) |           |          | 
- id_bitrix           | character varying(30) |           |          | 
- parameter_name      | character varying(50) |           |          | 
- value               | character varying(30) |           |          | 
- unit_of_measurement | character varying(20) |           |          | 
-Indexes:
-    "additional_parameters_id_row_key" UNIQUE CONSTRAINT, btree (id_row)
+Примеры:
+- `http://127.0.0.1:8000/off_bot/`
+- `http://127.0.0.1:8000/off_bot/login`
+- `http://127.0.0.1:8000/off_bot/docs`
 
+## Основные модули
 
+### `main.py`
+Точка входа приложения:
+- создаёт `FastAPI`;
+- подключает шаблоны, статику и middleware;
+- инициализирует БД;
+- подключает роутеры;
+- отвечает за login/logout и admin-доступ.
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                         Table "public.calc_sieve"
-      Column       |         Type          | Collation | Nullable | Default 
--------------------+-----------------------+-----------+----------+---------
- product           | character varying(25) |           |          | 
- sieve_type_letter | character varying(5)  |           |          | 
- clean_type        | character(40)         |           |          | 
- sieve_type        | character(40)         |           |          | 
- min               | integer               |           |          | 
- max               | integer               |           |          | 
- count_sieve       | integer               |           |          | 
- form_sieve        | character(40)         |           |          | 
- id_provider       | integer               |           |          | 1
+### `routers/page_API.py`
+Основной API-слой для frontend и Telegram WebApp:
+- получение справочников и номенклатуры;
+- чтение/создание/обновление КП;
+- работа с контрагентами;
+- отправка сообщений в Telegram;
+- работа с файлами;
+- интеграции с DaData, Bitrix и внешними сервисами.
 
+### `push_message.py`
+Отправка сообщений, изображений и PDF через Telegram Bot API.
 
+### `Front/static/js/`
+Frontend-логика калькуляторов, карточек оборудования, КП и Telegram WebApp.
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Что важно вынести в `.env`
 
+В `.env` нужно хранить всё, что не должно попадать в git:
 
-                   Table "public.calc_sieve_index"
-   Column    |         Type          | Collation | Nullable | Default 
--------------+-----------------------+-----------+----------+---------
- product     | character varying(65) |           |          | 
- index       | double precision      |           |          | 
- id_provider | integer               |           |          | 1
+- токены;
+- API keys;
+- bearer tokens;
+- логины/пароли/строки подключения к БД;
+- URL внешних сервисов, если они зависят от окружения;
+- пути к credential-файлам.
 
+Обычно **не обязательно** выносить:
+- `root_path`;
+- названия папок шаблонов и статики;
+- favicon path;
+- служебные константы интерфейса;
+- локальные значения по умолчанию, которые не являются секретами.
 
+## Git
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                                     Table "public.calc_sieve_size"
-   Column   |         Type          | Collation | Nullable |                   Default                   
-------------+-----------------------+-----------+----------+---------------------------------------------
- sieve_form | character varying(25) |           |          | 
- size       | double precision      |           |          | 
- id         | integer               |           | not null | nextval('calc_sieve_size_id_seq'::regclass)
-Indexes:
-    "calc_sieve_size_pkey" PRIMARY KEY, btree (id)
+В `.gitignore` обязательно должны быть:
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+```gitignore
+.env
+__pycache__/
+*.pyc
+Front/static/json/crend.json
+*.log
+```
 
-                                           Table "public.currency"
-        Column         |         Type          | Collation | Nullable |               Default                
------------------------+-----------------------+-----------+----------+--------------------------------------
- id                    | integer               |           | not null | nextval('currency_id_seq'::regclass)
- id_supplier           | character varying(30) |           |          | 
- standard_abbreviation | character varying(20) |           |          | 
- common_designation    | character varying(20) |           |          | 
-Indexes:
-    "currency_pkey" PRIMARY KEY, btree (id)
+Если есть отдельные credential-файлы или выгрузки:
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+```gitignore
+Front/static/img_manager/files/
+Front/static/document/deal_elevator/
+Front/static/img_sieve/
+```
 
-                                          Table "public.delivery_terms"
-       Column       |          Type          | Collation | Nullable |                  Default                   
---------------------+------------------------+-----------+----------+--------------------------------------------
- id                 | integer                |           | not null | nextval('delivery_terms_id_seq'::regclass)
- id_supplier        | character varying(30)  |           |          | 
- delivery_timeframe | character varying(50)  |           |          | 
- discount_value     | numeric(5,2)           |           |          | 
- text               | character varying(200) |           |          | 
-Indexes:
-    "delivery_terms_pkey" PRIMARY KEY, btree (id)
+## База данных
 
+По текущему README в проекте используются как минимум следующие основные таблицы: `additional_parameters`, `calc_sieve`, `calc_sieve_index`, `calc_sieve_size`, `currency`, `delivery_terms`, `list_of_created_cp`, `payment_method`, `provider_list`, `separat_table`, `sessions`, `sieve_table`, `struct_created_cp`, `user_credentials`, `user_info`, `user_list`, `warranty` fileciteturn8file0
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+### Ключевые таблицы
 
-                                          Table "public.list_of_created_cp"
-     Column     |            Type             | Collation | Nullable |                    Default                     
-----------------+-----------------------------+-----------+----------+------------------------------------------------
- id             | integer                     |           | not null | nextval('list_of_created_cp_id_seq'::regclass)
- user_id_tg     | character varying(30)       |           | not null | 
- key_cp         | character varying(30)       |           |          | 
- short_title    | character varying(50)       |           |          | 
- creation_date  | timestamp without time zone |           |          | CURRENT_TIMESTAMP
- currency       | character varying(6)        |           |          | 
- payment_method | character varying(30)       |           |          | 
- delivery_term  | character varying(30)       |           |          | 
- warranty       | character varying(50)       |           |          | 
- manager_id_tg  | character varying(30)       |           |          | 
-Indexes:
-    "list_of_created_cp_pkey" PRIMARY KEY, btree (id)
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#### `struct_created_cp`
+Хранит структуру коммерческого предложения:
+- `cp_key`
+- `price`
+- `group_info`
 
-                                           Table "public.payment_method"
-        Column        |          Type          | Collation | Nullable |                  Default                   
-----------------------+------------------------+-----------+----------+--------------------------------------------
- id                   | integer                |           | not null | nextval('payment_method_id_seq'::regclass)
- id_supplier          | character varying(30)  |           |          | 
- payment_distribution | character varying(50)  |           |          | 
- discount_value       | character varying(50)  |           |          | 
- text                 | character varying(200) |           |          | 
-Indexes:
-    "payment_method_pkey" PRIMARY KEY, btree (id)
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#### `list_of_created_cp`
+Метаданные созданного КП:
+- `user_id_tg`
+- `key_cp`
+- `creation_date`
+- `payment_method`
+- `delivery_term`
+- `warranty`
+- `manager_id_tg`
 
-                             Table "public.provider_list"
-         Column         |          Type          | Collation | Nullable |   Default   
-------------------------+------------------------+-----------+----------+-------------
- id                     | bigint                 |           | not null | 
- organization_fullname  | character varying(200) |           |          | 
- organization_shortname | character varying(50)  |           |          | 
- country                | character varying(30)  |           |          | 
- city                   | character varying(30)  |           |          | 
- inn                    | character varying(20)  |           |          | 
- ogrn                   | bigint                 |           |          | 
- kpp                    | bigint                 |           |          | 
- address                | character varying(200) |           |          | 
- index                  | bigint                 |           |          | 
- phone_number           | character varying(20)  |           |          | 
- email                  | character varying(50)  |           |          | 
- bic                    | character varying(20)  |           |          | 
- bank_info              | character varying(200) |           |          | 
- checking_account       | character varying(20)  |           |          | 
- corporate_account      | character varying(20)  |           |          | 
- first_name             | character varying(50)  |           |          | 
- second_name            | character varying(50)  |           |          | 
- surname                | character varying(50)  |           |          | 
- position_user          | character varying(50)  |           |          | 
- acts_basis             | character varying(50)  |           |          | 
- number_proxy           | character varying(100) |           |          | 
- seal_photo             | character varying(30)  |           |          | 
- signature_photo        | character varying(30)  |           |          | 
- equipment              | jsonb                  |           | not null | '{}'::jsonb
-Indexes:
-    "provider_list_pkey" PRIMARY KEY, btree (id)
-    "provider_list_organization_fullname_key" UNIQUE CONSTRAINT, btree (organization_fullname)
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#### `user_info`
+Основная информация о пользователе:
+- Telegram ID
+- ФИО
+- телефон
+- email
+- язык
+- роль
+- компания
 
-                                          Table "public.separat_table"
-     Column      |         Type          | Collation | Nullable |                    Default                    
------------------+-----------------------+-----------+----------+-----------------------------------------------
- id_provider     | bigint                |           | not null | 
- id_bitrix       | bigint                |           |          | 
- name            | character varying(50) |           |          | 
- name_print      | character varying(50) |           |          | 
- photo           | character varying(50) |           |          | 
- addit_params    | boolean               |           |          | 
- addit_equipment | boolean               |           |          | 
- id_row          | integer               |           | not null | nextval('separat_table_id_row_seq'::regclass)
- price           | integer               |           |          | 
-Indexes:
-    "separat_table_pkey" PRIMARY KEY, btree (id_row)
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#### `user_list`
+Реквизиты и данные для документов:
+- ИНН
+- адрес
+- телефон
+- email
+- БИК
+- расчётный счёт
+- подписант
+- основание подписания
+- реквизиты компании
 
-                                              Table "public.sessions"
-       Column       |            Type             | Collation | Nullable |                 Default                  
---------------------+-----------------------------+-----------+----------+------------------------------------------
- id                 | integer                     |           | not null | nextval('sessions_id_seq'::regclass)
- id_tg              | character varying(25)       |           |          | 
- refresh_token      | character varying(25)       |           |          | '000'::character varying
- access_token       | character varying(25)       |           |          | '000'::character varying
- refresh_token_time | timestamp without time zone |           |          | '-infinity'::timestamp without time zone
- access_token_time  | timestamp without time zone |           |          | '-infinity'::timestamp without time zone
- refresh_token_hash | character varying(100)      |           |          | '000'::character varying
- access_token_hash  | character varying(100)      |           |          | '000'::character varying
- salt               | character varying(60)       |           |          | '000'::character varying
- id_device          | character varying(60)       |           |          | '000'::character varying
-Indexes:
-    "sessions_pkey" PRIMARY KEY, btree (id)
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#### `provider_list`
+Реквизиты поставщиков и компаний.
 
-                      Table "public.sieve_table"
-   Column   |          Type          | Collation | Nullable | Default 
-------------+------------------------+-----------+----------+---------
- id         | bigint                 |           | not null | 
- id_bitrix  | bigint                 |           |          | 
- sieve_type | character varying(100) |           |          | 
- size       | double precision       |           |          | 
- price      | bigint                 |           |          | 
- provider   | bigint                 |           |          | 
-Indexes:
-    "sieve_table_pkey" PRIMARY KEY, btree (id)
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#### `sieve_table`, `calc_sieve`, `calc_sieve_index`, `separat_table`
+Справочники оборудования и таблицы расчётов. Их описание уже было в старом README fileciteturn8file0
 
-                                     Table "public.struct_created_cp"
-   Column   |       Type        | Collation | Nullable |                      Default                      
-------------+-------------------+-----------+----------+---------------------------------------------------
- cp_key     | character varying |           | not null | nextval('struct_created_cp_cp_key_seq'::regclass)
- price      | integer           |           |          | 
- group_info | json              |           |          | 
-Indexes:
-    "struct_created_cp_pkey" PRIMARY KEY, btree (cp_key)
+## Типовой сценарий работы
 
-                  Table "public.user_credentials"
-  Column   |         Type          | Collation | Nullable | Default 
------------+-----------------------+-----------+----------+---------
- id_tg     | character varying(25) |           | not null | 
- login     | character varying(50) |           |          | 
- password  | bytea                 |           |          | 
- id_device | character varying(60) |           |          | 
-Indexes:
-    "user_credentials_pkey" PRIMARY KEY, btree (id_tg)
-    "unique_login" UNIQUE CONSTRAINT, btree (login)
+1. Пользователь открывает WebApp из Telegram.
+2. Frontend получает справочники и данные пользователя через `/API/...`.
+3. Пользователь подбирает оборудование или собирает КП.
+4. Backend сохраняет структуру КП в БД.
+5. При необходимости формируются PDF, счета, договоры.
+6. Telegram-бот отправляет пользователю или менеджеру сообщение/файл.
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                        Table "public.user_info"
-    Column    |          Type          | Collation | Nullable | Default 
---------------+------------------------+-----------+----------+---------
- id_tg        | character varying(25)  |           | not null | 
- surname      | character varying(40)  |           |          | 
- name         | character varying(40)  |           |          | 
- middle_name  | character varying(40)  |           |          | 
- phone_number | character varying(20)  |           |          | 
- mail         | character varying(40)  |           |          | 
- language     | character varying(15)  |           |          | 
- data_reg     | date                   |           |          | 
- access_level | character varying(40)  |           |          | 
- photo        | character varying(255) |           |          | 
- company      | character varying(50)  |           |          | 
- login        | character varying(25)  |           |          | 
-Indexes:
-    "user_info_pkey" PRIMARY KEY, btree (id_tg)
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Полезные API-роуты
 
-                                      Table "public.user_list"
-         Column         |            Type             | Collation | Nullable |        Default        
-------------------------+-----------------------------+-----------+----------+-----------------------
- id_tg                  | character varying(15)       |           |          | 
- analysis_link          | character varying(40)       |           |          | ''::character varying
- analytics_photo        | character varying(40)       |           |          | ''::character varying
- pdf_kp                 | boolean                     |           |          | false
- agreement_kp           | boolean                     |           |          | false
- invoice_kp             | character varying(40)       |           |          | ''::character varying
- organization           | character varying(40)       |           |          | ''::character varying
- inn                    | character varying(30)       |           |          | ''::character varying
- adress                 | character varying(40)       |           |          | ''::character varying
- phone_number           | character varying(30)       |           |          | ''::character varying
- email                  | character varying(50)       |           |          | ''::character varying
- bic                    | character varying(20)       |           |          | ''::character varying
- checking_account       | character varying(25)       |           |          | ''::character varying
- first_name             | character varying(30)       |           |          | ''::character varying
- second_name            | character varying(30)       |           |          | ''::character varying
- surname                | character varying(30)       |           |          | ''::character varying
- position_user          | character varying(50)       |           |          | ''::character varying
- acts_basis             | character varying(50)       |           |          | ''::character varying
- number_proxy           | character varying(100)      |           |          | ''::character varying
- contract_ready         | boolean                     |           |          | false
- agreement_signed       | boolean                     |           |          | false
- invoice_sent           | boolean                     |           |          | false
- lastmanager_invoice    | timestamp without time zone |           |          | 
- height                 | integer                     |           |          | 0
- city                   | character varying(30)       |           |          | ''::character varying
- organization_shortname | character varying(30)       |           |          | ''::character varying
- organization_fullname  | character varying(40)       |           |          | ''::character varying
- ogrn                   | character varying(40)       |           |          | ''::character varying
- kpp                    | character varying(40)       |           |          | ''::character varying
- bank_info              | character varying(40)       |           |          | ''::character varying
- corporate_account      | character varying(40)       |           |          | ''::character varying
-Indexes:
-    "user_list_id_tg_key" UNIQUE CONSTRAINT, btree (id_tg)
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                                        Table "public.warranty"
-     Column      |          Type          | Collation | Nullable |               Default                
------------------+------------------------+-----------+----------+--------------------------------------
- id              | integer                |           | not null | nextval('warranty_id_seq'::regclass)
- id_supplier     | character varying(30)  |           |          | 
- warranty_period | character varying(50)  |           |          | 
- discount_value  | numeric(5,2)           |           |          | 
- text            | character varying(200) |           |          | 
-Indexes:
-    "warranty_pkey" PRIMARY KEY, btree (id)
+Несколько важных маршрутов:
+- `GET /API/getListData/{lang}`
+- `GET /API/getUserInfo/{id}`
+- `GET /API/getKPInfo/{key_Cp}`
+- `POST /API/Write_new_cp/{pages}/{user_id_tg}/{key_cp}`
+- `POST /API/Write_createdKP/{pages}/{user_id}`
+- `POST /API/Update_createdKP/{key}`
+- `POST /API/RecognizeFiles/{id}`
+- `GET /API/SearchInn_dadata/{inn}`
+- `GET /API/SearchBic_dadata/{bic}`
 
+## Что улучшить дальше
 
+Рекомендуемые следующие шаги:
+
+1. Собрать единый `config.py` / `settings.py` для всех env-переменных.
+2. Убрать хардкод URL, токенов и путей из всех модулей.
+3. Разбить слишком большие JS-файлы на меньшие модули.
+4. Добавить `requirements.txt`, если он ещё не оформлен.
+5. Добавить миграции БД через Alembic.
+6. Написать отдельный README для frontend и отдельный README для API.
+
+## Замечания по текущему README
+
+В текущем варианте README:
+- повторяется блок `# webapp / Quickstart / Backend / Таблицы` дважды;
+- описание БД вставлено как сырой дамп схемы;
+- нет инструкции по `.env`;
+- нет описания интеграций и структуры проекта fileciteturn8file0
+
+Поэтому этот README лучше использовать как обновлённую рабочую версию.
