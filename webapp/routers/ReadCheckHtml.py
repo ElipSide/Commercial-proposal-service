@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import asyncio
 from weasyprint import HTML
-from num2words import num2words
+from routers.modules.plural_form import PluralForm
 import pandas as pd
 import qrcode
 import requests
@@ -11,10 +11,8 @@ from routers.ftp_client import FTPClient
 import asyncio
 import json
 import os
-import routers.ReadCheck as ReadCheck
 from datetime import datetime, timedelta
 import base64
-from routers.ReadCheck import PluralForm
 
 TgSend = TgSendMess()
 server = '194.63.141.80'
@@ -223,6 +221,7 @@ async def GetJson_bitrix(data):
 
 
 async def main(data: dict) -> str:
+    import routers.ReadCheck as ReadCheck
     support       = SupportFunc(data['NameFile'])
     html = support.read_html_template()
 

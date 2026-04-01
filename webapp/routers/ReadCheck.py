@@ -7,16 +7,15 @@ import os
 import re
 import pandas as pd
 from bs4 import BeautifulSoup
-from num2words import num2words
+
 from weasyprint import HTML
 from babel.dates import format_date
 from PIL import Image
 from io import BytesIO
 
 from routers.push_message import TgSendMess
-import routers.API.page_API as page_API
-import routers.page_CalcKP as page_CalcKP
-
+# import routers.API.page_API as page_API
+from routers.modules.plural_form import PluralForm
 from .modules.dop_info_utils import (
     DopInfo_photo, DopInfo_machine, DopInfo_compressor, DopInfo_Elevator
 )
@@ -386,51 +385,6 @@ class ContractTableBuilder:
 
         return str(self.soup)
 
-class PluralForm:
-    """Склонение числительных"""
-
-    def __init__():
-        pass
-    
-    @staticmethod
-    async def _plural_form(number: str, forms: tuple[str, str, str]) -> str:
-        number = str(number)
-
-        last_two = int(number[-2:]) if len(number) > 1 else int(number)
-        last_one = int(number[-1])
-
-        if 11 <= last_two <= 14:
-            return forms[0]
-        if last_one == 1:
-            return forms[1]
-        if 2 <= last_one <= 4:
-            return forms[2]
-        return forms[0]
-    
-    @classmethod
-    async def rub(cls, number: str) -> str:
-        return await cls._plural_form(number, ("рублей","рубль","рубля"))
-    
-    @classmethod
-    async def kop(cls, number: str) -> str:
-        return await cls._plural_form(number, ("копеек","копейка","копейки"))
-    
-    @classmethod
-    async def sum_propis(cls, total_sum: str) -> str:
-
-        sum_user = total_sum.replace(" ", "")
-        parts = sum_user.split(".")
-        sum_user_rub = parts[0]
-        sum_user_kop = parts[1]
-
-        sum_rub_str = await cls.rub(sum_user_rub)
-        sum_kop_str = await cls.kop(sum_user_kop)
-
-        sum_propis_rus = num2words(sum_user_rub, lang='ru')
-        sum_rub = (sum_propis_rus + ' ' + sum_rub_str).capitalize()
-        sum_kop = (str(sum_user_kop) + ' ' + sum_kop_str).capitalize()
-        sum_propis = sum_rub + ' ' + sum_kop
-        return sum_propis
 
 class SpecElevatorBuilder:
     
@@ -1186,6 +1140,9 @@ async def processHtmlTemplate(html_template, replacements, id_row_elevator, lang
     return str(soup), has_ads, has_1432, has_823, has_transport
  
 async def main(data,key):
+    import routers.API.page_API as page_API
+    import routers.page_CalcKP as page_CalcKP
+
     start_price = 0
     discount_price = 0
     price_notNDS = 0
